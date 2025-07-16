@@ -1,0 +1,82 @@
+/* Custom styles for AdminLayout Menu Dropdown */
+
+/* INLINE SUBMENU STYLES (for expanded menu within sidebar) */
+.ant-menu-dark .ant-menu-inline .ant-menu-submenu {
+  background: #1e293b !important;
+}
+
+.ant-menu-dark .ant-menu-inline .ant-menu-submenu .ant-menu-item {
+  background: #1e293b !important;
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+.ant-menu-dark .ant-menu-inline .ant-menu-submenu .ant-menu-item:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: white !important;
+}
+
+.ant-menu-dark .ant-menu-inline .ant-menu-submenu .ant-menu-item-selected {
+  background: #3b82f6 !important;
+  color: white !important;
+}
+
+.ant-menu-dark .ant-menu-inline .ant-menu-submenu .ant-menu-item-active {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: white !important;
+}
+
+/* Submenu container background */
+.ant-menu-dark .ant-menu-submenu-inline {
+  background: #1e293b !important;
+}
+
+.ant-menu-dark .ant-menu-submenu-inline > .ant-menu {
+  background: #1e293b !important;
+}
+
+/* POPUP SUBMENU STYLES (for collapsed sidebar) */
+.ant-menu-dark .ant-menu-submenu-popup {
+  background: #1e293b !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+}
+
+.ant-menu-dark .ant-menu-submenu-popup .ant-menu {
+  background: #1e293b !important;
+}
+
+.ant-menu-dark .ant-menu-submenu-popup .ant-menu-item {
+  background: #1e293b !important;
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+.ant-menu-dark .ant-menu-submenu-popup .ant-menu-item:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: white !important;
+}
+
+.ant-menu-dark .ant-menu-submenu-popup .ant-menu-item-selected {
+  background: #3b82f6 !important;
+  color: white !important;
+}
+
+.ant-menu-dark .ant-menu-submenu-popup .ant-menu-item-active {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: white !important;
+}
+
+/* Submenu popup arrow */
+.ant-menu-dark .ant-menu-submenu-popup::before {
+  background: #1e293b !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Submenu title styling */
+.ant-menu-dark .ant-menu-submenu-title:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+.ant-menu-dark .ant-menu-submenu-open .ant-menu-submenu-title {
+  background: rgba(255, 255, 255, 0.1) !important;
+}

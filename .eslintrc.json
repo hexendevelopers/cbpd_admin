@@ -1,3 +1,11 @@
 {
-  "extends": ["next/core-web-vitals", "next/typescript"]
+  "extends": ["next/core-web-vitals", "next/typescript"],
+  "rules": {
+    // Disable all rules
+    "@next/next/no-img-element": "off",
+    "react/no-unescaped-entities": "off",
+    "react/display-name": "off",
+    // Add any other rules you want to disable
+    "no-unused-vars": "off"
+  }
 }

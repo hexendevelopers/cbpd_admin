@@ -6,21 +6,38 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "create-admin": "node scripts/createDefaultAdmin.js"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.844.0",
+    "antd": "^5.26.5",
+    "bcrypt": "^6.0.0",
+    "csv-parse": "^6.0.0",
+    "dayjs": "^1.11.13",
+    "file-saver": "^2.0.5",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^2.2.12",
+    "mongoose": "^8.16.3",
+    "next": "14.2.14",
+    "nodemailer": "^7.0.5",
     "react": "^18",
     "react-dom": "^18",
-    "next": "14.2.14"
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@types/bcrypt": "^5.0.2",
+    "@types/file-saver": "^2.0.7",
+    "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^20",
+    "@types/nodemailer": "^6.4.17",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/xlsx": "^0.0.35",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.14",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
-    "eslint": "^8",
-    "eslint-config-next": "14.2.14"
+    "typescript": "^5"
   }
 }
