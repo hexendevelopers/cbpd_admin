@@ -9,5 +9,7 @@ export default function Home() {
     router.push("/admin/login");
   }, []);
 
-  return <div className=""></div>;
+  return <div className="">
+    
+  </div>;
 }

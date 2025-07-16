@@ -52,6 +52,8 @@ export const POST = async (req: Request) => {
       { status: 200 }
     );
 
+    console.log(response);
+
     response.cookies.set({
       name: "authToken",
       value: token,

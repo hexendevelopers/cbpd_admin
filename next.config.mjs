@@ -1,10 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
- eslint: {
+  eslint: {
     // Warning: This allows production builds to successfully complete even if
     // your project has ESLint errors.
     ignoreDuringBuilds: true,
   },
+
   async headers() {
     return [
       {
@@ -13,7 +14,7 @@ const nextConfig = {
           // Replace "*" with your frontend's specific origin
           {
             key: "Access-Control-Allow-Origin",
-            value: "http://localhost:3001",
+            value: "https://cbpd-new-version.vercel.app",
           },
           {
             key: "Access-Control-Allow-Methods",

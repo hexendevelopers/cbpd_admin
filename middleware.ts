@@ -1,7 +1,7 @@
 // middleware.js (in your project root)
 import { NextResponse } from "next/server";
 
-export function middleware(request : any) {
+export function middleware(request: any) {
   // Handle CORS for API routes
   if (request.nextUrl.pathname.startsWith("/api/")) {
     const response = NextResponse.next();
@@ -10,7 +10,8 @@ export function middleware(request : any) {
     response.headers.set("Access-Control-Allow-Credentials", "true");
     response.headers.set(
       "Access-Control-Allow-Origin",
-      "http://localhost:3001"
+      "https://cbpd-new-version.vercel.app"
+
     ); // Your frontend URL
     response.headers.set(
       "Access-Control-Allow-Methods",
