@@ -7,7 +7,7 @@ import Admin from "@/models/adminModel";
 export async function POST(request: NextRequest) {
   try {
     await connectDB();
-    
+
     const { email, password } = await request.json();
 
     if (!email || !password) {
@@ -38,11 +38,11 @@ export async function POST(request: NextRequest) {
     await admin.save();
 
     const token = jwt.sign(
-      { 
-        adminId: admin._id, 
-        email: admin.email, 
+      {
+        adminId: admin._id,
+        email: admin.email,
         role: admin.role,
-        permissions: admin.permissions 
+        permissions: admin.permissions,
       },
       process.env.JWT_SECRET!,
       { expiresIn: "24h" }
@@ -64,10 +64,12 @@ export async function POST(request: NextRequest) {
     response.cookies.set("admin_token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
+      sameSite: "lax",
       maxAge: 86400, // 24 hours
+      path: "/", // Add this
+      domain: process.env.NODE_ENV === "production" ? ".vercel.app" : undefined,
     });
-
+    console.log("Cookie set successfully");
     return response;
   } catch (error) {
     console.error("Admin login error:", error);
