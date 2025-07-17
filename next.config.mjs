@@ -1,20 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   eslint: {
-    // Warning: This allows production builds to successfully complete even if
-    // your project has ESLint errors.
     ignoreDuringBuilds: true,
   },
-
   async headers() {
     return [
       {
         source: "/api/:path*",
         headers: [
-          // Replace "*" with your frontend's specific origin
           {
             key: "Access-Control-Allow-Origin",
-            value: "https://cbpd-new-version.vercel.app",
+            value: "https://cbpd-admin.vercel.app", // Change this to your admin panel URL
           },
           {
             key: "Access-Control-Allow-Methods",
@@ -24,8 +20,10 @@ const nextConfig = {
             key: "Access-Control-Allow-Headers",
             value: "Content-Type, Authorization",
           },
-          // Add this to allow credentials
-          { key: "Access-Control-Allow-Credentials", value: "true" },
+          {
+            key: "Access-Control-Allow-Credentials",
+            value: "true",
+          },
         ],
       },
     ];
