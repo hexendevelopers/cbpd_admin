@@ -1,25 +1,54 @@
-// middleware.js (in your project root)
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export function middleware(request: any) {
+export function middleware(request: NextRequest) {
   // Handle CORS for API routes
   if (request.nextUrl.pathname.startsWith("/api/")) {
+    // Define allowed origins
+    const allowedOrigins = [
+      "https://cbpd-new-version.vercel.app",
+      "https://cbpd-admin.vercel.app",
+      "http://localhost:3000", // For development
+      "http://localhost:3001", // In case you use different ports
+    ];
+
+    // Get the origin from the request
+    const origin = request.headers.get("origin");
+
+    // Check if origin is allowed
+    const isAllowedOrigin = origin && allowedOrigins.includes(origin);
+    const allowedOrigin = isAllowedOrigin ? origin : allowedOrigins[0];
+
+    // Handle preflight OPTIONS requests
+    if (request.method === "OPTIONS") {
+      const response = new NextResponse(null, { status: 200 });
+
+      response.headers.set("Access-Control-Allow-Credentials", "true");
+      response.headers.set("Access-Control-Allow-Origin", allowedOrigin);
+      response.headers.set(
+        "Access-Control-Allow-Methods",
+        "GET, POST, PUT, DELETE, OPTIONS"
+      );
+      response.headers.set(
+        "Access-Control-Allow-Headers",
+        "Content-Type, Authorization, Cookie"
+      );
+      response.headers.set("Access-Control-Max-Age", "86400");
+
+      return response;
+    }
+
+    // Handle actual API requests
     const response = NextResponse.next();
 
-    // Allow credentials and set CORS headers
     response.headers.set("Access-Control-Allow-Credentials", "true");
-    response.headers.set(
-      "Access-Control-Allow-Origin",
-      "https://cbpd-new-version.vercel.app"
-
-    ); // Your frontend URL
+    response.headers.set("Access-Control-Allow-Origin", allowedOrigin);
     response.headers.set(
       "Access-Control-Allow-Methods",
       "GET, POST, PUT, DELETE, OPTIONS"
     );
     response.headers.set(
       "Access-Control-Allow-Headers",
-      "Content-Type, Authorization"
+      "Content-Type, Authorization, Cookie"
     );
 
     return response;

@@ -10,7 +10,8 @@ const nextConfig = {
         headers: [
           {
             key: "Access-Control-Allow-Origin",
-            value: "https://cbpd-admin.vercel.app", // Change this to your admin panel URL
+            value:
+              "https://cbpd-new-version.vercel.app, https://cbpd-admin.vercel.app",
           },
           {
             key: "Access-Control-Allow-Methods",
