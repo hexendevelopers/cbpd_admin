@@ -629,7 +629,7 @@ export default function AdminsManagement() {
                 </Option>
               </Select>
             </Col>
-            <Col xs={24} sm={8} md={3}>
+            {/* <Col xs={24} sm={8} md={3}>
               <div style={{ marginBottom: 8 }}>
                 <Text strong>Status</Text>
               </div>
@@ -653,7 +653,7 @@ export default function AdminsManagement() {
                   Inactive
                 </Option>
               </Select>
-            </Col>
+            </Col> */}
           </Row>
         </Card>
 

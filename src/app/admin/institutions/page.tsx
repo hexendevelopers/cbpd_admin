@@ -545,12 +545,12 @@ export default function InstitutionsManagement() {
           <Text type="secondary" style={{ fontSize: 12 }}>
             {record.jobTitle}
           </Text>
-          <div style={{ fontSize: 12, color: "#666", marginTop: 4 }}>
+          {/* <div style={{ fontSize: 12, color: "#666", marginTop: 4 }}>
             <MailOutlined style={{ marginRight: 4 }} /> {record.emailAddress}
           </div>
           <div style={{ fontSize: 12, color: "#666" }}>
             <PhoneOutlined style={{ marginRight: 4 }} /> {record.phoneNumber}
-          </div>
+          </div> */}
         </div>
       ),
     },
@@ -1450,6 +1450,7 @@ export default function InstitutionsManagement() {
           bodyStyle={{ padding: 0 }}
         >
           <Table
+            className="w-screen"
             columns={columns}
             dataSource={institutions}
             rowKey="_id"
@@ -1468,7 +1469,7 @@ export default function InstitutionsManagement() {
               },
               style: { padding: "16px 24px" },
             }}
-            scroll={{ x: 1400 }}
+            // scroll={{ x: 1400 }}
             style={{ borderRadius: 16 }}
           />
         </Card>
