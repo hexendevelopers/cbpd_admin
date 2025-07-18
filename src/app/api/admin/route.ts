@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import connectDB from "@/configs/mongodb";
 import Admin from "@/models/adminModel";
 import { verifyAdminToken } from "@/lib/verifyToken";
