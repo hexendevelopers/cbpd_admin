@@ -102,7 +102,7 @@ export default function CoursesManagement() {
 
   const fetchCategories = async () => {
     try {
-      const response = await fetch('/api/admin/course-categories?all=true');
+      const response = await fetch("/api/admin/course-categories?all=true");
       if (response.ok) {
         const data = await response.json();
         setCategories(data.categories);
@@ -134,9 +134,9 @@ export default function CoursesManagement() {
     } catch (error) {
       console.error("Error fetching courses:", error);
       notification.error({
-        message: 'Error',
-        description: 'Failed to fetch courses',
-        placement: 'topRight',
+        message: "Error",
+        description: "Failed to fetch courses",
+        placement: "topRight",
       });
     } finally {
       setLoading(false);
@@ -147,10 +147,10 @@ export default function CoursesManagement() {
     setUploadLoading(true);
     try {
       const formData = new FormData();
-      formData.append('file', file);
+      formData.append("file", file);
 
-      const response = await fetch('/api/admin/courses/upload', {
-        method: 'POST',
+      const response = await fetch("/api/admin/courses/upload", {
+        method: "POST",
         body: formData,
       });
 
@@ -158,15 +158,15 @@ export default function CoursesManagement() {
         const data = await response.json();
         setImageUrl(data.imageUrl);
         form.setFieldsValue({ image: data.imageUrl });
-        message.success('Image uploaded successfully');
+        message.success("Image uploaded successfully");
         return data.imageUrl;
       } else {
         const errorData = await response.json();
-        message.error(errorData.error || 'Upload failed');
+        message.error(errorData.error || "Upload failed");
         return false;
       }
     } catch (error) {
-      message.error('Upload failed');
+      message.error("Upload failed");
       return false;
     } finally {
       setUploadLoading(false);
@@ -176,9 +176,9 @@ export default function CoursesManagement() {
   const handleBulkAction = async (action: string) => {
     if (selectedCourses.length === 0) {
       notification.warning({
-        message: 'No Selection',
-        description: 'Please select courses first',
-        placement: 'topRight',
+        message: "No Selection",
+        description: "Please select courses first",
+        placement: "topRight",
       });
       return;
     }
@@ -198,25 +198,25 @@ export default function CoursesManagement() {
       if (response.ok) {
         const data = await response.json();
         notification.success({
-          message: 'Success',
+          message: "Success",
           description: data.message,
-          placement: 'topRight',
+          placement: "topRight",
         });
         fetchCourses();
         setSelectedCourses([]);
       } else {
         const data = await response.json();
         notification.error({
-          message: 'Error',
-          description: data.error || 'Action failed',
-          placement: 'topRight',
+          message: "Error",
+          description: data.error || "Action failed",
+          placement: "topRight",
         });
       }
     } catch (error) {
       notification.error({
-        message: 'Network Error',
-        description: 'Please try again',
-        placement: 'topRight',
+        message: "Network Error",
+        description: "Please try again",
+        placement: "topRight",
       });
     }
   };
@@ -228,32 +228,35 @@ export default function CoursesManagement() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: action !== "delete" ? JSON.stringify({
-          isActive: action === "activate"
-        }) : undefined,
+        body:
+          action !== "delete"
+            ? JSON.stringify({
+                isActive: action === "activate",
+              })
+            : undefined,
       });
 
       if (response.ok) {
         const data = await response.json();
         notification.success({
-          message: 'Success',
+          message: "Success",
           description: data.message,
-          placement: 'topRight',
+          placement: "topRight",
         });
         fetchCourses();
       } else {
         const data = await response.json();
         notification.error({
-          message: 'Error',
-          description: data.error || 'Action failed',
-          placement: 'topRight',
+          message: "Error",
+          description: data.error || "Action failed",
+          placement: "topRight",
         });
       }
     } catch (error) {
       notification.error({
-        message: 'Network Error',
-        description: 'Please try again',
-        placement: 'topRight',
+        message: "Network Error",
+        description: "Please try again",
+        placement: "topRight",
       });
     }
   };
@@ -265,10 +268,10 @@ export default function CoursesManagement() {
         image: imageUrl || values.image || null,
       };
 
-      const url = isEditMode 
+      const url = isEditMode
         ? `/api/admin/courses/${selectedCourse?._id}`
         : "/api/admin/courses";
-      
+
       const method = isEditMode ? "PUT" : "POST";
 
       const response = await fetch(url, {
@@ -282,9 +285,9 @@ export default function CoursesManagement() {
       if (response.ok) {
         const data = await response.json();
         notification.success({
-          message: 'Success',
+          message: "Success",
           description: data.message,
-          placement: 'topRight',
+          placement: "topRight",
         });
         setIsModalVisible(false);
         setSelectedCourse(null);
@@ -294,24 +297,24 @@ export default function CoursesManagement() {
       } else {
         const data = await response.json();
         notification.error({
-          message: 'Error',
-          description: data.error || 'Operation failed',
-          placement: 'topRight',
+          message: "Error",
+          description: data.error || "Operation failed",
+          placement: "topRight",
         });
       }
     } catch (error) {
       notification.error({
-        message: 'Network Error',
-        description: 'Please try again',
-        placement: 'topRight',
+        message: "Network Error",
+        description: "Please try again",
+        placement: "topRight",
       });
     }
   };
 
   const getActionMenu = (record: Course) => (
     <Menu>
-      <Menu.Item 
-        key="view" 
+      <Menu.Item
+        key="view"
         icon={<EyeOutlined />}
         onClick={() => {
           setSelectedCourse(record);
@@ -320,8 +323,8 @@ export default function CoursesManagement() {
       >
         View Details
       </Menu.Item>
-      <Menu.Item 
-        key="edit" 
+      <Menu.Item
+        key="edit"
         icon={<EditOutlined />}
         onClick={() => {
           setSelectedCourse(record);
@@ -329,32 +332,38 @@ export default function CoursesManagement() {
           setImageUrl(record.image || "");
           form.setFieldsValue({
             ...record,
-            categoryId: record.categoryId?._id
+            categoryId: record.categoryId?._id,
           });
           setIsModalVisible(true);
         }}
       >
         Edit Course
       </Menu.Item>
-      <Menu.Item 
-        key="toggle" 
+      <Menu.Item
+        key="toggle"
         icon={record.isActive ? <StopOutlined /> : <CheckCircleOutlined />}
-        onClick={() => handleCourseAction(record._id, record.isActive ? "deactivate" : "activate")}
+        onClick={() =>
+          handleCourseAction(
+            record._id,
+            record.isActive ? "deactivate" : "activate"
+          )
+        }
       >
         {record.isActive ? "Deactivate" : "Activate"}
       </Menu.Item>
       <Menu.Divider />
-      <Menu.Item 
-        key="delete" 
+      <Menu.Item
+        key="delete"
         icon={<DeleteOutlined />}
         danger
         onClick={() => {
           Modal.confirm({
-            title: 'Delete Course',
-            content: 'Are you sure you want to delete this course? This action cannot be undone.',
-            okText: 'Delete',
-            okType: 'danger',
-            cancelText: 'Cancel',
+            title: "Delete Course",
+            content:
+              "Are you sure you want to delete this course? This action cannot be undone.",
+            okText: "Delete",
+            okType: "danger",
+            cancelText: "Cancel",
             onOk: () => handleCourseAction(record._id, "delete"),
           });
         }}
@@ -376,30 +385,33 @@ export default function CoursesManagement() {
               alt={record.title}
               width={40}
               height={40}
-              style={{ borderRadius: 6, objectFit: 'cover' }}
+              style={{ borderRadius: 6, objectFit: "cover" }}
               fallback="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMIAAADDCAYAAADQvc6UAAABRWlDQ1BJQ0MgUHJvZmlsZQAAKJFjYGASSSwoyGFhYGDIzSspCnJ3UoiIjFJgf8LAwSDCIMogwMCcmFxc4BgQ4ANUwgCjUcG3awyMIPqyLsis7PPOq3QdDFcvjV3jOD1boQVTPQrgSkktTgbSf4A4LbmgqISBgTEFyFYuLykAsTuAbJEioKOA7DkgdjqEvQHEToKwj4DVhAQ5A9k3gGyB5IxEoBmML4BsnSQk8XQkNtReEOBxcfXxUQg1Mjc0dyHgXNJBSWpFCYh2zi+oLMpMzyhRcASGUqqCZ16yno6CkYGRAQMDKMwhqj/fAIcloxgHQqxAjIHBEugw5sUIsSQpBobtQPdLciLEVJYzMPBHMDBsayhILEqEO4DxG0txmrERhM29nYGBddr//5/DGRjYNRkY/l7////39v///y4Dmn+LgeHANwDrkl1AuO+pmgAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAwqADAAQAAAABAAAAwwAAAAD9b/HnAAAHlklEQVR4Ae3dP3Ik1RnG4W+FgYxN"
             />
           ) : (
-            <div style={{
-              width: 40,
-              height: 40,
-              borderRadius: 6,
-              background: "#f7f8fc",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              border: "1px solid #e2e8f0"
-            }}>
+            <div
+              style={{
+                width: 40,
+                height: 40,
+                borderRadius: 6,
+                background: "#f7f8fc",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                border: "1px solid #e2e8f0",
+              }}
+            >
               <PictureOutlined style={{ color: "#64748b" }} />
             </div>
           )}
           <div>
-            <div style={{ fontWeight: 600, color: "#1a202c" }}>{record.title}</div>
+            <div style={{ fontWeight: 600, color: "#1a202c" }}>
+              {record.title}
+            </div>
             <Text type="secondary" style={{ fontSize: 12 }}>
-              {record.description.length > 50 
-                ? `${record.description.substring(0, 50)}...` 
-                : record.description
-              }
+              {record.description.length > 50
+                ? `${record.description.substring(0, 50)}...`
+                : record.description}
             </Text>
           </div>
         </Space>
@@ -409,7 +421,7 @@ export default function CoursesManagement() {
       title: "Category",
       key: "category",
       render: (record: Course) => (
-        <Tag 
+        <Tag
           color="#64748b"
           style={{ borderRadius: 6, fontWeight: 500, border: "none" }}
         >
@@ -421,7 +433,7 @@ export default function CoursesManagement() {
       title: "Status",
       key: "status",
       render: (record: Course) => (
-        <Tag 
+        <Tag
           color={record.isActive ? "#22c55e" : "#ef4444"}
           style={{ borderRadius: 6, fontWeight: 500, border: "none" }}
         >
@@ -443,9 +455,9 @@ export default function CoursesManagement() {
       title: "Actions",
       key: "actions",
       render: (record: Course) => (
-        <Dropdown overlay={getActionMenu(record)} trigger={['click']}>
-          <Button 
-            type="text" 
+        <Dropdown overlay={getActionMenu(record)} trigger={["click"]}>
+          <Button
+            type="text"
             icon={<MoreOutlined />}
             style={{ borderRadius: 6 }}
           />
@@ -461,18 +473,20 @@ export default function CoursesManagement() {
     },
   };
 
-  const activeCourses = courses.filter(course => course.isActive).length;
+  const activeCourses = courses.filter((course) => course.isActive).length;
 
   if (loading && !courses.length) {
     return (
       <AdminLayout>
-        <div style={{ 
-          display: "flex", 
-          justifyContent: "center", 
-          alignItems: "center",
-          height: "60vh",
-          flexDirection: "column"
-        }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "60vh",
+            flexDirection: "column",
+          }}
+        >
           <Spin size="large" />
           <Text style={{ marginTop: 16, fontSize: 16, color: "#4a5568" }}>
             Loading Courses...
@@ -487,7 +501,14 @@ export default function CoursesManagement() {
       <div style={{ padding: "24px" }}>
         {/* Header Section */}
         <div style={{ marginBottom: 24 }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginBottom: 16,
+            }}
+          >
             <div>
               <Title level={2} style={{ margin: 0, fontWeight: 600 }}>
                 Courses Management
@@ -497,22 +518,22 @@ export default function CoursesManagement() {
               </Text>
             </div>
             <Space>
-              <Button 
-                icon={<AppstoreOutlined />} 
+              <Button
+                icon={<AppstoreOutlined />}
                 onClick={() => router.push("/admin/course-categories")}
                 style={{ borderRadius: 6 }}
               >
                 Manage Categories
               </Button>
-              <Button 
-                icon={<ReloadOutlined />} 
+              <Button
+                icon={<ReloadOutlined />}
                 onClick={fetchCourses}
                 style={{ borderRadius: 6 }}
               >
                 Refresh
               </Button>
-              <Button 
-                type="primary" 
+              <Button
+                type="primary"
                 icon={<PlusOutlined />}
                 onClick={() => {
                   setIsEditMode(false);
@@ -520,7 +541,11 @@ export default function CoursesManagement() {
                   form.resetFields();
                   setIsModalVisible(true);
                 }}
-                style={{ borderRadius: 6, background: "#2d3748", border: "none" }}
+                style={{
+                  borderRadius: 6,
+                  background: "#2d3748",
+                  border: "none",
+                }}
               >
                 Add Course
               </Button>
@@ -533,14 +558,24 @@ export default function CoursesManagement() {
           <Col xs={24} sm={8}>
             <Card style={{ borderRadius: 8, border: "1px solid #e2e8f0" }}>
               <Space direction="vertical" size={12} style={{ width: "100%" }}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
                   <BookOutlined style={{ fontSize: 24, color: "#64748b" }} />
                   <Badge status="processing" text="Live" />
                 </div>
                 <Statistic
                   title="Total Courses"
                   value={courses.length}
-                  valueStyle={{ fontWeight: 600, fontSize: 24, color: "#1a202c" }}
+                  valueStyle={{
+                    fontWeight: 600,
+                    fontSize: 24,
+                    color: "#1a202c",
+                  }}
                 />
               </Space>
             </Card>
@@ -548,14 +583,26 @@ export default function CoursesManagement() {
           <Col xs={24} sm={8}>
             <Card style={{ borderRadius: 8, border: "1px solid #e2e8f0" }}>
               <Space direction="vertical" size={12} style={{ width: "100%" }}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <CheckCircleOutlined style={{ fontSize: 24, color: "#22c55e" }} />
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <CheckCircleOutlined
+                    style={{ fontSize: 24, color: "#22c55e" }}
+                  />
                   <Badge status="success" text="Active" />
                 </div>
                 <Statistic
                   title="Active Courses"
                   value={activeCourses}
-                  valueStyle={{ fontWeight: 600, fontSize: 24, color: "#22c55e" }}
+                  valueStyle={{
+                    fontWeight: 600,
+                    fontSize: 24,
+                    color: "#22c55e",
+                  }}
                 />
               </Space>
             </Card>
@@ -563,14 +610,26 @@ export default function CoursesManagement() {
           <Col xs={24} sm={8}>
             <Card style={{ borderRadius: 8, border: "1px solid #e2e8f0" }}>
               <Space direction="vertical" size={12} style={{ width: "100%" }}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <AppstoreOutlined style={{ fontSize: 24, color: "#8b5cf6" }} />
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <AppstoreOutlined
+                    style={{ fontSize: 24, color: "#8b5cf6" }}
+                  />
                   <Badge status="default" text="Categories" />
                 </div>
                 <Statistic
                   title="Categories"
                   value={categories.length}
-                  valueStyle={{ fontWeight: 600, fontSize: 24, color: "#1a202c" }}
+                  valueStyle={{
+                    fontWeight: 600,
+                    fontSize: 24,
+                    color: "#1a202c",
+                  }}
                 />
               </Space>
             </Card>
@@ -578,7 +637,7 @@ export default function CoursesManagement() {
         </Row>
 
         {/* Filters Section */}
-        <Card 
+        <Card
           title={
             <Space>
               <FilterOutlined />
@@ -596,7 +655,9 @@ export default function CoursesManagement() {
                 placeholder="Search by title, description..."
                 prefix={<SearchOutlined style={{ color: "#bfbfbf" }} />}
                 value={filters.search}
-                onChange={(e) => setFilters({ ...filters, search: e.target.value, page: 1 })}
+                onChange={(e) =>
+                  setFilters({ ...filters, search: e.target.value, page: 1 })
+                }
                 allowClear
                 style={{ borderRadius: 6 }}
               />
@@ -609,10 +670,12 @@ export default function CoursesManagement() {
                 placeholder="Select category"
                 style={{ width: "100%" }}
                 value={filters.categoryId}
-                onChange={(value) => setFilters({ ...filters, categoryId: value, page: 1 })}
+                onChange={(value) =>
+                  setFilters({ ...filters, categoryId: value, page: 1 })
+                }
                 allowClear
               >
-                {categories.map(category => (
+                {categories.map((category) => (
                   <Option key={category._id} value={category._id}>
                     {category.name}
                   </Option>
@@ -627,11 +690,15 @@ export default function CoursesManagement() {
                 placeholder="Select status"
                 style={{ width: "100%" }}
                 value={filters.status}
-                onChange={(value) => setFilters({ ...filters, status: value, page: 1 })}
+                onChange={(value) =>
+                  setFilters({ ...filters, status: value, page: 1 })
+                }
                 allowClear
               >
                 <Option value="active">
-                  <CheckCircleOutlined style={{ color: "#22c55e", marginRight: 8 }} />
+                  <CheckCircleOutlined
+                    style={{ color: "#22c55e", marginRight: 8 }}
+                  />
                   Active
                 </Option>
                 <Option value="inactive">
@@ -645,8 +712,8 @@ export default function CoursesManagement() {
 
         {/* Bulk Actions */}
         {selectedCourses.length > 0 && (
-          <Card 
-            style={{ 
+          <Card
+            style={{
               marginBottom: 24,
               borderRadius: 8,
               border: "2px solid #2d3748",
@@ -655,17 +722,22 @@ export default function CoursesManagement() {
           >
             <Space>
               <Text strong style={{ color: "#2d3748" }}>
-                {selectedCourses.length} course{selectedCourses.length > 1 ? 's' : ''} selected
+                {selectedCourses.length} course
+                {selectedCourses.length > 1 ? "s" : ""} selected
               </Text>
-              <Button 
+              <Button
                 type="primary"
                 size="small"
                 onClick={() => handleBulkAction("activate")}
-                style={{ borderRadius: 6, background: "#22c55e", border: "none" }}
+                style={{
+                  borderRadius: 6,
+                  background: "#22c55e",
+                  border: "none",
+                }}
               >
                 Activate
               </Button>
-              <Button 
+              <Button
                 size="small"
                 onClick={() => handleBulkAction("deactivate")}
                 style={{ borderRadius: 6 }}
@@ -682,7 +754,10 @@ export default function CoursesManagement() {
             <Space>
               <BookOutlined />
               <span>Courses List</span>
-              <Badge count={pagination.total} style={{ backgroundColor: "#64748b" }} />
+              <Badge
+                count={pagination.total}
+                style={{ backgroundColor: "#64748b" }}
+              />
             </Space>
           }
           style={{ borderRadius: 8, marginBottom: 24 }}
@@ -699,13 +774,12 @@ export default function CoursesManagement() {
               total: pagination.total,
               showSizeChanger: true,
               showQuickJumper: true,
-              showTotal: (total, range) => 
+              showTotal: (total, range) =>
                 `${range[0]}-${range[1]} of ${total} courses`,
               onChange: (page, pageSize) => {
                 setFilters({ ...filters, page, limit: pageSize || 10 });
               },
             }}
-            scroll={{ x: 1200 }}
           />
         </Card>
       </div>
@@ -725,34 +799,42 @@ export default function CoursesManagement() {
       >
         {selectedCourse && (
           <div>
-            <div style={{ 
-              textAlign: "center", 
-              marginBottom: 24,
-              padding: 24,
-              background: "#f7f8fc",
-              borderRadius: 8,
-              border: "1px solid #e2e8f0"
-            }}>
+            <div
+              style={{
+                textAlign: "center",
+                marginBottom: 24,
+                padding: 24,
+                background: "#f7f8fc",
+                borderRadius: 8,
+                border: "1px solid #e2e8f0",
+              }}
+            >
               {selectedCourse.image ? (
                 <Image
                   src={selectedCourse.image}
                   alt={selectedCourse.title}
                   width={120}
                   height={120}
-                  style={{ borderRadius: 8, objectFit: 'cover', marginBottom: 16 }}
+                  style={{
+                    borderRadius: 8,
+                    objectFit: "cover",
+                    marginBottom: 16,
+                  }}
                 />
               ) : (
-                <div style={{
-                  width: 120,
-                  height: 120,
-                  borderRadius: 8,
-                  background: "#f7f8fc",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  border: "1px solid #e2e8f0",
-                  margin: "0 auto 16px"
-                }}>
+                <div
+                  style={{
+                    width: 120,
+                    height: 120,
+                    borderRadius: 8,
+                    background: "#f7f8fc",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    border: "1px solid #e2e8f0",
+                    margin: "0 auto 16px",
+                  }}
+                >
                   <PictureOutlined style={{ fontSize: 48, color: "#64748b" }} />
                 </div>
               )}
@@ -760,13 +842,13 @@ export default function CoursesManagement() {
                 {selectedCourse.title}
               </Title>
               <Space>
-                <Tag 
+                <Tag
                   color="#64748b"
                   style={{ borderRadius: 6, fontWeight: 500, border: "none" }}
                 >
                   {selectedCourse.categoryId?.name || "No Category"}
                 </Tag>
-                <Tag 
+                <Tag
                   color={selectedCourse.isActive ? "#22c55e" : "#ef4444"}
                   style={{ borderRadius: 6, fontWeight: 500, border: "none" }}
                 >
@@ -775,8 +857,8 @@ export default function CoursesManagement() {
               </Space>
             </div>
 
-            <Card 
-              title="Course Information" 
+            <Card
+              title="Course Information"
               style={{ marginBottom: 16, borderRadius: 8 }}
               size="small"
             >
@@ -785,7 +867,7 @@ export default function CoursesManagement() {
                   <Text strong>{selectedCourse.title}</Text>
                 </Descriptions.Item>
                 <Descriptions.Item label="Category">
-                  <Tag 
+                  <Tag
                     color="#64748b"
                     style={{ borderRadius: 6, fontWeight: 500, border: "none" }}
                   >
@@ -805,7 +887,7 @@ export default function CoursesManagement() {
                   )}
                 </Descriptions.Item>
                 <Descriptions.Item label="Status">
-                  <Tag 
+                  <Tag
                     color={selectedCourse.isActive ? "#22c55e" : "#ef4444"}
                     style={{ borderRadius: 6, fontWeight: 500, border: "none" }}
                   >
@@ -819,7 +901,7 @@ export default function CoursesManagement() {
             </Card>
 
             <Space style={{ width: "100%", justifyContent: "center" }}>
-              <Button 
+              <Button
                 type="primary"
                 icon={<EditOutlined />}
                 onClick={() => {
@@ -827,17 +909,26 @@ export default function CoursesManagement() {
                   setImageUrl(selectedCourse.image || "");
                   form.setFieldsValue({
                     ...selectedCourse,
-                    categoryId: selectedCourse.categoryId?._id
+                    categoryId: selectedCourse.categoryId?._id,
                   });
                   setIsModalVisible(true);
                   setIsDrawerVisible(false);
                 }}
-                style={{ borderRadius: 6, background: "#2d3748", border: "none" }}
+                style={{
+                  borderRadius: 6,
+                  background: "#2d3748",
+                  border: "none",
+                }}
               >
                 Edit Course
               </Button>
-              <Button 
-                onClick={() => handleCourseAction(selectedCourse._id, selectedCourse.isActive ? "deactivate" : "activate")}
+              <Button
+                onClick={() =>
+                  handleCourseAction(
+                    selectedCourse._id,
+                    selectedCourse.isActive ? "deactivate" : "activate"
+                  )
+                }
                 style={{ borderRadius: 6 }}
               >
                 {selectedCourse.isActive ? "Deactivate" : "Activate"}
@@ -876,9 +967,9 @@ export default function CoursesManagement() {
             label="Course Title"
             rules={[{ required: true, message: "Please enter course title" }]}
           >
-            <Input 
+            <Input
               placeholder="Enter course title"
-              style={{ borderRadius: 6 }} 
+              style={{ borderRadius: 6 }}
             />
           </Form.Item>
 
@@ -887,15 +978,17 @@ export default function CoursesManagement() {
             label="Course Category"
             rules={[{ required: true, message: "Please select a category" }]}
           >
-            <Select 
+            <Select
               placeholder="Select course category"
               style={{ borderRadius: 6 }}
               showSearch
               filterOption={(input, option) =>
-                (option?.children as unknown as string)?.toLowerCase().includes(input.toLowerCase())
+                (option?.children as unknown as string)
+                  ?.toLowerCase()
+                  .includes(input.toLowerCase())
               }
             >
-              {categories.map(category => (
+              {categories.map((category) => (
                 <Option key={category._id} value={category._id}>
                   {category.name}
                 </Option>
@@ -906,19 +999,18 @@ export default function CoursesManagement() {
           <Form.Item
             name="description"
             label="Course Description"
-            rules={[{ required: true, message: "Please enter course description" }]}
+            rules={[
+              { required: true, message: "Please enter course description" },
+            ]}
           >
-            <TextArea 
+            <TextArea
               placeholder="Enter course description"
               rows={4}
-              style={{ borderRadius: 6 }} 
+              style={{ borderRadius: 6 }}
             />
           </Form.Item>
 
-          <Form.Item
-            name="image"
-            label="Course Image"
-          >
+          <Form.Item name="image" label="Course Image">
             <div>
               <Upload
                 name="file"
@@ -932,7 +1024,11 @@ export default function CoursesManagement() {
                   <Image
                     src={imageUrl}
                     alt="course"
-                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                    }}
                   />
                 ) : (
                   <div>
@@ -941,7 +1037,10 @@ export default function CoursesManagement() {
                   </div>
                 )}
               </Upload>
-              <Text type="secondary" style={{ fontSize: 12, marginTop: 8, display: "block" }}>
+              <Text
+                type="secondary"
+                style={{ fontSize: 12, marginTop: 8, display: "block" }}
+              >
                 Upload course image (JPG, PNG, WebP - Max 5MB)
               </Text>
             </div>
@@ -949,15 +1048,20 @@ export default function CoursesManagement() {
 
           <Form.Item style={{ textAlign: "center", marginTop: 24 }}>
             <Space size="large">
-              <Button 
-                type="primary" 
+              <Button
+                type="primary"
                 htmlType="submit"
                 size="large"
-                style={{ borderRadius: 6, minWidth: 120, background: "#2d3748", border: "none" }}
+                style={{
+                  borderRadius: 6,
+                  minWidth: 120,
+                  background: "#2d3748",
+                  border: "none",
+                }}
               >
                 {isEditMode ? "Update Course" : "Add Course"}
               </Button>
-              <Button 
+              <Button
                 size="large"
                 onClick={() => {
                   setIsModalVisible(false);
