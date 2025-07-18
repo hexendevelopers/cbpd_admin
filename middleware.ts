@@ -4,12 +4,7 @@ export function middleware(request: NextRequest) {
   // Handle CORS for API routes
   if (request.nextUrl.pathname.startsWith("/api/")) {
     // Define allowed origins
-    const allowedOrigins = [
-      "https://cbpd-new-version.vercel.app",
-      "https://cbpd-admin.vercel.app",
-      "http://localhost:3000", // For development
-      "http://localhost:3001", // In case you use different ports
-    ];
+    const allowedOrigins = "https://cbpd-new-version.vercel.app";
 
     // Get the origin from the request
     const origin = request.headers.get("origin");
