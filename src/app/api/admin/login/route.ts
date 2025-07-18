@@ -67,7 +67,10 @@ export async function POST(request: NextRequest) {
       sameSite: "lax",
       maxAge: 86400, // 24 hours
       path: "/", // Add this
-      domain: process.env.NODE_ENV === "production" ? ".vercel.app" : undefined,
+      domain:
+        process.env.NODE_ENV === "production"
+          ? "https://cbpd-admin.vercel.app"
+          : undefined,
     });
     console.log("Cookie set successfully");
     return response;
