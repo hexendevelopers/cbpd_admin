@@ -12,7 +12,7 @@
   "dependencies": {
     "@aws-sdk/client-s3": "^3.844.0",
     "antd": "^5.26.5",
-    "bcrypt": "^6.0.0",
+    "bcryptjs": "^3.0.2",
     "csv-parse": "^6.0.0",
     "dayjs": "^1.11.13",
     "file-saver": "^2.0.5",

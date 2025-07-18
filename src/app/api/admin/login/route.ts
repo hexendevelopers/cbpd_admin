@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import connectDB from "@/configs/mongodb";
 import Admin from "@/models/adminModel";
@@ -67,10 +67,7 @@ export async function POST(request: NextRequest) {
       sameSite: "lax",
       maxAge: 86400, // 24 hours
       path: "/", // Add this
-      domain:
-        process.env.NODE_ENV === "production"
-          ? "https://cbpd-admin.vercel.app"
-          : undefined,
+      domain: undefined,
     });
     console.log("Cookie set successfully");
     return response;
