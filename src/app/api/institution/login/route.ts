@@ -58,7 +58,7 @@ export const POST = async (req: Request) => {
       name: "authToken",
       value: token,
       httpOnly: true,
-      sameSite: "lax", // Changed from "strict" to "lax" to allow cross-origin requests
+      sameSite: "strict", // Changed from "strict" to "lax" to allow cross-origin requests
       secure: process.env.NODE_ENV === "production", // Only secure in production
       path: "/",
       maxAge: 60 * 60 * 24 * 7, // 7 days
