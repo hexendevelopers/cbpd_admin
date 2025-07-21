@@ -19,14 +19,14 @@ export async function GET(
   { params }: { params: { id: string } }
 ): Promise<NextResponse> {
   try {
-    const authResult = await protectOrg(request);
+    // const authResult = await protectOrg(request);
 
-    if (authResult.error) {
-      return NextResponse.json(
-        { status: "Failed", message: authResult.error },
-        { status: authResult.status }
-      );
-    }
+    // if (authResult.error) {
+    //   return NextResponse.json(
+    //     { status: "Failed", message: authResult.error },
+    //     { status: authResult.status }
+    //   );
+    // }
 
     await connectToDB();
 
