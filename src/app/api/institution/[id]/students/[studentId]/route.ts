@@ -6,7 +6,7 @@ import Organization from "@/models/institutionModel";
 import { uploadImageToR2 } from "@/configs/uploadFiletoR2";
 import mongoose from "mongoose";
 
-import { verifyInstitutionToken } from "@/lib/verifyToken";
+import { verifyInstitutionToken, protectOrg } from "@/lib/verifyToken";
 
 interface ApiResponse<T> {
   success: boolean;
@@ -22,7 +22,7 @@ export async function GET(
   { params }: { params: { id: string; studentId: string } }
 ): Promise<NextResponse> {
   try {
-    const authResult = await verifyInstitutionToken(request);
+    const authResult = await protectOrg();
 
     if (authResult.error) {
       return NextResponse.json(
