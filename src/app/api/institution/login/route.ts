@@ -59,14 +59,10 @@ export const POST = async (req: Request) => {
       name: "authToken",
       value: token,
       httpOnly: true,
-      sameSite: "none", // Changed to "none" for cross-origin requests
-      secure: true, // Always secure when using sameSite: "none"
+      sameSite: "none",
+      secure: true,
       path: "/",
-      maxAge: 60 * 60 * 24 * 7, // 7 days
-      domain:
-        process.env.NODE_ENV === "production"
-          ? ".cbpd.co.uk" // Set domain for Vercel deployment
-          : undefined,
+      maxAge: 60 * 60 * 24 * 7,
     });
 
     return response;
