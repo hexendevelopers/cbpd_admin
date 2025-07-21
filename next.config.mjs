@@ -10,7 +10,7 @@ const nextConfig = {
         headers: [
           {
             key: "Access-Control-Allow-Origin",
-            value: "https://cbpd-new-version.vercel.app",
+            value: "https://cbpd.co.uk",
           },
           {
             key: "Access-Control-Allow-Methods",
