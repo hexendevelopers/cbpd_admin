@@ -25,7 +25,7 @@ export async function GET(
   { params }: RouteParams
 ): Promise<NextResponse> {
   try {
-    const authResult = await verifyInstitutionToken();
+    const authResult = await verifyInstitutionToken(req);
 
     if (authResult.error) {
       return NextResponse.json(
@@ -166,7 +166,7 @@ export async function DELETE(
   { params }: RouteParams
 ): Promise<NextResponse> {
   try {
-    const authResult = await verifyInstitutionToken();
+    const authResult = await verifyInstitutionToken(request);
 
     if (authResult.error) {
       return NextResponse.json(

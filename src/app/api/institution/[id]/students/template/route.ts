@@ -20,7 +20,7 @@ export async function GET(
   { params }: { params: { id: string } }
 ): Promise<NextResponse> {
   try {
-    const authResult = await verifyInstitutionToken();
+    const authResult = await verifyInstitutionToken(request);
 
     if (authResult.error) {
       return NextResponse.json(

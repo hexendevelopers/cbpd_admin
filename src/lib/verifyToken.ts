@@ -50,91 +50,34 @@ export async function verifyAdminToken(
   }
 }
 
-// Enhanced function to get token from multiple sources
-function getTokenFromRequest(request?: NextRequest): string | null {
-  let token: string | null = null;
+export async function verifyInstitutionToken(request: NextRequest) {
+  try {
+    const token = request.cookies.get("authToken")?.value;
 
-  if (request) {
-    // Try to get token from Authorization header first
-    const authHeader = request.headers.get("authorization");
-    if (authHeader && authHeader.startsWith("Bearer ")) {
-      token = authHeader.substring(7);
-    }
-
-    // If not found in header, try cookies
     if (!token) {
-      token = request.cookies.get("authToken")?.value || null;
+      return null;
     }
-  } else {
-    // Server-side: Try cookies using Next.js cookies() function
-    try {
-      const cookieStore = cookies();
-      token = cookieStore.get("authToken")?.value || null;
-    } catch (error) {
-      console.error("Error accessing cookies:", error);
-    }
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as any;
+    return decoded;
+  } catch (error) {
+    console.error("Institution token verification error:", error);
+    return null;
   }
-
-  return token;
 }
-/**
- * Verifies the JWT token for an institution user.
- *
- * This function attempts to extract and validate a JWT token from either the request
- * headers or cookies. It's used to authenticate institution users before allowing
- * access to protected resources.
- *
- * @param request - The Next.js request object, if available. When provided, the function
- *                  will attempt to extract the token from this request's headers or cookies.
- *                  If not provided, the function will try to access cookies from the server context.
- *
- * @returns A promise that resolves to an object containing either:
- *          - On success: { success: true, user: DecodedToken } where DecodedToken contains the JWT payload
- *          - On failure: { error: string, status: number, debug: string } with details about the authentication failure
- */
 
-export async function verifyInstitutionToken(request?: NextRequest) {
-  const token = getTokenFromRequest(request);
+export async function protectOrg() {
+  const cookieStore = cookies();
+  const token = cookieStore.get("authToken")?.value;
 
   if (!token) {
-    return {
-      error: "Not authorized, token missing",
-      status: 401,
-      debug: "Token not found in cookies or Authorization header",
-    };
+    return { error: "Not authorized, token missing in cookies", status: 401 };
   }
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET!);
     return { success: true, user: decoded };
-  } catch (err: any) {
-    return {
-      error: "Invalid token",
-      status: 401,
-      debug: `JWT verification failed: ${err.message}`,
-    };
-  }
-}
-
-export async function protectOrg(request?: NextRequest) {
-  const token = getTokenFromRequest(request);
-
-  if (!token) {
-    return {
-      error: "Not authorized, token missing",
-      status: 401,
-      debug: "Token not found in cookies or Authorization header",
-    };
-  }
-
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET!);
-    return { success: true, user: decoded };
-  } catch (err: any) {
-    return {
-      error: "Invalid token",
-      status: 401,
-      debug: `JWT verification failed: ${err.message}`,
-    };
+  } catch (err) {
+    return { error: "Invalid token", status: 401 };
   }
 }
