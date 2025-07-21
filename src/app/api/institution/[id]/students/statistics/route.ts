@@ -11,6 +11,7 @@ interface ApiResponse<T> {
   data?: T;
   error?: string;
   message?: string;
+  debug?: string; // Added for debugging
 }
 
 // GET - Get student statistics for a specific organization
@@ -19,11 +20,16 @@ export async function GET(
   { params }: { params: { id: string } }
 ): Promise<NextResponse> {
   try {
-    const authResult = await verifyInstitutionToken();
+    // Pass the request object to verifyInstitutionToken
+    const authResult = await verifyInstitutionToken(request);
 
     if (authResult.error) {
       return NextResponse.json(
-        { status: "Failed", message: authResult.error },
+        {
+          status: "Failed",
+          message: authResult.error,
+          debug: authResult.debug, // Include debug info
+        },
         { status: authResult.status }
       );
     }
@@ -193,6 +199,7 @@ export async function GET(
     const errorResponse: ApiResponse<never> = {
       success: false,
       error: "Failed to fetch organization student statistics",
+      debug: error instanceof Error ? error.message : "Unknown error",
     };
     return NextResponse.json(errorResponse, { status: 500 });
   }
