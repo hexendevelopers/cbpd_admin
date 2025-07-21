@@ -19,7 +19,7 @@ export async function GET(
   { params }: { params: { id: string } }
 ): Promise<NextResponse> {
   try {
-    const authResult = await protectOrg();
+    const authResult = await protectOrg(request);
 
     if (authResult.error) {
       return NextResponse.json(

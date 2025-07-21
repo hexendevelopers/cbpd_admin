@@ -66,9 +66,8 @@ export async function verifyInstitutionToken(request: NextRequest) {
   }
 }
 
-export async function protectOrg() {
-  const cookieStore = cookies();
-  const token = cookieStore.get("authToken")?.value;
+export async function protectOrg(req: NextRequest) {
+  const token = req.cookies.get("authToken")?.value;
 
   if (!token) {
     return { error: "Not authorized, token missing in cookies", status: 401 };
