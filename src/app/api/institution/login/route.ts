@@ -14,6 +14,7 @@ export const POST = async (req: Request) => {
         { status: 400 }
       );
     }
+
     await connectToDB();
 
     const org = await Organization.findOne({
@@ -48,20 +49,24 @@ export const POST = async (req: Request) => {
         status: "Success",
         message: "Login successful",
         org: orgData,
+        token: token, // Also include token in response body as backup
       },
       { status: 200 }
     );
 
-    console.log(response);
-
+    // Set cookie with more permissive settings for production
     response.cookies.set({
       name: "authToken",
       value: token,
       httpOnly: true,
-      sameSite: "lax", // Changed from "strict" to "lax" to allow cross-origin requests
-      secure: process.env.NODE_ENV === "production", // Only secure in production
+      sameSite: "none", // Changed to "none" for cross-origin requests
+      secure: true, // Always secure when using sameSite: "none"
       path: "/",
       maxAge: 60 * 60 * 24 * 7, // 7 days
+      domain:
+        process.env.NODE_ENV === "production"
+          ? ".cbpd.co.uk" // Set domain for Vercel deployment
+          : undefined,
     });
 
     return response;
