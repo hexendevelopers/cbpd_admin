@@ -50,24 +50,25 @@ export async function verifyAdminToken(
   }
 }
 
-export async function verifyInstitutionToken(request: NextRequest) {
+export async function verifyInstitutionToken() {
+  const cookieStore = cookies();
+  const token = cookieStore.get("authToken")?.value;
+
+  if (!token) {
+    return { error: "Not authorized, token missing in cookies", status: 401 };
+  }
+
   try {
-    const token = request.cookies.get("authToken")?.value;
-
-    if (!token) {
-      return null;
-    }
-
-    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as any;
-    return decoded;
-  } catch (error) {
-    console.error("Institution token verification error:", error);
-    return null;
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!);
+    return { success: true, user: decoded };
+  } catch (err) {
+    return { error: "Invalid token", status: 401 };
   }
 }
 
-export async function protectOrg(req: NextRequest) {
-  const token = req.cookies.get("authToken")?.value;
+export async function protectOrg() {
+  const cookieStore = cookies();
+  const token = cookieStore.get("authToken")?.value;
 
   if (!token) {
     return { error: "Not authorized, token missing in cookies", status: 401 };
