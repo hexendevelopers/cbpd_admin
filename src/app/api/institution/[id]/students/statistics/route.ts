@@ -4,7 +4,7 @@ import connectToDB from "@/configs/mongodb";
 import Student from "@/models/studentModel";
 import Organization from "@/models/institutionModel";
 import mongoose from "mongoose";
-import { verifyInstitutionToken } from "@/lib/verifyToken";
+import { protectOrg, verifyInstitutionToken } from "@/lib/verifyToken";
 
 interface ApiResponse<T> {
   success: boolean;
@@ -19,7 +19,7 @@ export async function GET(
   { params }: { params: { id: string } }
 ): Promise<NextResponse> {
   try {
-    const authResult = await verifyInstitutionToken(request);
+    const authResult = await protectOrg();
 
     if (authResult.error) {
       return NextResponse.json(
