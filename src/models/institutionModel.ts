@@ -33,12 +33,6 @@ const organizationSchema = new mongoose.Schema(
     website: {
       type: String,
       trim: true,
-      validate: {
-        validator: function (v) {
-          return !v || /^https?:\/\/.+/.test(v);
-        },
-        message: "Please enter a valid URL",
-      },
     },
     email: {
       type: String,
