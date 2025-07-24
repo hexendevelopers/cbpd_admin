@@ -40,12 +40,6 @@ const organizationSchema = new mongoose.Schema(
       unique: true,
       trim: true,
       lowercase: true,
-      validate: {
-        validator: function (v) {
-          return /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v);
-        },
-        message: "Please enter a valid email address",
-      },
     },
     password: {
       type: String,
@@ -74,12 +68,6 @@ const organizationSchema = new mongoose.Schema(
       required: [true, "Email address is required"],
       trim: true,
       lowercase: true,
-      validate: {
-        validator: function (v) {
-          return /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v);
-        },
-        message: "Please enter a valid email address",
-      },
     },
     phoneNumber: {
       type: String,
@@ -108,15 +96,8 @@ const organizationSchema = new mongoose.Schema(
 
     SemailAddress: {
       type: String,
-
       trim: true,
       lowercase: true,
-      validate: {
-        validator: function (v) {
-          return /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v);
-        },
-        message: "Please enter a valid email address",
-      },
     },
     SphoneNumber: {
       type: String,

@@ -1,6 +1,6 @@
 // models/Student.ts
 import mongoose from "mongoose";
-import "./institutionModel"
+import "./institutionModel";
 // Clear any existing model to avoid caching issues
 if (mongoose.models.Student) {
   delete mongoose.models.Student;
@@ -25,12 +25,6 @@ const studentSchema = new mongoose.Schema(
       type: String,
       required: [true, "Phone number is required"],
       trim: true,
-      validate: {
-        validator: function (v: string) {
-          return /^[\+]?[1-9][\d]{0,15}$/.test(v);
-        },
-        message: "Please enter a valid phone number",
-      },
     },
     dateOfBirth: {
       type: Date,
