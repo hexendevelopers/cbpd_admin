@@ -1,4 +1,4 @@
-// src/lib/mongodb.ts
+// src/configs/mongodb.ts
 
 import mongoose from "mongoose";
 
@@ -8,43 +8,18 @@ if (!MONGO_URI) {
   throw new Error("⚠️ Please define the MONGO_URI environment variable in .env.local");
 }
 
-// Augment globalThis to avoid TypeScript errors
+// Augment globalThis for TypeScript
 declare global {
-  var mongoose: {
-    conn: typeof mongoose | null;
-    promise: Promise<typeof mongoose> | null;
-  };
+  var mongooseConnection: Promise<typeof mongoose> | undefined;
 }
 
-let cached = global.mongoose;
+let cached = global.mongooseConnection;
 
 if (!cached) {
-  cached = global.mongoose = { conn: null, promise: null };
+  cached = global.mongooseConnection = mongoose.connect(MONGO_URI, {
+    dbName: "coachdesk",
+    bufferCommands: false,
+  });
 }
 
-async function connectToDB() {
-  if (cached.conn) {
-    return cached.conn;
-  }
-
-  if (!cached.promise) {
-    cached.promise = mongoose
-      .connect(MONGO_URI, {
-        dbName: "coachdesk",
-        bufferCommands: false,
-      })
-      .then((mongoose) => {
-        console.log("✅ MongoDB connected");
-        return mongoose;
-      })
-      .catch((err) => {
-        console.error("❌ MongoDB connection error:", err);
-        throw err;
-      });
-  }
-
-  cached.conn = await cached.promise;
-  return cached.conn;
-}
-
-export default connectToDB;
+export default cached;
