@@ -13,7 +13,7 @@ declare global {
   var mongooseConnection: Promise<typeof mongoose> | undefined;
 }
 
-let cached = global.mongooseConnection;
+let connectDB = global.mongooseConnection;
 
 if (!cached) {
   cached = global.mongooseConnection = mongoose.connect(MONGO_URI, {
@@ -22,4 +22,4 @@ if (!cached) {
   });
 }
 
-export default cached;
+export default connectDB;
