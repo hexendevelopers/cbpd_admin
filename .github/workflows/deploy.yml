@@ -27,12 +27,20 @@ jobs:
             git reset --hard origin/main
             echo "Last commit after reset:"
             git log -1 --oneline
+            
             echo "Cleaning old Next.js build..."
             rm -rf .next
-            echo "Installing dependencies..."
-            npm ci --omit=dev || { echo "npm install failed"; exit 1; }
+            rm -rf node_modules
+            
+            echo "Installing all dependencies (needed for build)..."
+            npm install || { echo "npm install failed"; exit 1; }
+            
             echo "Building Next.js..."
             npm run build || { echo "Next.js build failed"; exit 1; }
+            
+            echo "Cleaning up dev dependencies..."
+            npm prune --omit=dev
+            
             echo "Reloading PM2 without downtime..."
             pm2 reload cbpd_admin || pm2 start npm --name "cbpd_admin" -- start
             echo "Deployment complete!"
