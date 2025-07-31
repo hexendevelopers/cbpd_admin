@@ -1,0 +1,30 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to VPS
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: 194.238.16.221
+          username: root
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            set -e
+            cd /var/www/cbpd_admin
+            echo "Pulling latest code..."
+            git reset --hard
+            git pull origin main
+            echo "Installing dependencies..."
+            npm ci --omit=dev
+            echo "Building Next.js..."
+            npm run build
+            echo "Reloading PM2 without downtime..."
+            pm2 reload cbpd_admin || pm2 start npm --name "cbpd_admin" -- start
+            echo "Deployment complete!"
