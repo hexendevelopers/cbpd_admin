@@ -18,9 +18,9 @@ jobs:
           script: |
             set -e
             cd /var/www/cbpd_admin
-            echo "Pulling latest code..."
-            git reset --hard
-            git pull origin main
+            echo "Force syncing to GitHub main branch..."
+            git fetch origin main
+            git reset --hard origin/main
             echo "Installing dependencies..."
             npm ci --omit=dev
             echo "Building Next.js..."
