@@ -243,12 +243,10 @@ export const emailTemplates = {
             <div class="login-info">
               <h3 style="margin-top: 0; color: #28a745;">Your Login Details</h3>
               <p><strong>Email:</strong> ${loginEmail}</p>
-              <p><strong>Password:</strong> Use your existing password</p>
-              <p style="margin-bottom: 0;"><em>If you've forgotten your password, you can reset it using the "Forgot Password" link on the login page.</em></p>
             </div>
             
             <div style="text-align: center;">
-              <a href="${process.env.NEXT_PUBLIC_APP_URL || 'https://cbpd-admin.com'}/login" class="cta-button">Login to Your Account</a>
+              <a href="${process.env.NEXT_PUBLIC_APP_URL || 'https://cbpd.co.uk'}/login" class="cta-button">Login to Your Account</a>
             </div>
             
             <div class="features-list">
@@ -287,7 +285,7 @@ export const emailTemplates = {
       Email: ${loginEmail}
       Password: Use your existing password
       
-      Login URL: ${process.env.NEXT_PUBLIC_APP_URL || 'https://cbpd-admin.com'}/login
+      Login URL: ${process.env.NEXT_PUBLIC_APP_URL || 'https:/cbpd.co.uk'}/login
       
       If you need assistance, contact our support team at support@cbpd.com or +1 (555) 123-4567.
       
