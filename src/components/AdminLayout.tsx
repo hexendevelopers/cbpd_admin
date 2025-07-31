@@ -422,7 +422,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
               }}
             >
               <Text style={{ color: "rgba(255,255,255,0.45)", fontSize: 11 }}>
-                Version 1.0.0
+                Version 1.0.1
               </Text>
             </div>
           )}
