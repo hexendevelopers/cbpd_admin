@@ -115,7 +115,7 @@ export async function PUT(
         updateData = { isTerminated: true, isApproved: false };
         message = `Institution ${action}d successfully`;
       } else if (action === "reactivate") {
-        updateData = { isTerminated: false, isApproved : true };
+        updateData = { isTerminated: false, isApproved: true };
         message = `Institution ${action}d successfully`;
         // Send approval email only if institution wasn't previously approved
         shouldSendApprovalEmail = !currentInstitution.isApproved;
@@ -149,15 +149,33 @@ export async function PUT(
     if (shouldSendApprovalEmail) {
       try {
         const contactName = `${institution.firstName} ${institution.lastName}`;
-        await EmailService.sendApprovalNotification(
-          institution.emailAddress,
+
+        console.log("Sending approval email to organization:", {
+          recipientEmail: institution.email,
+          institutionName: institution.orgName,
+          contactName,
+          loginEmail: institution.email,
+        });
+
+        const emailSent = await EmailService.sendApprovalNotification(
+          institution.email, // Send to organization email
           institution.orgName,
           contactName,
-          institution.email
+          institution.email // Use organization email as login email
         );
-        console.log('Approval notification email sent successfully');
+
+        if (emailSent) {
+          console.log("Approval notification email sent successfully");
+        } else {
+          console.error(
+            "Failed to send approval notification email - EmailService returned false"
+          );
+        }
       } catch (emailError) {
-        console.error('Failed to send approval notification email:', emailError);
+        console.error(
+          "Failed to send approval notification email:",
+          emailError
+        );
         // Don't fail the approval if email fails
       }
     }
