@@ -16,15 +16,21 @@ jobs:
           username: root
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
-            set -ex
-            cd /var/www/cbpd_admin
+            set -ex  # Enable debug mode (prints each command before running)
+            cd /var/www/cbpd_admin || { echo "Directory not found"; exit 1; }
+            echo "Current directory: $(pwd)"
+            echo "Current branch: $(git branch --show-current)"
             echo "Force syncing to GitHub main branch..."
             git fetch origin main
             git reset --hard origin/main
+            echo "Last commit after reset:"
+            git log -1 --oneline
+            echo "Cleaning old Next.js build..."
+            rm -rf .next
             echo "Installing dependencies..."
-            npm ci --omit=dev
+            npm ci --omit=dev || { echo "npm install failed"; exit 1; }
             echo "Building Next.js..."
-            npm run build
+            npm run build || { echo "Next.js build failed"; exit 1; }
             echo "Reloading PM2 without downtime..."
             pm2 reload cbpd_admin || pm2 start npm --name "cbpd_admin" -- start
             echo "Deployment complete!"
