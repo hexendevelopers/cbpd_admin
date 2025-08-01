@@ -48,7 +48,6 @@ const studentSchema = new mongoose.Schema(
     },
     county: {
       type: String,
-      required: [true, "County is required"],
       trim: true,
     },
 
