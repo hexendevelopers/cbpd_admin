@@ -1,7 +1,7 @@
 export const emailTemplates = {
   // Registration confirmation email
   registrationConfirmation: (institutionName: string, contactName: string) => ({
-    subject: "Registration Successful - CBPD Admin Portal",
+    subject: "Registration Successful - CBPD",
     html: `
       <!DOCTYPE html>
       <html lang="en">
@@ -80,8 +80,8 @@ export const emailTemplates = {
       <body>
         <div class="container">
           <div class="header">
-            <div class="logo">CBPD Admin Portal</div>
-            <div style="color: #666; font-size: 16px;">Capacity Building and Professional Development</div>
+            <div class="logo">CBPD</div>
+            <div style="color: #666; font-size: 16px;">Central Board Of Professional Development</div>
           </div>
           
           <h2 class="title">Registration Successful!</h2>
@@ -89,7 +89,7 @@ export const emailTemplates = {
           <div class="content">
             <p>Dear <strong>${contactName}</strong>,</p>
             
-            <p>Thank you for registering <strong>${institutionName}</strong> with the CBPD Admin Portal. We have successfully received your registration request.</p>
+            <p>Thank you for registering <strong>${institutionName}</strong> with the CBPD. We have successfully received your registration request.</p>
             
             <div class="highlight">
               <h3 style="margin-top: 0; color: #007bff;">Current Status</h3>
@@ -108,15 +108,12 @@ export const emailTemplates = {
             <div class="contact-info">
               <h4 style="margin-top: 0; color: #2c3e50;">Need Help?</h4>
               <p>If you have any questions or need assistance, please don't hesitate to contact our support team:</p>
-              <p>📧 Email: support@cbpd.com<br>
-              📞 Phone: +1 (555) 123-4567<br>
-              🕒 Business Hours: Monday - Friday, 9:00 AM - 5:00 PM</p>
+              <p>📧 Email: info@cbpd.co.uk<br>
             </div>
           </div>
           
           <div class="footer">
-            <p>This is an automated message from CBPD Admin Portal. Please do not reply to this email.</p>
-            <p>&copy; 2024 CBPD Admin Portal. All rights reserved.</p>
+            <p>This is an automated message from CBPD. Please do not reply to this email.</p>
           </div>
         </div>
       </body>
@@ -125,20 +122,24 @@ export const emailTemplates = {
     text: `
       Dear ${contactName},
       
-      Thank you for registering ${institutionName} with the CBPD Admin Portal.
+      Thank you for registering ${institutionName} with the CBPD.
       
       Your registration is currently pending approval. You will receive another email notification once your account has been approved.
       
-      If you have any questions, please contact our support team at support@cbpd.com or +1 (555) 123-4567.
+      If you have any questions, please contact our support team at info@cbpd.co.uk.
       
       Best regards,
-      CBPD Admin Portal Team
-    `
+      CBPD
+    `,
   }),
 
   // Approval notification email
-  approvalNotification: (institutionName: string, contactName: string, loginEmail: string) => ({
-    subject: "Account Approved - Welcome to CBPD Admin Portal",
+  approvalNotification: (
+    institutionName: string,
+    contactName: string,
+    loginEmail: string
+  ) => ({
+    subject: "Account Approved - Welcome to CBPD",
     html: `
       <!DOCTYPE html>
       <html lang="en">
@@ -227,8 +228,8 @@ export const emailTemplates = {
       <body>
         <div class="container">
           <div class="header">
-            <div class="logo">CBPD Admin Portal</div>
-            <div style="color: #666; font-size: 16px;">Capacity Building and Professional Development</div>
+            <div class="logo">CBPD</div>
+            <div style="color: #666; font-size: 16px;">Central Board Of Professional Development</div>
           </div>
           
           <h2 class="title">🎉 Congratulations! Your Account is Approved</h2>
@@ -236,7 +237,7 @@ export const emailTemplates = {
           <div class="content">
             <p>Dear <strong>${contactName}</strong>,</p>
             
-            <p>Great news! Your institution <strong>${institutionName}</strong> has been approved and is now active in the CBPD Admin Portal.</p>
+            <p>Great news! Your institution <strong>${institutionName}</strong> has been approved and is now active in the CBPD</p>
             
             <p><span class="success-badge">✓ Account Approved</span></p>
             
@@ -246,31 +247,19 @@ export const emailTemplates = {
             </div>
             
             <div style="text-align: center;">
-              <a href="${process.env.NEXT_PUBLIC_APP_URL || 'https://cbpd.co.uk'}/login" class="cta-button">Login to Your Account</a>
+              <a href="${
+                process.env.NEXT_PUBLIC_APP_URL || "https://cbpd.co.uk"
+              }/login" class="cta-button">Login to Your Account</a>
             </div>
             
-            <div class="features-list">
-              <h3 style="margin-top: 0; color: #2c3e50;">What you can do now:</h3>
-              <ul style="padding-left: 20px; margin-bottom: 0;">
-                <li>Manage student registrations and profiles</li>
-                <li>Access course materials and resources</li>
-                <li>Generate reports and analytics</li>
-                <li>Bulk upload student data</li>
-                <li>Export student information</li>
-                <li>Track student progress and achievements</li>
-              </ul>
-            </div>
             
             <h3 style="color: #2c3e50;">Need Help Getting Started?</h3>
-            <p>Our support team is here to help you make the most of the CBPD Admin Portal:</p>
-            <p>📧 Email: support@cbpd.com<br>
-            📞 Phone: +1 (555) 123-4567<br>
-            🕒 Business Hours: Monday - Friday, 9:00 AM - 5:00 PM</p>
+            <p>Our support team is here to help you make the most of the CBPD</p>
+            <p>📧 Email: info@cbpd.co.uk<br>
           </div>
           
           <div class="footer">
-            <p>Welcome to the CBPD community! We're excited to have you on board.</p>
-            <p>&copy; 2024 CBPD Admin Portal. All rights reserved.</p>
+            <p>Welcome to the CBPD! We're excited to have you on board.</p>
           </div>
         </div>
       </body>
@@ -279,24 +268,27 @@ export const emailTemplates = {
     text: `
       Dear ${contactName},
       
-      Congratulations! Your institution ${institutionName} has been approved for the CBPD Admin Portal.
+      Congratulations! Your institution ${institutionName} has been approved for the CBPD.
       
       Login Details:
       Email: ${loginEmail}
       Password: Use your existing password
       
-      Login URL: ${process.env.NEXT_PUBLIC_APP_URL || 'https:/cbpd.co.uk'}/login
+      Login URL: ${process.env.NEXT_PUBLIC_APP_URL || "https:/cbpd.co.uk"}/login
       
-      If you need assistance, contact our support team at support@cbpd.com or +1 (555) 123-4567.
+      If you need assistance, contact our support team at info@cbpd.com.
       
       Welcome to CBPD!
-      CBPD Admin Portal Team
-    `
+    `,
   }),
 
   // Password reset email
-  passwordReset: (institutionName: string, contactName: string, resetToken: string) => ({
-    subject: "Password Reset Request - CBPD Admin Portal",
+  passwordReset: (
+    institutionName: string,
+    contactName: string,
+    resetToken: string
+  ) => ({
+    subject: "Password Reset Request - CBPD",
     html: `
       <!DOCTYPE html>
       <html lang="en">
@@ -377,8 +369,8 @@ export const emailTemplates = {
       <body>
         <div class="container">
           <div class="header">
-            <div class="logo">CBPD Admin Portal</div>
-            <div style="color: #666; font-size: 16px;">Capacity Building and Professional Development</div>
+            <div class="logo">CBPD</div>
+            <div style="color: #666; font-size: 16px;">Central Board Of Professional Development</div>
           </div>
           
           <h2 class="title">🔐 Password Reset Request</h2>
@@ -386,7 +378,7 @@ export const emailTemplates = {
           <div class="content">
             <p>Dear <strong>${contactName}</strong>,</p>
             
-            <p>We received a request to reset the password for your CBPD Admin Portal account associated with <strong>${institutionName}</strong>.</p>
+            <p>We received a request to reset the password for your CBPD account associated with <strong>${institutionName}</strong>.</p>
             
             <div class="reset-info">
               <h3 style="margin-top: 0; color: #856404;">Reset Your Password</h3>
@@ -394,12 +386,16 @@ export const emailTemplates = {
             </div>
             
             <div style="text-align: center;">
-              <a href="${process.env.NEXT_PUBLIC_APP_URL || 'https://cbpd-admin.com'}/reset-password?token=${resetToken}" class="cta-button">Reset Password</a>
+              <a href="${
+                process.env.NEXT_PUBLIC_APP_URL || "https://cbpd-admin.com"
+              }/reset-password?token=${resetToken}" class="cta-button">Reset Password</a>
             </div>
             
             <p>If the button doesn't work, you can copy and paste this link into your browser:</p>
             <p style="word-break: break-all; background-color: #f8f9fa; padding: 10px; border-radius: 4px; font-family: monospace;">
-              ${process.env.NEXT_PUBLIC_APP_URL || 'https://cbpd-admin.com'}/reset-password?token=${resetToken}
+              ${
+                process.env.NEXT_PUBLIC_APP_URL || "https://cbpd-admin.com"
+              }/reset-password?token=${resetToken}
             </p>
             
             <div class="security-note">
@@ -413,13 +409,11 @@ export const emailTemplates = {
             </div>
             
             <p>If you continue to have problems or didn't request this reset, please contact our support team:</p>
-            <p>📧 Email: support@cbpd.com<br>
-            📞 Phone: +1 (555) 123-4567</p>
+            <p>📧 Email: info@cbpd.co.uk
           </div>
           
           <div class="footer">
             <p>This is an automated security message from CBPD Admin Portal.</p>
-            <p>&copy; 2024 CBPD Admin Portal. All rights reserved.</p>
           </div>
         </div>
       </body>
@@ -431,15 +425,17 @@ export const emailTemplates = {
       We received a request to reset the password for your CBPD Admin Portal account for ${institutionName}.
       
       Reset your password by clicking this link:
-      ${process.env.NEXT_PUBLIC_APP_URL || 'https://cbpd-admin.com'}/reset-password?token=${resetToken}
+      ${
+        process.env.NEXT_PUBLIC_APP_URL || "https://cbpd-admin.com"
+      }/reset-password?token=${resetToken}
       
       This link will expire in 1 hour for security reasons.
       
       If you didn't request this reset, please ignore this email.
       
-      For assistance, contact support@cbpd.com or +1 (555) 123-4567.
+      For assistance, contact info@cbpd.co.uk
       
-      CBPD Admin Portal Team
-    `
-  })
+      CBPD
+    `,
+  }),
 };
