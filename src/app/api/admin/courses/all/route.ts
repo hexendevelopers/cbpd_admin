@@ -1,11 +1,12 @@
 import connectToDB from "@/configs/mongodb";
 import Course from "@/models/courseModel";
 import { NextRequest, NextResponse } from "next/server";
+import "@/models/courseCategoryModel"
 
 export const GET = async (req: NextRequest) => {
   try {
     await connectToDB();
-    const response = await Course.find();
+    const response = await Course.find().populate("categoryId");
     if (response.length === 0) {
       return NextResponse.json(
         { message: "No courses found" },
