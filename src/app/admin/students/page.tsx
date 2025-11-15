@@ -30,6 +30,7 @@ import {
   notification,
   Dropdown,
   Menu,
+  Image,
 } from "antd";
 import {
   SearchOutlined,
@@ -64,21 +65,24 @@ interface Student {
   fullName: string;
   gender: string;
   phoneNumber: string;
-  dateOfBirth: string;
-  joiningDate: string;
+  dateOfBirth: string | null;
+  joiningDate: string | null;
   state: string;
   district: string;
-  county: string;
+  county?: string;
   currentCourse: string;
   department: string;
   semester: string;
   admissionNumber: string;
+  marksheets?: string[];
+  passportPhoto?: string;
   isActive: boolean;
   createdAt: string;
+  updatedAt?: string;
   institutionId: {
     _id: string;
     orgName: string;
-    email: string;
+    email?: string;
   };
 }
 
@@ -104,16 +108,32 @@ interface StudentStatistics {
     age: Array<{ _id: string; count: number; avgAge: number }>;
   };
   academic: {
-    departments: Array<{ _id: string; count: number; activeCount: number; maleCount: number; femaleCount: number }>;
+    departments: Array<{
+      _id: string;
+      count: number;
+      activeCount: number;
+      maleCount: number;
+      femaleCount: number;
+    }>;
     courses: Array<{ _id: string; count: number; departments: string[] }>;
     semesters: Array<{ _id: string; count: number; activeCount: number }>;
   };
   geographic: {
     states: Array<{ _id: string; count: number; districts: string[] }>;
   };
-  institutions: Array<{ _id: string; institutionName: string; count: number; activeCount: number; activePercentage: number }>;
+  institutions: Array<{
+    _id: string;
+    institutionName: string;
+    count: number;
+    activeCount: number;
+    activePercentage: number;
+  }>;
   trends: {
-    monthly: Array<{ _id: { year: number; month: number }; count: number; activeCount: number }>;
+    monthly: Array<{
+      _id: { year: number; month: number };
+      count: number;
+      activeCount: number;
+    }>;
     growthRate: number;
   };
 }
@@ -148,7 +168,8 @@ export default function StudentsManagement() {
 
   const router = useRouter();
   const [form] = Form.useForm();
-  const handleExport = async (format: 'csv' | 'excel') => {
+
+  const handleExport = async (format: "csv" | "excel") => {
     try {
       const queryParams = new URLSearchParams({
         format,
@@ -161,58 +182,64 @@ export default function StudentsManagement() {
         ...(filters.gender && { gender: filters.gender }),
       });
 
-      if (format === 'csv') {
-        const response = await fetch(`/api/admin/students/export?${queryParams}`);
+      if (format === "csv") {
+        const response = await fetch(
+          `/api/admin/students/export?${queryParams}`
+        );
         if (response.ok) {
           const blob = await response.blob();
           const url = window.URL.createObjectURL(blob);
-          const a = document.createElement('a');
+          const a = document.createElement("a");
           a.href = url;
-          a.download = `students_export_${new Date().toISOString().split('T')[0]}.csv`;
+          a.download = `students_export_${
+            new Date().toISOString().split("T")[0]
+          }.csv`;
           document.body.appendChild(a);
           a.click();
           window.URL.revokeObjectURL(url);
           document.body.removeChild(a);
-          
+
           notification.success({
-            message: 'Export Successful',
-            description: 'Students data exported to CSV successfully',
-            placement: 'topRight',
+            message: "Export Successful",
+            description: "Students data exported to CSV successfully",
+            placement: "topRight",
           });
         } else {
-          throw new Error('Export failed');
+          throw new Error("Export failed");
         }
       } else {
-        const response = await fetch(`/api/admin/students/export?${queryParams}`);
+        const response = await fetch(
+          `/api/admin/students/export?${queryParams}`
+        );
         if (response.ok) {
           const data = await response.json();
-          const { exportToExcel } = await import('@/utils/exportUtils');
+          const { exportToExcel } = await import("@/utils/exportUtils");
           exportToExcel(data.data, data.filename);
-          
+
           notification.success({
-            message: 'Export Successful',
-            description: 'Students data exported to Excel successfully',
-            placement: 'topRight',
+            message: "Export Successful",
+            description: "Students data exported to Excel successfully",
+            placement: "topRight",
           });
         } else {
-          throw new Error('Export failed');
+          throw new Error("Export failed");
         }
       }
     } catch (error) {
-      console.error('Export error:', error);
+      console.error("Export error:", error);
       notification.error({
-        message: 'Export Failed',
-        description: 'Failed to export students data. Please try again.',
-        placement: 'topRight',
+        message: "Export Failed",
+        description: "Failed to export students data. Please try again.",
+        placement: "topRight",
       });
     }
   };
-
 
   useEffect(() => {
     fetchStudents();
     fetchStatistics();
     fetchInstitutions();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters]);
 
   const fetchInstitutions = async () => {
@@ -246,16 +273,23 @@ export default function StudentsManagement() {
       if (response.ok) {
         const data = await response.json();
         setStudents(data.students);
-        setPagination(data.pagination);
+        if (data.pagination) {
+          setPagination(data.pagination);
+        } else {
+          setPagination((prev) => ({
+            ...prev,
+            total: data.total || data.students.length || 0,
+          }));
+        }
       } else if (response.status === 403) {
         router.push("/admin/login");
       }
     } catch (error) {
       console.error("Error fetching students:", error);
       notification.error({
-        message: 'Error',
-        description: 'Failed to fetch students',
-        placement: 'topRight',
+        message: "Error",
+        description: "Failed to fetch students",
+        placement: "topRight",
       });
     } finally {
       setLoading(false);
@@ -277,9 +311,9 @@ export default function StudentsManagement() {
   const handleBulkAction = async (action: string) => {
     if (selectedStudents.length === 0) {
       notification.warning({
-        message: 'No Selection',
-        description: 'Please select students first',
-        placement: 'topRight',
+        message: "No Selection",
+        description: "Please select students first",
+        placement: "topRight",
       });
       return;
     }
@@ -299,9 +333,9 @@ export default function StudentsManagement() {
       if (response.ok) {
         const data = await response.json();
         notification.success({
-          message: 'Success',
+          message: "Success",
           description: data.message,
-          placement: 'topRight',
+          placement: "topRight",
         });
         fetchStudents();
         fetchStatistics();
@@ -309,16 +343,16 @@ export default function StudentsManagement() {
       } else {
         const data = await response.json();
         notification.error({
-          message: 'Error',
-          description: data.error || 'Action failed',
-          placement: 'topRight',
+          message: "Error",
+          description: data.error || "Action failed",
+          placement: "topRight",
         });
       }
     } catch (error) {
       notification.error({
-        message: 'Network Error',
-        description: 'Please try again',
-        placement: 'topRight',
+        message: "Network Error",
+        description: "Please try again",
+        placement: "topRight",
       });
     }
   };
@@ -330,33 +364,36 @@ export default function StudentsManagement() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: action !== "delete" ? JSON.stringify({
-          isActive: action === "activate"
-        }) : undefined,
+        body:
+          action !== "delete"
+            ? JSON.stringify({
+                isActive: action === "activate",
+              })
+            : undefined,
       });
 
       if (response.ok) {
         const data = await response.json();
         notification.success({
-          message: 'Success',
+          message: "Success",
           description: data.message,
-          placement: 'topRight',
+          placement: "topRight",
         });
         fetchStudents();
         fetchStatistics();
       } else {
         const data = await response.json();
         notification.error({
-          message: 'Error',
-          description: data.error || 'Action failed',
-          placement: 'topRight',
+          message: "Error",
+          description: data.error || "Action failed",
+          placement: "topRight",
         });
       }
     } catch (error) {
       notification.error({
-        message: 'Network Error',
-        description: 'Please try again',
-        placement: 'topRight',
+        message: "Network Error",
+        description: "Please try again",
+        placement: "topRight",
       });
     }
   };
@@ -365,14 +402,18 @@ export default function StudentsManagement() {
     try {
       const formattedValues = {
         ...values,
-        dateOfBirth: values.dateOfBirth ? dayjs(values.dateOfBirth).toISOString() : null,
-        joiningDate: values.joiningDate ? dayjs(values.joiningDate).toISOString() : null,
+        dateOfBirth: values.dateOfBirth
+          ? dayjs(values.dateOfBirth).toISOString()
+          : null,
+        joiningDate: values.joiningDate
+          ? dayjs(values.joiningDate).toISOString()
+          : null,
       };
 
-      const url = isEditMode 
+      const url = isEditMode
         ? `/api/admin/students/${selectedStudent?._id}`
         : "/api/admin/students";
-      
+
       const method = isEditMode ? "PUT" : "POST";
 
       const response = await fetch(url, {
@@ -386,9 +427,9 @@ export default function StudentsManagement() {
       if (response.ok) {
         const data = await response.json();
         notification.success({
-          message: 'Success',
+          message: "Success",
           description: data.message,
-          placement: 'topRight',
+          placement: "topRight",
         });
         setIsModalVisible(false);
         setSelectedStudent(null);
@@ -398,24 +439,24 @@ export default function StudentsManagement() {
       } else {
         const data = await response.json();
         notification.error({
-          message: 'Error',
-          description: data.error || 'Operation failed',
-          placement: 'topRight',
+          message: "Error",
+          description: data.error || "Operation failed",
+          placement: "topRight",
         });
       }
     } catch (error) {
       notification.error({
-        message: 'Network Error',
-        description: 'Please try again',
-        placement: 'topRight',
+        message: "Network Error",
+        description: "Please try again",
+        placement: "topRight",
       });
     }
   };
 
   const getActionMenu = (record: Student) => (
     <Menu>
-      <Menu.Item 
-        key="view" 
+      <Menu.Item
+        key="view"
         icon={<EyeOutlined />}
         onClick={() => {
           setSelectedStudent(record);
@@ -424,8 +465,8 @@ export default function StudentsManagement() {
       >
         View Details
       </Menu.Item>
-      <Menu.Item 
-        key="edit" 
+      <Menu.Item
+        key="edit"
         icon={<EditOutlined />}
         onClick={() => {
           setSelectedStudent(record);
@@ -441,25 +482,31 @@ export default function StudentsManagement() {
       >
         Edit Student
       </Menu.Item>
-      <Menu.Item 
-        key="toggle" 
+      <Menu.Item
+        key="toggle"
         icon={record.isActive ? <StopOutlined /> : <CheckCircleOutlined />}
-        onClick={() => handleStudentAction(record._id, record.isActive ? "deactivate" : "activate")}
+        onClick={() =>
+          handleStudentAction(
+            record._id,
+            record.isActive ? "deactivate" : "activate"
+          )
+        }
       >
         {record.isActive ? "Deactivate" : "Activate"}
       </Menu.Item>
       <Menu.Divider />
-      <Menu.Item 
-        key="delete" 
+      <Menu.Item
+        key="delete"
         icon={<DeleteOutlined />}
         danger
         onClick={() => {
           Modal.confirm({
-            title: 'Delete Student',
-            content: 'Are you sure you want to delete this student? This action cannot be undone.',
-            okText: 'Delete',
-            okType: 'danger',
-            cancelText: 'Cancel',
+            title: "Delete Student",
+            content:
+              "Are you sure you want to delete this student? This action cannot be undone.",
+            okText: "Delete",
+            okType: "danger",
+            cancelText: "Cancel",
             onOk: () => handleStudentAction(record._id, "delete"),
           });
         }}
@@ -475,9 +522,10 @@ export default function StudentsManagement() {
       key: "student",
       render: (record: Student) => (
         <Space>
-          <Avatar 
-            icon={<UserOutlined />} 
-            style={{ background: "#1890ff" }} 
+          <Avatar
+            src={record.passportPhoto}
+            icon={!record.passportPhoto ? <UserOutlined /> : undefined}
+            style={{ background: record.passportPhoto ? undefined : "#1890ff" }}
           />
           <div>
             <div style={{ fontWeight: 600 }}>{record.fullName}</div>
@@ -493,9 +541,7 @@ export default function StudentsManagement() {
       dataIndex: ["institutionId", "orgName"],
       key: "institution",
       ellipsis: true,
-      render: (text: string) => (
-        <Text style={{ fontWeight: 500 }}>{text}</Text>
-      ),
+      render: (text: string) => <Text style={{ fontWeight: 500 }}>{text}</Text>,
     },
     {
       title: "Course Details",
@@ -537,7 +583,7 @@ export default function StudentsManagement() {
       title: "Status",
       key: "status",
       render: (record: Student) => (
-        <Tag 
+        <Tag
           color={record.isActive ? "success" : "error"}
           style={{ borderRadius: 6, fontWeight: 500 }}
         >
@@ -549,9 +595,9 @@ export default function StudentsManagement() {
       title: "Actions",
       key: "actions",
       render: (record: Student) => (
-        <Dropdown overlay={getActionMenu(record)} trigger={['click']}>
-          <Button 
-            type="text" 
+        <Dropdown overlay={getActionMenu(record)} trigger={["click"]}>
+          <Button
+            type="text"
             icon={<MoreOutlined />}
             style={{ borderRadius: 6 }}
           />
@@ -570,13 +616,15 @@ export default function StudentsManagement() {
   if (loading && !students.length) {
     return (
       <AdminLayout>
-        <div style={{ 
-          display: "flex", 
-          justifyContent: "center", 
-          alignItems: "center",
-          height: "60vh",
-          flexDirection: "column"
-        }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "60vh",
+            flexDirection: "column",
+          }}
+        >
           <Spin size="large" />
           <Text style={{ marginTop: 16, fontSize: 16, color: "#666" }}>
             Loading Students...
@@ -591,7 +639,14 @@ export default function StudentsManagement() {
       <div style={{ padding: "24px" }}>
         {/* Header Section */}
         <div style={{ marginBottom: 24 }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginBottom: 16,
+            }}
+          >
             <div>
               <Title level={2} style={{ margin: 0, fontWeight: 600 }}>
                 Students Management
@@ -601,8 +656,8 @@ export default function StudentsManagement() {
               </Text>
             </div>
             <Space>
-              <Button 
-                icon={<ReloadOutlined />} 
+              <Button
+                icon={<ReloadOutlined />}
                 onClick={fetchStudents}
                 style={{ borderRadius: 6 }}
               >
@@ -611,26 +666,26 @@ export default function StudentsManagement() {
               <Dropdown
                 overlay={
                   <Menu>
-                    <Menu.Item key="csv" onClick={() => handleExport('csv')}>
+                    <Menu.Item key="csv" onClick={() => handleExport("csv")}>
                       Export as CSV
                     </Menu.Item>
-                    <Menu.Item key="excel" onClick={() => handleExport('excel')}>
+                    <Menu.Item
+                      key="excel"
+                      onClick={() => handleExport("excel")}
+                    >
                       Export as Excel
                     </Menu.Item>
                   </Menu>
                 }
-                trigger={['click']}
+                trigger={["click"]}
               >
-                <Button 
-                  icon={<DownloadOutlined />}
-                  style={{ borderRadius: 6 }}
-                >
+                <Button icon={<DownloadOutlined />} style={{ borderRadius: 6 }}>
                   Export
                 </Button>
               </Dropdown>
 
-              <Button 
-                type="primary" 
+              <Button
+                type="primary"
                 icon={<PlusOutlined />}
                 onClick={() => {
                   setIsEditMode(false);
@@ -651,19 +706,31 @@ export default function StudentsManagement() {
             <Col xs={24} sm={6}>
               <Card style={{ borderRadius: 8, border: "1px solid #f0f0f0" }}>
                 <Space direction="vertical" size={12} style={{ width: "100%" }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                    }}
+                  >
                     <TeamOutlined style={{ fontSize: 24, color: "#495057" }} />
                     <Badge status="processing" text="Live" />
                   </div>
                   <Statistic
                     title="Total Students"
                     value={statistics.overview.total}
-                    valueStyle={{ fontWeight: 600, fontSize: 24, color: "#2c3e50" }}
+                    valueStyle={{
+                      fontWeight: 600,
+                      fontSize: 24,
+                      color: "#2c3e50",
+                    }}
                   />
-                  <Progress 
-                    percent={statistics.overview.activePercentage} 
+                  <Progress
+                    percent={statistics.overview.activePercentage}
                     size="small"
-                    format={() => `${statistics.overview.activePercentage}% active`}
+                    format={() =>
+                      `${statistics.overview.activePercentage}% active`
+                    }
                     strokeColor="#495057"
                   />
                 </Space>
@@ -672,14 +739,26 @@ export default function StudentsManagement() {
             <Col xs={24} sm={6}>
               <Card style={{ borderRadius: 8, border: "1px solid #f0f0f0" }}>
                 <Space direction="vertical" size={12} style={{ width: "100%" }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <CheckCircleOutlined style={{ fontSize: 24, color: "#28a745" }} />
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                    }}
+                  >
+                    <CheckCircleOutlined
+                      style={{ fontSize: 24, color: "#28a745" }}
+                    />
                     <Badge status="success" text="Active" />
                   </div>
                   <Statistic
                     title="Active Students"
                     value={statistics.overview.active}
-                    valueStyle={{ fontWeight: 600, fontSize: 24, color: "#28a745" }}
+                    valueStyle={{
+                      fontWeight: 600,
+                      fontSize: 24,
+                      color: "#28a745",
+                    }}
                   />
                 </Space>
               </Card>
@@ -687,14 +766,24 @@ export default function StudentsManagement() {
             <Col xs={24} sm={6}>
               <Card style={{ borderRadius: 8, border: "1px solid #f0f0f0" }}>
                 <Space direction="vertical" size={12} style={{ width: "100%" }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                    }}
+                  >
                     <BankOutlined style={{ fontSize: 24, color: "#6c757d" }} />
                     <Text type="secondary">Total</Text>
                   </div>
                   <Statistic
                     title="Departments"
                     value={statistics.overview.departmentCount}
-                    valueStyle={{ fontWeight: 600, fontSize: 24, color: "#2c3e50" }}
+                    valueStyle={{
+                      fontWeight: 600,
+                      fontSize: 24,
+                      color: "#2c3e50",
+                    }}
                   />
                 </Space>
               </Card>
@@ -702,14 +791,24 @@ export default function StudentsManagement() {
             <Col xs={24} sm={6}>
               <Card style={{ borderRadius: 8, border: "1px solid #f0f0f0" }}>
                 <Space direction="vertical" size={12} style={{ width: "100%" }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                    }}
+                  >
                     <UserOutlined style={{ fontSize: 24, color: "#6c757d" }} />
                     <Text type="secondary">Years</Text>
                   </div>
                   <Statistic
                     title="Average Age"
                     value={statistics.overview.avgAge}
-                    valueStyle={{ fontWeight: 600, fontSize: 24, color: "#2c3e50" }}
+                    valueStyle={{
+                      fontWeight: 600,
+                      fontSize: 24,
+                      color: "#2c3e50",
+                    }}
                     suffix="years"
                   />
                 </Space>
@@ -719,7 +818,7 @@ export default function StudentsManagement() {
         )}
 
         {/* Filters Section */}
-        <Card 
+        <Card
           title={
             <Space>
               <FilterOutlined />
@@ -737,7 +836,9 @@ export default function StudentsManagement() {
                 placeholder="Search by name, admission number..."
                 prefix={<SearchOutlined style={{ color: "#bfbfbf" }} />}
                 value={filters.search}
-                onChange={(e) => setFilters({ ...filters, search: e.target.value, page: 1 })}
+                onChange={(e) =>
+                  setFilters({ ...filters, search: e.target.value, page: 1 })
+                }
                 allowClear
                 style={{ borderRadius: 6 }}
               />
@@ -750,11 +851,15 @@ export default function StudentsManagement() {
                 placeholder="Select institution"
                 style={{ width: "100%" }}
                 value={filters.institution}
-                onChange={(value) => setFilters({ ...filters, institution: value, page: 1 })}
+                onChange={(value) =>
+                  setFilters({ ...filters, institution: value, page: 1 })
+                }
                 allowClear
                 showSearch
                 filterOption={(input, option) =>
-                  (option?.children as unknown as string)?.toLowerCase().includes(input.toLowerCase())
+                  (option?.children as unknown as string)
+                    ?.toLowerCase()
+                    .includes(input.toLowerCase())
                 }
               >
                 {institutions.map((inst) => (
@@ -772,11 +877,15 @@ export default function StudentsManagement() {
                 placeholder="Select status"
                 style={{ width: "100%" }}
                 value={filters.status}
-                onChange={(value) => setFilters({ ...filters, status: value, page: 1 })}
+                onChange={(value) =>
+                  setFilters({ ...filters, status: value, page: 1 })
+                }
                 allowClear
               >
                 <Option value="active">
-                  <CheckCircleOutlined style={{ color: "#52c41a", marginRight: 8 }} />
+                  <CheckCircleOutlined
+                    style={{ color: "#52c41a", marginRight: 8 }}
+                  />
                   Active
                 </Option>
                 <Option value="inactive">
@@ -793,7 +902,9 @@ export default function StudentsManagement() {
                 placeholder="Select gender"
                 style={{ width: "100%" }}
                 value={filters.gender}
-                onChange={(value) => setFilters({ ...filters, gender: value, page: 1 })}
+                onChange={(value) =>
+                  setFilters({ ...filters, gender: value, page: 1 })
+                }
                 allowClear
               >
                 <Option value="Male">Male</Option>
@@ -808,7 +919,13 @@ export default function StudentsManagement() {
               <Input
                 placeholder="Enter department"
                 value={filters.department}
-                onChange={(e) => setFilters({ ...filters, department: e.target.value, page: 1 })}
+                onChange={(e) =>
+                  setFilters({
+                    ...filters,
+                    department: e.target.value,
+                    page: 1,
+                  })
+                }
                 allowClear
                 style={{ borderRadius: 6 }}
               />
@@ -820,7 +937,9 @@ export default function StudentsManagement() {
               <Input
                 placeholder="Enter course"
                 value={filters.course}
-                onChange={(e) => setFilters({ ...filters, course: e.target.value, page: 1 })}
+                onChange={(e) =>
+                  setFilters({ ...filters, course: e.target.value, page: 1 })
+                }
                 allowClear
                 style={{ borderRadius: 6 }}
               />
@@ -830,8 +949,8 @@ export default function StudentsManagement() {
 
         {/* Bulk Actions */}
         {selectedStudents.length > 0 && (
-          <Card 
-            style={{ 
+          <Card
+            style={{
               marginBottom: 24,
               borderRadius: 8,
               border: "2px solid #1890ff",
@@ -840,9 +959,10 @@ export default function StudentsManagement() {
           >
             <Space>
               <Text strong style={{ color: "#1890ff" }}>
-                {selectedStudents.length} student{selectedStudents.length > 1 ? 's' : ''} selected
+                {selectedStudents.length} student
+                {selectedStudents.length > 1 ? "s" : ""} selected
               </Text>
-              <Button 
+              <Button
                 type="primary"
                 size="small"
                 onClick={() => handleBulkAction("activate")}
@@ -850,14 +970,14 @@ export default function StudentsManagement() {
               >
                 Activate
               </Button>
-              <Button 
+              <Button
                 size="small"
                 onClick={() => handleBulkAction("deactivate")}
                 style={{ borderRadius: 6 }}
               >
                 Deactivate
               </Button>
-              <Button 
+              <Button
                 icon={<DownloadOutlined />}
                 size="small"
                 style={{ borderRadius: 6 }}
@@ -874,7 +994,10 @@ export default function StudentsManagement() {
             <Space>
               <TeamOutlined />
               <span>Students List</span>
-              <Badge count={pagination.total} style={{ backgroundColor: "#1890ff" }} />
+              <Badge
+                count={pagination.total}
+                style={{ backgroundColor: "#1890ff" }}
+              />
             </Space>
           }
           style={{ borderRadius: 8, marginBottom: 24 }}
@@ -891,7 +1014,7 @@ export default function StudentsManagement() {
               total: pagination.total,
               showSizeChanger: true,
               showQuickJumper: true,
-              showTotal: (total, range) => 
+              showTotal: (total, range) =>
                 `${range[0]}-${range[1]} of ${total} students`,
               onChange: (page, pageSize) => {
                 setFilters({ ...filters, page, limit: pageSize || 10 });
@@ -903,7 +1026,7 @@ export default function StudentsManagement() {
 
         {/* Analytics Dashboard */}
         {statistics && (
-          <Card 
+          <Card
             title={
               <Space>
                 <BarChartOutlined style={{ color: "#1890ff" }} />
@@ -913,30 +1036,41 @@ export default function StudentsManagement() {
             style={{ borderRadius: 8 }}
           >
             <Tabs defaultActiveKey="demographics">
-              <TabPane 
+              <TabPane
                 tab={
                   <span>
                     <UserOutlined />
                     Demographics
                   </span>
-                } 
+                }
                 key="demographics"
               >
                 <Row gutter={[24, 24]}>
                   <Col xs={24} md={12}>
-                    <Card 
-                      title="Gender Distribution" 
+                    <Card
+                      title="Gender Distribution"
                       size="small"
                       style={{ borderRadius: 8 }}
                     >
                       {statistics.demographics.gender.map((item) => (
                         <div key={item._id} style={{ marginBottom: 16 }}>
-                          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                              marginBottom: 8,
+                            }}
+                          >
                             <span style={{ fontWeight: 600 }}>{item._id}</span>
-                            <Badge count={item.count} style={{ backgroundColor: "#52c41a" }} />
+                            <Badge
+                              count={item.count}
+                              style={{ backgroundColor: "#52c41a" }}
+                            />
                           </div>
-                          <Progress 
-                            percent={Math.round((item.count / statistics.overview.total) * 100)} 
+                          <Progress
+                            percent={Math.round(
+                              (item.count / statistics.overview.total) * 100
+                            )}
                             size="small"
                             strokeColor="#52c41a"
                             showInfo={false}
@@ -946,19 +1080,30 @@ export default function StudentsManagement() {
                     </Card>
                   </Col>
                   <Col xs={24} md={12}>
-                    <Card 
-                      title="Age Distribution" 
+                    <Card
+                      title="Age Distribution"
                       size="small"
                       style={{ borderRadius: 8 }}
                     >
                       {statistics.demographics.age.map((item) => (
                         <div key={item._id} style={{ marginBottom: 16 }}>
-                          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                              marginBottom: 8,
+                            }}
+                          >
                             <span style={{ fontWeight: 600 }}>{item._id}</span>
-                            <Badge count={item.count} style={{ backgroundColor: "#1890ff" }} />
+                            <Badge
+                              count={item.count}
+                              style={{ backgroundColor: "#1890ff" }}
+                            />
                           </div>
-                          <Progress 
-                            percent={Math.round((item.count / statistics.overview.total) * 100)} 
+                          <Progress
+                            percent={Math.round(
+                              (item.count / statistics.overview.total) * 100
+                            )}
                             size="small"
                             strokeColor="#1890ff"
                             showInfo={false}
@@ -969,58 +1114,89 @@ export default function StudentsManagement() {
                   </Col>
                 </Row>
               </TabPane>
-              
-              <TabPane 
+
+              <TabPane
                 tab={
                   <span>
                     <TrophyOutlined />
                     Academic
                   </span>
-                } 
+                }
                 key="academic"
               >
                 <Row gutter={[24, 24]}>
                   <Col xs={24} lg={8}>
-                    <Card 
-                      title="Top Departments" 
+                    <Card
+                      title="Top Departments"
                       size="small"
                       style={{ borderRadius: 8 }}
                     >
-                      {statistics.academic.departments.slice(0, 5).map((dept) => (
-                        <div key={dept._id} style={{ marginBottom: 16 }}>
-                          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
-                            <Text strong>{dept._id}</Text>
-                            <Badge count={dept.count} />
+                      {statistics.academic.departments
+                        .slice(0, 5)
+                        .map((dept) => (
+                          <div key={dept._id} style={{ marginBottom: 16 }}>
+                            <div
+                              style={{
+                                display: "flex",
+                                justifyContent: "space-between",
+                                marginBottom: 8,
+                              }}
+                            >
+                              <Text strong>{dept._id}</Text>
+                              <Badge count={dept.count} />
+                            </div>
+                            <div
+                              style={{
+                                fontSize: 12,
+                                color: "#666",
+                                marginBottom: 8,
+                              }}
+                            >
+                              Active: {dept.activeCount} | Male:{" "}
+                              {dept.maleCount} | Female: {dept.femaleCount}
+                            </div>
+                            <Progress
+                              percent={Math.round(
+                                (dept.count / statistics.overview.total) * 100
+                              )}
+                              size="small"
+                              showInfo={false}
+                            />
                           </div>
-                          <div style={{ fontSize: 12, color: "#666", marginBottom: 8 }}>
-                            Active: {dept.activeCount} | Male: {dept.maleCount} | Female: {dept.femaleCount}
-                          </div>
-                          <Progress 
-                            percent={Math.round((dept.count / statistics.overview.total) * 100)} 
-                            size="small"
-                            showInfo={false}
-                          />
-                        </div>
-                      ))}
+                        ))}
                     </Card>
                   </Col>
                   <Col xs={24} lg={8}>
-                    <Card 
-                      title="Top Courses" 
+                    <Card
+                      title="Top Courses"
                       size="small"
                       style={{ borderRadius: 8 }}
                     >
                       {statistics.academic.courses.slice(0, 5).map((course) => (
                         <div key={course._id} style={{ marginBottom: 16 }}>
-                          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                              marginBottom: 8,
+                            }}
+                          >
                             <Text strong>{course._id}</Text>
                             <Badge count={course.count} />
                           </div>
-                          <div style={{ fontSize: 12, color: "#666", marginBottom: 8 }}>
+                          <div
+                            style={{
+                              fontSize: 12,
+                              color: "#666",
+                              marginBottom: 8,
+                            }}
+                          >
                             Departments: {course.departments.length}
                           </div>
-                          <Progress 
-                            percent={Math.round((course.count / statistics.overview.total) * 100)} 
+                          <Progress
+                            percent={Math.round(
+                              (course.count / statistics.overview.total) * 100
+                            )}
                             size="small"
                             showInfo={false}
                           />
@@ -1029,22 +1205,32 @@ export default function StudentsManagement() {
                     </Card>
                   </Col>
                   <Col xs={24} lg={8}>
-                    <Card 
-                      title="Semester Distribution" 
+                    <Card
+                      title="Semester Distribution"
                       size="small"
                       style={{ borderRadius: 8 }}
                     >
                       {statistics.academic.semesters.map((sem) => (
                         <div key={sem._id} style={{ marginBottom: 16 }}>
-                          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
-                            <span style={{ fontWeight: 600 }}>Semester {sem._id}</span>
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                              marginBottom: 8,
+                            }}
+                          >
+                            <span style={{ fontWeight: 600 }}>
+                              Semester {sem._id}
+                            </span>
                             <Badge count={sem.count} />
                           </div>
                           <Text type="secondary" style={{ fontSize: 12 }}>
                             Active: {sem.activeCount}
                           </Text>
-                          <Progress 
-                            percent={Math.round((sem.count / statistics.overview.total) * 100)} 
+                          <Progress
+                            percent={Math.round(
+                              (sem.count / statistics.overview.total) * 100
+                            )}
                             size="small"
                             showInfo={false}
                             style={{ marginTop: 8 }}
@@ -1056,34 +1242,42 @@ export default function StudentsManagement() {
                 </Row>
               </TabPane>
 
-              <TabPane 
+              <TabPane
                 tab={
                   <span>
                     <BankOutlined />
                     Institutions
                   </span>
-                } 
+                }
                 key="institutions"
               >
-                <Card 
-                  title="Students by Institution" 
+                <Card
+                  title="Students by Institution"
                   size="small"
                   style={{ borderRadius: 8 }}
                 >
                   {statistics.institutions.slice(0, 10).map((inst) => (
                     <div key={inst._id} style={{ marginBottom: 16 }}>
-                      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          marginBottom: 8,
+                        }}
+                      >
                         <Text strong>{inst.institutionName}</Text>
                         <Badge count={inst.count} />
                       </div>
-                      <Progress 
-                        percent={inst.activePercentage} 
+                      <Progress
+                        percent={inst.activePercentage}
                         size="small"
-                        format={() => `${inst.activeCount}/${inst.count} active`}
+                        format={() =>
+                          `${inst.activeCount}/${inst.count} active`
+                        }
                         strokeColor={{
-                          '0%': '#ff4d4f',
-                          '50%': '#faad14',
-                          '100%': '#52c41a',
+                          "0%": "#ff4d4f",
+                          "50%": "#faad14",
+                          "100%": "#52c41a",
                         }}
                       />
                     </div>
@@ -1111,26 +1305,31 @@ export default function StudentsManagement() {
         {selectedStudent && (
           <div>
             {/* Student Header */}
-            <div style={{ 
-              textAlign: "center", 
-              marginBottom: 24,
-              padding: 24,
-              background: "linear-gradient(135deg, #1890ff 0%, #722ed1 100%)",
-              borderRadius: 8,
-              color: "white"
-            }}>
-              <Avatar 
-                size={64} 
-                icon={<UserOutlined />} 
-                style={{ 
-                  background: "rgba(255,255,255,0.2)",
-                  marginBottom: 16
-                }} 
+            <div
+              style={{
+                textAlign: "center",
+                marginBottom: 24,
+                padding: 24,
+                background: "linear-gradient(135deg, #1890ff 0%, #722ed1 100%)",
+                borderRadius: 8,
+                color: "white",
+              }}
+            >
+              <Avatar
+                size={64}
+                icon={<UserOutlined />}
+                src={selectedStudent.passportPhoto}
+                style={{
+                  background: selectedStudent.passportPhoto
+                    ? "rgba(255,255,255,0.08)"
+                    : "rgba(255,255,255,0.2)",
+                  marginBottom: 16,
+                }}
               />
               <Title level={4} style={{ color: "white", marginBottom: 8 }}>
                 {selectedStudent.fullName}
               </Title>
-              <Tag 
+              <Tag
                 color={selectedStudent.isActive ? "success" : "error"}
                 style={{ borderRadius: 6, fontWeight: 500 }}
               >
@@ -1139,14 +1338,16 @@ export default function StudentsManagement() {
             </div>
 
             {/* Student Details */}
-            <Card 
-              title="Personal Information" 
+            <Card
+              title="Personal Information"
               style={{ marginBottom: 16, borderRadius: 8 }}
               size="small"
             >
               <Descriptions column={1} bordered size="small">
                 <Descriptions.Item label="Admission Number">
-                  <Text strong copyable>{selectedStudent.admissionNumber}</Text>
+                  <Text strong copyable>
+                    {selectedStudent.admissionNumber}
+                  </Text>
                 </Descriptions.Item>
                 <Descriptions.Item label="Institution">
                   <Text strong>{selectedStudent.institutionId.orgName}</Text>
@@ -1167,31 +1368,146 @@ export default function StudentsManagement() {
                   <Text copyable>{selectedStudent.phoneNumber}</Text>
                 </Descriptions.Item>
                 <Descriptions.Item label="Date of Birth">
-                  {new Date(selectedStudent.dateOfBirth).toLocaleDateString()}
+                  {selectedStudent.dateOfBirth
+                    ? new Date(selectedStudent.dateOfBirth).toLocaleDateString()
+                    : "-"}
                 </Descriptions.Item>
                 <Descriptions.Item label="Joining Date">
-                  {new Date(selectedStudent.joiningDate).toLocaleDateString()}
+                  {selectedStudent.joiningDate
+                    ? new Date(selectedStudent.joiningDate).toLocaleDateString()
+                    : "-"}
                 </Descriptions.Item>
                 <Descriptions.Item label="Location">
-                  {selectedStudent.state}, {selectedStudent.district}, {selectedStudent.county}
+                  {selectedStudent.state}
+                  {selectedStudent.district
+                    ? `, ${selectedStudent.district}`
+                    : ""}
+                  {selectedStudent.county ? `, ${selectedStudent.county}` : ""}
                 </Descriptions.Item>
                 <Descriptions.Item label="Registered">
-                  {new Date(selectedStudent.createdAt).toLocaleDateString()}
+                  {selectedStudent.createdAt
+                    ? new Date(selectedStudent.createdAt).toLocaleDateString()
+                    : "-"}
                 </Descriptions.Item>
               </Descriptions>
             </Card>
 
+            {/* Documents Card: passportPhoto + marksheets (responsive) */}
+            <Card
+              title="Documents"
+              style={{ marginBottom: 16, borderRadius: 8 }}
+              size="small"
+            >
+              <Space direction="vertical" style={{ width: "100%" }}>
+                <div>
+                  <Text strong>Passport Photo</Text>
+                  <div style={{ marginTop: 8 }}>
+                    {selectedStudent.passportPhoto ? (
+                      <Image
+                        src={selectedStudent.passportPhoto}
+                        alt={`${selectedStudent.fullName} - passport`}
+                        width={140}
+                        style={{ borderRadius: 8, objectFit: "cover" }}
+                        placeholder={
+                          <div
+                            style={{
+                              width: 140,
+                              height: 120,
+                              background: "#fafafa",
+                            }}
+                          />
+                        }
+                      />
+                    ) : (
+                      <div
+                        style={{
+                          width: 140,
+                          height: 120,
+                          borderRadius: 8,
+                          background: "#f0f0f0",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          color: "#888",
+                        }}
+                      >
+                        No photo
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                <div>
+                  <Text strong>
+                    Marksheets ({selectedStudent.marksheets?.length || 0})
+                  </Text>
+
+                  <div style={{ marginTop: 12 }}>
+                    {selectedStudent.marksheets &&
+                    selectedStudent.marksheets.length > 0 ? (
+                      <Image.PreviewGroup>
+                        <Row gutter={[12, 12]}>
+                          {selectedStudent.marksheets.map((url, idx) => (
+                            <Col key={idx} xs={24} sm={12} md={8} lg={6}>
+                              <div
+                                style={{
+                                  borderRadius: 8,
+                                  overflow: "hidden",
+                                  border: "1px solid #f0f0f0",
+                                  padding: 8,
+                                  background: "#fff",
+                                }}
+                              >
+                                <Image
+                                  src={url}
+                                  alt={`marksheet-${idx + 1}`}
+                                  width={"100%"}
+                                  style={{
+                                    maxHeight: 160,
+                                    objectFit: "contain",
+                                  }}
+                                  placeholder={
+                                    <div
+                                      style={{
+                                        height: 120,
+                                        background: "#fafafa",
+                                      }}
+                                    />
+                                  }
+                                />
+                              </div>
+                            </Col>
+                          ))}
+                        </Row>
+                      </Image.PreviewGroup>
+                    ) : (
+                      <Text
+                        type="secondary"
+                        style={{ display: "block", marginTop: 8 }}
+                      >
+                        No marksheets uploaded.
+                      </Text>
+                    )}
+                  </div>
+                </div>
+              </Space>
+            </Card>
+
             {/* Action Buttons */}
             <Space style={{ width: "100%", justifyContent: "center" }}>
-              <Button 
+              <Button
                 type="primary"
                 icon={<EditOutlined />}
                 onClick={() => {
                   setIsEditMode(true);
                   form.setFieldsValue({
                     ...selectedStudent,
-                    dateOfBirth: selectedStudent.dateOfBirth ? dayjs(selectedStudent.dateOfBirth) : null,
-                    joiningDate: selectedStudent.joiningDate ? dayjs(selectedStudent.joiningDate) : null,
+                    dateOfBirth: selectedStudent.dateOfBirth
+                      ? dayjs(selectedStudent.dateOfBirth)
+                      : null,
+                    joiningDate: selectedStudent.joiningDate
+                      ? dayjs(selectedStudent.joiningDate)
+                      : null,
                     institutionId: selectedStudent.institutionId._id,
                   });
                   setIsModalVisible(true);
@@ -1201,8 +1517,13 @@ export default function StudentsManagement() {
               >
                 Edit Student
               </Button>
-              <Button 
-                onClick={() => handleStudentAction(selectedStudent._id, selectedStudent.isActive ? "deactivate" : "activate")}
+              <Button
+                onClick={() =>
+                  handleStudentAction(
+                    selectedStudent._id,
+                    selectedStudent.isActive ? "deactivate" : "activate"
+                  )
+                }
                 style={{ borderRadius: 6 }}
               >
                 {selectedStudent.isActive ? "Deactivate" : "Activate"}
@@ -1235,13 +1556,18 @@ export default function StudentsManagement() {
           onFinish={handleEditStudent}
           style={{ marginTop: 24 }}
         >
-          <Card title="Personal Information" style={{ marginBottom: 24, borderRadius: 8 }}>
+          <Card
+            title="Personal Information"
+            style={{ marginBottom: 24, borderRadius: 8 }}
+          >
             <Row gutter={16}>
               <Col span={12}>
                 <Form.Item
                   name="fullName"
                   label="Full Name"
-                  rules={[{ required: true, message: "Please enter full name" }]}
+                  rules={[
+                    { required: true, message: "Please enter full name" },
+                  ]}
                 >
                   <Input style={{ borderRadius: 6 }} />
                 </Form.Item>
@@ -1250,7 +1576,12 @@ export default function StudentsManagement() {
                 <Form.Item
                   name="admissionNumber"
                   label="Admission Number"
-                  rules={[{ required: true, message: "Please enter admission number" }]}
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please enter admission number",
+                    },
+                  ]}
                 >
                   <Input style={{ borderRadius: 6 }} />
                 </Form.Item>
@@ -1275,7 +1606,9 @@ export default function StudentsManagement() {
                 <Form.Item
                   name="phoneNumber"
                   label="Phone Number"
-                  rules={[{ required: true, message: "Please enter phone number" }]}
+                  rules={[
+                    { required: true, message: "Please enter phone number" },
+                  ]}
                 >
                   <Input style={{ borderRadius: 6 }} />
                 </Form.Item>
@@ -1284,7 +1617,9 @@ export default function StudentsManagement() {
                 <Form.Item
                   name="dateOfBirth"
                   label="Date of Birth"
-                  rules={[{ required: true, message: "Please select date of birth" }]}
+                  rules={[
+                    { required: true, message: "Please select date of birth" },
+                  ]}
                 >
                   <DatePicker style={{ width: "100%", borderRadius: 6 }} />
                 </Form.Item>
@@ -1292,7 +1627,10 @@ export default function StudentsManagement() {
             </Row>
           </Card>
 
-          <Card title="Location Information" style={{ marginBottom: 24, borderRadius: 8 }}>
+          <Card
+            title="Location Information"
+            style={{ marginBottom: 24, borderRadius: 8 }}
+          >
             <Row gutter={16}>
               <Col span={8}>
                 <Form.Item
@@ -1324,13 +1662,18 @@ export default function StudentsManagement() {
             </Row>
           </Card>
 
-          <Card title="Academic Information" style={{ marginBottom: 24, borderRadius: 8 }}>
+          <Card
+            title="Academic Information"
+            style={{ marginBottom: 24, borderRadius: 8 }}
+          >
             <Row gutter={16}>
               <Col span={8}>
                 <Form.Item
                   name="currentCourse"
                   label="Current Course"
-                  rules={[{ required: true, message: "Please enter current course" }]}
+                  rules={[
+                    { required: true, message: "Please enter current course" },
+                  ]}
                 >
                   <Input style={{ borderRadius: 6 }} />
                 </Form.Item>
@@ -1339,7 +1682,9 @@ export default function StudentsManagement() {
                 <Form.Item
                   name="department"
                   label="Department"
-                  rules={[{ required: true, message: "Please enter department" }]}
+                  rules={[
+                    { required: true, message: "Please enter department" },
+                  ]}
                 >
                   <Input style={{ borderRadius: 6 }} />
                 </Form.Item>
@@ -1360,7 +1705,9 @@ export default function StudentsManagement() {
                 <Form.Item
                   name="joiningDate"
                   label="Joining Date"
-                  rules={[{ required: true, message: "Please select joining date" }]}
+                  rules={[
+                    { required: true, message: "Please select joining date" },
+                  ]}
                 >
                   <DatePicker style={{ width: "100%", borderRadius: 6 }} />
                 </Form.Item>
@@ -1369,13 +1716,17 @@ export default function StudentsManagement() {
                 <Form.Item
                   name="institutionId"
                   label="Institution"
-                  rules={[{ required: true, message: "Please select institution" }]}
+                  rules={[
+                    { required: true, message: "Please select institution" },
+                  ]}
                 >
-                  <Select 
+                  <Select
                     placeholder="Select institution"
                     showSearch
                     filterOption={(input, option) =>
-                      (option?.children as unknown as string)?.toLowerCase().includes(input.toLowerCase())
+                      (option?.children as unknown as string)
+                        ?.toLowerCase()
+                        .includes(input.toLowerCase())
                     }
                     style={{ borderRadius: 6 }}
                   >
@@ -1392,15 +1743,15 @@ export default function StudentsManagement() {
 
           <Form.Item style={{ textAlign: "center", marginTop: 24 }}>
             <Space size="large">
-              <Button 
-                type="primary" 
+              <Button
+                type="primary"
                 htmlType="submit"
                 size="large"
                 style={{ borderRadius: 6, minWidth: 120 }}
               >
                 {isEditMode ? "Update Student" : "Add Student"}
               </Button>
-              <Button 
+              <Button
                 size="large"
                 onClick={() => {
                   setIsModalVisible(false);
