@@ -29,6 +29,7 @@ import {
   IdcardOutlined,
   BookOutlined,
   AppstoreOutlined,
+  FileDoneOutlined,
 } from "@ant-design/icons";
 import "../styles/admin-layout.css";
 
@@ -242,6 +243,17 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       ],
     },
     {
+      key: "certificates",
+      icon: <FileDoneOutlined style={{ fontSize: 18, color: "#ffffff" }} />,
+      label: "Certificates",
+      children: [
+        {
+          key: "/admin/certificates/generate",
+          label: "Generate Certificate",
+        },
+      ],
+    },
+    {
       key: "/admin/admins",
       icon: (
         <svg
@@ -288,6 +300,12 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
         if (segment === "course-categories") {
           title = "Course Categories";
         }
+        if (segment === "certificates") {
+          title = "Certificates";
+        }
+        if (segment === "generate") {
+          title = "Generate Certificate";
+        }
 
         breadcrumbItems.push({
           title: <span>{isLast ? <Text strong>{title}</Text> : title}</span>,
@@ -304,13 +322,17 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
   };
 
   const getOpenKeys = () => {
+    const keys: string[] = [];
     if (
       pathname.includes("/courses") ||
       pathname.includes("/course-categories")
     ) {
-      return ["courses"];
+      keys.push("courses");
     }
-    return [];
+    if (pathname.includes("/admin/certificates")) {
+      keys.push("certificates");
+    }
+    return keys;
   };
 
   return (

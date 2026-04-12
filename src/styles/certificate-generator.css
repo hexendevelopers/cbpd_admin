@@ -1,0 +1,134 @@
+/* Fixed canvas — must match certificate-template.png pixel size (1234×1738). */
+
+.certificate-canvas {
+  position: relative;
+  width: 1234px;
+  height: 1738px;
+  flex-shrink: 0;
+  color: #0d0d0d;
+  font-family: "Times New Roman", Times, "Liberation Serif", Georgia, serif !important;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+}
+
+.certificate-canvas * {
+  font-family: inherit !important;
+  box-sizing: border-box;
+}
+
+.certificate-canvas .certificate-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Recipient — centered, below “This is to certify that” */
+.certificate-canvas .student-name {
+  position: absolute;
+  top: 448px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 900px;
+  font-size: 44px;
+  font-weight: 700;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  line-height: 1.15;
+  margin: 0;
+  padding: 0;
+}
+
+/* Course title — centered, in award block */
+.certificate-canvas .course-name {
+  position: absolute;
+  top: 582px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 920px;
+  font-size: 30px;
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.28;
+  margin: 0;
+  padding: 0;
+}
+
+.certificate-canvas .course-level {
+  position: absolute;
+  top: 656px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 900px;
+  font-size: 26px;
+  font-weight: 700;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  margin: 0;
+  padding: 0;
+}
+
+/*
+ * Admin values only — template already prints bold labels.
+ * Column starts to the right of “Provider Name:”, “Certificate No:”, “Registration No:”
+ * (block is visually centered; do not anchor from far left).
+ */
+.certificate-canvas .provider-name {
+  position: absolute;
+  top: 818px;
+  left: 578px;
+  width: 560px;
+  font-size: 21px;
+  font-weight: 400;
+  text-align: left;
+  line-height: 1.35;
+  margin: 0;
+  padding: 0;
+}
+
+.certificate-canvas .certificate-number {
+  position: absolute;
+  top: 862px;
+  left: 578px;
+  width: 560px;
+  font-size: 21px;
+  font-weight: 400;
+  text-align: left;
+  line-height: 1.35;
+  margin: 0;
+  padding: 0;
+}
+
+.certificate-canvas .registration-number {
+  position: absolute;
+  top: 906px;
+  left: 578px;
+  width: 560px;
+  font-size: 21px;
+  font-weight: 400;
+  text-align: left;
+  line-height: 1.35;
+  margin: 0;
+  padding: 0;
+}
+
+/* Between signatures/seal and footer — template includes “Date Issued:” */
+.certificate-canvas .date-issued {
+  position: absolute;
+  bottom: 218px;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 880px;
+  font-size: 21px;
+  font-weight: 400;
+  text-align: center;
+  line-height: 1.35;
+  margin: 0;
+  padding: 0;
+}
