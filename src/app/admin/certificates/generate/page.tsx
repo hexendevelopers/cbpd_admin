@@ -72,7 +72,7 @@ const CertificateCanvas = forwardRef<HTMLDivElement, CertificateCanvasProps>(
           {studentName}
         </div>
         <div
-          className="course-name max-w-100 text-center"
+          className="course-name max-w-1000 text-center"
           style={{ marginTop: "145px", fontSize: "27px" }}
         >
           {courseName}
