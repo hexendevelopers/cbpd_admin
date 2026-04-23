@@ -132,3 +132,94 @@
   margin: 0;
   padding: 0;
 }
+
+/* Learner Achievement Record canvas */
+.lar-canvas {
+  position: relative;
+  width: 737px;
+  height: 1042px;
+  flex-shrink: 0;
+  color: #0d0d0d;
+  font-family: "Times New Roman", Times, "Liberation Serif", Georgia, serif !important;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+}
+
+.lar-canvas * {
+  font-family: inherit !important;
+  box-sizing: border-box;
+}
+
+.lar-canvas .lar-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+  user-select: none;
+}
+
+.lar-canvas .lar-field {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  line-height: 1.15;
+  font-size: 11px;
+  font-weight: 400;
+}
+
+.lar-canvas .learner-name { top: 331px; left: 92px; width: 260px; }
+.lar-canvas .learner-no { top: 351px; left: 92px; width: 260px; }
+.lar-canvas .date-of-birth { top: 372px; left: 92px; width: 260px; }
+.lar-canvas .programme-code { top: 393px; left: 92px; width: 260px; }
+.lar-canvas .qualification-title {
+  top: 414px;
+  left: 92px;
+  width: 260px;
+  white-space: pre-wrap;
+}
+.lar-canvas .qualification-level { top: 458px; left: 92px; width: 260px; }
+.lar-canvas .mode-of-study { top: 320px; left: 528px; width: 130px; }
+.lar-canvas .provider-name { top: 335px; left: 528px; width: 130px; }
+.lar-canvas .centre-code { top: 352px; left: 528px; width: 130px; }
+.lar-canvas .awarding-body { top: 370px; left: 528px; width: 130px; }
+.lar-canvas .language-instruction { top: 387px; left: 528px; width: 130px; }
+.lar-canvas .language-assessment { top: 404px; left: 528px; width: 130px; }
+.lar-canvas .date-of-award { top: 420px; left: 528px; width: 150px; }
+
+.lar-canvas .unit-code,
+.lar-canvas .unit-title,
+.lar-canvas .unit-level,
+.lar-canvas .unit-hours,
+.lar-canvas .unit-credits,
+.lar-canvas .unit-mark,
+.lar-canvas .unit-decision,
+.lar-canvas .unit-session {
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.lar-canvas .unit-code { left: 74px; width: 72px; }
+.lar-canvas .unit-title { left: 147px; width: 195px; }
+.lar-canvas .unit-level { left: 349px; width: 28px; text-align: center; }
+.lar-canvas .unit-hours { left: 383px; width: 34px; text-align: center; }
+.lar-canvas .unit-credits { left: 423px; width: 34px; text-align: center; }
+.lar-canvas .unit-mark { left: 464px; width: 50px; text-align: center; }
+.lar-canvas .unit-decision { left: 521px; width: 50px; text-align: center; }
+.lar-canvas .unit-session { left: 576px; width: 88px; text-align: center; }
+
+.lar-canvas .total-credits { top: 822px; left: 180px; width: 180px; }
+.lar-canvas .overall-classification { top: 844px; left: 236px; width: 220px; }
+.lar-canvas .qualification-awarded {
+  top: 865px;
+  left: 205px;
+  width: 255px;
+  white-space: pre-wrap;
+}
+.lar-canvas .certificate-no { top: 822px; left: 536px; width: 160px; }
+.lar-canvas .registration-no { top: 844px; left: 536px; width: 160px; }
