@@ -197,11 +197,11 @@
 .lar-canvas .unit-decision,
 .lar-canvas .unit-session {
   font-size: 10px;
-  font-weight: 400;
+  font-weight: 500;
   line-height: 1;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  /* white-space: nowrap; */
+  /* overflow: hidden; */
+  /* text-overflow: ellipsis; */
 }
 
 .lar-canvas .unit-code { left: 74px; width: 72px; }
@@ -213,13 +213,13 @@
 .lar-canvas .unit-decision { left: 521px; width: 50px; text-align: center; }
 .lar-canvas .unit-session { left: 576px; width: 88px; text-align: center; }
 
-.lar-canvas .total-credits { top: 822px; left: 180px; width: 180px; }
-.lar-canvas .overall-classification { top: 844px; left: 236px; width: 220px; }
+.lar-canvas .total-credits { top: 790px; left: 225px; width: 180px; }
+.lar-canvas .overall-classification { top: 807px; left: 225px; width: 220px; }
 .lar-canvas .qualification-awarded {
-  top: 865px;
-  left: 205px;
-  width: 255px;
+  top: 825px;
+  left: 225px;
+  width: 200px;
   white-space: pre-wrap;
 }
-.lar-canvas .certificate-no { top: 822px; left: 536px; width: 160px; }
-.lar-canvas .registration-no { top: 844px; left: 536px; width: 160px; }
+.lar-canvas .certificate-no { top: 787px; left: 566px; width: 160px; }
+.lar-canvas .registration-no { top: 810px; left: 566px; width: 160px; }

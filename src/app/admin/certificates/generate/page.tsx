@@ -98,7 +98,7 @@ const CertificateCanvas = forwardRef<HTMLDivElement, CertificateCanvasProps>(
     return (
       <div ref={ref} className="certificate-canvas">
         <img
-          src="/certificate-templates.jpeg"
+          src="/newcert.jpeg"
           alt=""
           className="certificate-bg"
           width={CANVAS_W}
@@ -125,7 +125,7 @@ const CertificateCanvas = forwardRef<HTMLDivElement, CertificateCanvasProps>(
           <div className="certificate-number" style={{marginTop : "112px", marginLeft : "40px"}}>{certificateNumber}</div>
           <div className="registration-number" style={{marginTop : "112px", marginLeft : "40px"}}>{registrationNumber}</div>
         </div>
-        <div className="date-issued" style={{marginBottom : "121px", marginLeft : "50px"}}>{dateIssuedText}</div>
+        <div className="date-issued" style={{marginBottom : "121px", marginLeft : "70px"}}>{dateIssuedText}</div>
       </div>
     );
   },
@@ -155,12 +155,12 @@ const LarCanvas = forwardRef<HTMLDivElement, LarCanvasProps>(function LarCanvas(
       />
       <div className="ml-20" style={{marginLeft:"100px"}}>
 
-      <div className="lar-field learner-name" style={{marginLeft:"80px", marginTop:"-10px", fontSize:"12px"}}>{values.learnerName}</div>
-      <div className="lar-field learner-no" style={{marginLeft:"80px", marginTop:"-14px",  fontSize:"12px"}}>{values.learnerNo}</div>
-      <div className="lar-field date-of-birth" style={{marginLeft:"80px", marginTop:"-18px",  fontSize:"12px"}}>{dateOfBirthText}</div>
-      <div className="lar-field programme-code" style={{marginLeft:"80px", marginTop:"-22px",  fontSize:"12px"}}>{values.programmeCode}</div>
+      <div className="lar-field learner-name" style={{marginLeft:"80px", marginTop:"-10px", fontSize:"11px"}}>{values.learnerName}</div>
+      <div className="lar-field learner-no" style={{marginLeft:"80px", marginTop:"-14px",  fontSize:"11px"}}>{values.learnerNo}</div>
+      <div className="lar-field date-of-birth" style={{marginLeft:"80px", marginTop:"-18px",  fontSize:"11px"}}>{dateOfBirthText}</div>
+      <div className="lar-field programme-code" style={{marginLeft:"80px", marginTop:"-22px",  fontSize:"11px"}}>{values.programmeCode}</div>
       <div className="lar-field qualification-title" style={{marginLeft:"80px", marginTop:"-28px", width:"210px",  fontSize:"12px"}}>{values.qualificationTitle}</div>
-      <div className="lar-field qualification-level" style={{marginLeft:"80px", marginTop:"-38px",  fontSize:"12px"}}>{values.qualificationLevel}</div>
+      <div className="lar-field qualification-level" style={{marginLeft:"80px", marginTop:"-38px",  fontSize:"11px"}}>{values.qualificationLevel}</div>
       </div>
 
       <div className="lar-field mode-of-study">{values.modeOfStudy}</div>
@@ -175,7 +175,7 @@ const LarCanvas = forwardRef<HTMLDivElement, LarCanvasProps>(function LarCanvas(
 
       {Array.from({ length: UNIT_ROWS }).map((_, index) => {
         const row = units[index] ?? {};
-        const top = 528 + index * 31;
+        const top = 520 + index * 26;
         return (
           <div key={`lar-row-${index}`}>
             <div className="lar-field unit-code" style={{ top }}>
