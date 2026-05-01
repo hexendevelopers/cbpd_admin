@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 // Admin schema (copied from model)
 const adminSchema = new mongoose.Schema({
@@ -50,7 +50,7 @@ const Admin = mongoose.model('Admin', adminSchema);
 async function createDefaultAdmin() {
   try {
     // Connect to MongoDB
-    await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/cbpd_admin');
+    await mongoose.connect(process.env.MONGODB_URI || process.env.MONGO_URI || 'mongodb://localhost:27017/cbpd_admin');
     console.log('Connected to MongoDB');
 
     // Check if admin already exists

@@ -46,7 +46,10 @@ const { TextArea } = Input;
 interface CourseCategory {
   _id: string;
   name: string;
+  slug?: string;
   description: string;
+  icon?: string;
+  image?: string;
   isActive: boolean;
   createdAt: string;
 }
@@ -606,8 +609,17 @@ export default function CourseCategoriesManagement() {
                 <Descriptions.Item label="Name">
                   <Text strong>{selectedCategory.name}</Text>
                 </Descriptions.Item>
+                <Descriptions.Item label="Slug">
+                  <Text>{selectedCategory.slug}</Text>
+                </Descriptions.Item>
                 <Descriptions.Item label="Description">
                   <Text>{selectedCategory.description || "No description"}</Text>
+                </Descriptions.Item>
+                <Descriptions.Item label="Icon">
+                  <Text>{selectedCategory.icon || "None"}</Text>
+                </Descriptions.Item>
+                <Descriptions.Item label="Image">
+                  <Text>{selectedCategory.image || "None"}</Text>
                 </Descriptions.Item>
                 <Descriptions.Item label="Status">
                   <Tag 
@@ -683,12 +695,42 @@ export default function CourseCategoriesManagement() {
           </Form.Item>
 
           <Form.Item
+            name="slug"
+            label="Slug (optional, auto-generated if empty)"
+          >
+            <Input 
+              placeholder="Enter unique slug"
+              style={{ borderRadius: 6 }} 
+            />
+          </Form.Item>
+
+          <Form.Item
             name="description"
             label="Description"
           >
             <TextArea 
               placeholder="Enter category description (optional)"
               rows={4}
+              style={{ borderRadius: 6 }} 
+            />
+          </Form.Item>
+
+          <Form.Item
+            name="icon"
+            label="Icon (Emoji)"
+          >
+            <Input 
+              placeholder="e.g. 💼"
+              style={{ borderRadius: 6 }} 
+            />
+          </Form.Item>
+
+          <Form.Item
+            name="image"
+            label="Image URL"
+          >
+            <Input 
+              placeholder="Enter image URL"
               style={{ borderRadius: 6 }} 
             />
           </Form.Item>

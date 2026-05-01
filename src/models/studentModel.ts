@@ -73,6 +73,21 @@ const studentSchema = new mongoose.Schema(
       unique: true,
       trim: true,
     },
+    registerNumber: {
+      type: String,
+      trim: true,
+      default: "",
+    },
+    certificateNumber: {
+      type: String,
+      trim: true,
+      default: "",
+    },
+    learnerNumber: {
+      type: String,
+      trim: true,
+      default: "",
+    },
 
     // File Uploads (URLs from Cloudflare R2) - uploaded separately after creation
     marksheets: {
@@ -108,6 +123,9 @@ const studentSchema = new mongoose.Schema(
 studentSchema.index({ fullName: "text" });
 studentSchema.index({ isActive: 1 });
 studentSchema.index({ institutionId: 1 });
+studentSchema.index({ registerNumber: 1 });
+studentSchema.index({ certificateNumber: 1 });
+studentSchema.index({ learnerNumber: 1 });
 const Student =
   mongoose.models.Student || mongoose.model("Student", studentSchema);
 

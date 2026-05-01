@@ -7,7 +7,23 @@ const courseCategorySchema = new mongoose.Schema({
     trim: true,
     unique: true
   },
+  slug: {
+    type: String,
+    required: true,
+    trim: true,
+    unique: true
+  },
   description: {
+    type: String,
+    required: false,
+    trim: true
+  },
+  icon: {
+    type: String,
+    required: false,
+    trim: true
+  },
+  image: {
     type: String,
     required: false,
     trim: true
@@ -21,7 +37,7 @@ const courseCategorySchema = new mongoose.Schema({
 });
 
 // Index for better search performance
-courseCategorySchema.index({ name: 'text', description: 'text' });
+courseCategorySchema.index({ name: 'text', description: 'text', slug: 'text' });
 
 const CourseCategory = mongoose.models.CourseCategory || mongoose.model('CourseCategory', courseCategorySchema);
 

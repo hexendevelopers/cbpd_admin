@@ -45,7 +45,7 @@ export async function PUT(
     await connectDB();
 
     const body = await request.json();
-    const { title, description, image, categoryId, isActive } = body;
+    const { title, description, image, categoryId, isActive, slug, overview, curriculum, jobMarket } = body;
 
     // Check if course exists
     const existingCourse = await Course.findById(params.id);
@@ -67,9 +67,26 @@ export async function PUT(
       }
     }
 
+    if (slug) {
+      const existingSlug = await Course.findOne({
+        slug: slug.trim(),
+        _id: { $ne: params.id }
+      });
+      if (existingSlug) {
+        return NextResponse.json(
+          { error: "Course slug already exists" },
+          { status: 400 }
+        );
+      }
+    }
+
     const updateData: any = {};
     if (title) updateData.title = title;
-    if (description) updateData.description = description;
+    if (description !== undefined) updateData.description = description;
+    if (slug !== undefined) updateData.slug = slug.trim();
+    if (overview !== undefined) updateData.overview = overview;
+    if (curriculum !== undefined) updateData.curriculum = curriculum;
+    if (jobMarket !== undefined) updateData.jobMarket = jobMarket;
     if (image !== undefined) updateData.image = image;
     if (categoryId) updateData.categoryId = categoryId;
     if (typeof isActive === 'boolean') updateData.isActive = isActive;

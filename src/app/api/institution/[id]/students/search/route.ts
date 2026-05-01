@@ -102,6 +102,24 @@ export async function POST(
         $options: "i",
       };
     }
+    if (filters.registerNumber) {
+      query.registerNumber = {
+        $regex: `^${filters.registerNumber}$`,
+        $options: "i",
+      };
+    }
+    if (filters.certificateNumber) {
+      query.certificateNumber = {
+        $regex: `^${filters.certificateNumber}$`,
+        $options: "i",
+      };
+    }
+    if (filters.learnerNumber) {
+      query.learnerNumber = {
+        $regex: `^${filters.learnerNumber}$`,
+        $options: "i",
+      };
+    }
     if (filters.govtIdNumber) {
       query.govtIdNumber = { $regex: filters.govtIdNumber, $options: "i" };
     }

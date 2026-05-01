@@ -58,6 +58,15 @@ interface Course {
     _id: string;
     name: string;
   };
+  slug?: string;
+  overview?: string;
+  curriculum?: string[];
+  jobMarket?: {
+    salaryRange?: string;
+    growthRate?: string;
+    topEmployers?: string[];
+    description?: string;
+  };
   isActive: boolean;
   createdAt: string;
 }
@@ -265,6 +274,15 @@ export default function CoursesManagement() {
     try {
       const formattedValues = {
         ...values,
+        curriculum: typeof values.curriculum === 'string' 
+          ? values.curriculum.split('\n').map((x:string) => x.trim()).filter(Boolean) 
+          : values.curriculum,
+        jobMarket: values.jobMarket ? {
+          ...values.jobMarket,
+          topEmployers: typeof values.jobMarket.topEmployers === 'string' 
+            ? values.jobMarket.topEmployers.split(',').map((x:string) => x.trim()).filter(Boolean) 
+            : values.jobMarket.topEmployers
+        } : undefined,
         image: imageUrl || values.image || null,
       };
 
@@ -333,6 +351,11 @@ export default function CoursesManagement() {
           form.setFieldsValue({
             ...record,
             categoryId: record.categoryId?._id,
+            curriculum: record.curriculum?.join('\n'),
+            jobMarket: record.jobMarket ? {
+              ...record.jobMarket,
+              topEmployers: record.jobMarket.topEmployers?.join(', ')
+            } : undefined
           });
           setIsModalVisible(true);
         }}
@@ -874,8 +897,14 @@ export default function CoursesManagement() {
                     {selectedCourse.categoryId?.name || "No Category"}
                   </Tag>
                 </Descriptions.Item>
+                <Descriptions.Item label="Slug">
+                  <Text>{selectedCourse.slug}</Text>
+                </Descriptions.Item>
                 <Descriptions.Item label="Description">
                   <Text>{selectedCourse.description}</Text>
+                </Descriptions.Item>
+                <Descriptions.Item label="Overview">
+                  <Text>{selectedCourse.overview || "N/A"}</Text>
                 </Descriptions.Item>
                 <Descriptions.Item label="Image">
                   {selectedCourse.image ? (
@@ -910,6 +939,11 @@ export default function CoursesManagement() {
                   form.setFieldsValue({
                     ...selectedCourse,
                     categoryId: selectedCourse.categoryId?._id,
+                    curriculum: selectedCourse.curriculum?.join('\n'),
+                    jobMarket: selectedCourse.jobMarket ? {
+                      ...selectedCourse.jobMarket,
+                      topEmployers: selectedCourse.jobMarket.topEmployers?.join(', ')
+                    } : undefined
                   });
                   setIsModalVisible(true);
                   setIsDrawerVisible(false);
@@ -997,18 +1031,72 @@ export default function CoursesManagement() {
           </Form.Item>
 
           <Form.Item
+            name="slug"
+            label="Slug (optional, auto-generated if empty)"
+          >
+            <Input
+              placeholder="Enter unique slug"
+              style={{ borderRadius: 6 }}
+            />
+          </Form.Item>
+
+          <Form.Item
             name="description"
-            label="Course Description"
-            rules={[
-              { required: true, message: "Please enter course description" },
-            ]}
+            label="Course Description (Short)"
           >
             <TextArea
-              placeholder="Enter course description"
+              placeholder="Enter short course description"
+              rows={2}
+              style={{ borderRadius: 6 }}
+            />
+          </Form.Item>
+
+          <Form.Item
+            name="overview"
+            label="Course Overview (Detailed)"
+          >
+            <TextArea
+              placeholder="Enter detailed course overview"
               rows={4}
               style={{ borderRadius: 6 }}
             />
           </Form.Item>
+
+          <Form.Item
+            name="curriculum"
+            label="Curriculum (One item per line)"
+          >
+            <TextArea
+              placeholder="Module 1: Introduction&#10;Module 2: Advanced Topics"
+              rows={4}
+              style={{ borderRadius: 6 }}
+            />
+          </Form.Item>
+
+          <div style={{ padding: '16px', background: '#f8fafc', borderRadius: '8px', marginBottom: '24px', border: '1px solid #e2e8f0' }}>
+            <Text strong style={{ display: 'block', marginBottom: '16px' }}>Job Market Insights</Text>
+            
+            <Row gutter={16}>
+              <Col span={12}>
+                <Form.Item name={['jobMarket', 'salaryRange']} label="Salary Range">
+                  <Input placeholder="e.g. £30,000 - £80,000+" style={{ borderRadius: 6 }} />
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item name={['jobMarket', 'growthRate']} label="Growth Rate">
+                  <Input placeholder="e.g. Steady Growth" style={{ borderRadius: 6 }} />
+                </Form.Item>
+              </Col>
+            </Row>
+
+            <Form.Item name={['jobMarket', 'topEmployers']} label="Top Employers (Comma separated)">
+              <Input placeholder="e.g. Leading UK Companies, Global Enterprises" style={{ borderRadius: 6 }} />
+            </Form.Item>
+
+            <Form.Item name={['jobMarket', 'description']} label="Market Description">
+              <TextArea placeholder="Describe the job market for this discipline" rows={3} style={{ borderRadius: 6 }} />
+            </Form.Item>
+          </div>
 
           <Form.Item name="image" label="Course Image">
             <div>

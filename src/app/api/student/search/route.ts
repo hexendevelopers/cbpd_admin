@@ -26,6 +26,9 @@ interface SearchFilters {
   department?: string;
   semester?: string;
   admissionNumber?: string;
+  registerNumber?: string;
+  certificateNumber?: string;
+  learnerNumber?: string;
   isActive?: boolean;
   institutionId?: string;
   dateOfBirthFrom?: Date;
@@ -81,6 +84,24 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     if (filters.admissionNumber) {
       query.admissionNumber = {
         $regex: filters.admissionNumber,
+        $options: "i",
+      };
+    }
+    if (filters.registerNumber) {
+      query.registerNumber = {
+        $regex: `^${filters.registerNumber}$`,
+        $options: "i",
+      };
+    }
+    if (filters.certificateNumber) {
+      query.certificateNumber = {
+        $regex: `^${filters.certificateNumber}$`,
+        $options: "i",
+      };
+    }
+    if (filters.learnerNumber) {
+      query.learnerNumber = {
+        $regex: `^${filters.learnerNumber}$`,
         $options: "i",
       };
     }

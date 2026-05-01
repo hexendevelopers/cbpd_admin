@@ -243,6 +243,21 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       ],
     },
     {
+      key: "student-certificates",
+      icon: <SafetyCertificateOutlined style={{ fontSize: 18, color: "#ffffff" }} />,
+      label: "Student Certificates",
+      children: [
+        {
+          key: "/admin/student-certificates",
+          label: "Certificate List",
+        },
+        {
+          key: "/admin/student-certificates/add",
+          label: "Add Certificate",
+        },
+      ],
+    },
+    {
       key: "certificates",
       icon: <FileDoneOutlined style={{ fontSize: 18, color: "#ffffff" }} />,
       label: "Certificates",
@@ -250,6 +265,21 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
         {
           key: "/admin/certificates/generate",
           label: "Generate Certificate",
+        },
+      ],
+    },
+    {
+      key: "enquiries",
+      icon: <AppstoreOutlined style={{ fontSize: 18, color: "#ffffff" }} />,
+      label: "Enquiries",
+      children: [
+        {
+          key: "/admin/contacts",
+          label: "Contact Forms",
+        },
+        {
+          key: "/admin/partners",
+          label: "Partnership Forms",
         },
       ],
     },
@@ -303,8 +333,14 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
         if (segment === "certificates") {
           title = "Certificates";
         }
+        if (segment === "student-certificates") {
+          title = "Student Certificates";
+        }
         if (segment === "generate") {
           title = "Generate Certificate";
+        }
+        if (segment === "add" && pathSegments.includes("student-certificates")) {
+          title = "Add Certificate";
         }
 
         breadcrumbItems.push({
@@ -331,6 +367,12 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
     }
     if (pathname.includes("/admin/certificates")) {
       keys.push("certificates");
+    }
+    if (pathname.includes("/admin/student-certificates")) {
+      keys.push("student-certificates");
+    }
+    if (pathname.includes("/admin/contacts") || pathname.includes("/admin/partners")) {
+      keys.push("enquiries");
     }
     return keys;
   };

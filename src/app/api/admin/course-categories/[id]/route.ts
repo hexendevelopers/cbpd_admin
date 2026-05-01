@@ -42,7 +42,7 @@ export async function PUT(
     await connectDB();
 
     const body = await request.json();
-    const { name, description, isActive } = body;
+    const { name, description, isActive, slug, icon, image } = body;
 
     // Check if category exists
     const existingCategory = await CourseCategory.findById(params.id);
@@ -67,9 +67,25 @@ export async function PUT(
       }
     }
 
+    if (slug) {
+      const existingSlug = await CourseCategory.findOne({
+        slug: slug.trim(),
+        _id: { $ne: params.id }
+      });
+      if (existingSlug) {
+        return NextResponse.json(
+          { error: "Category slug already exists" },
+          { status: 400 }
+        );
+      }
+    }
+
     const updateData: any = {};
     if (name) updateData.name = name.trim();
     if (description !== undefined) updateData.description = description.trim();
+    if (slug !== undefined) updateData.slug = slug.trim();
+    if (icon !== undefined) updateData.icon = icon.trim();
+    if (image !== undefined) updateData.image = image.trim();
     if (typeof isActive === 'boolean') updateData.isActive = isActive;
 
     const category = await CourseCategory.findByIdAndUpdate(

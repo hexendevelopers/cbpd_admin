@@ -205,6 +205,96 @@ GET /api/admin/memberships/search?membershipType=Premium&membershipStatus=Active
 
 ---
 
+---
+
+## 🎓 **Student Certificates Search API**
+
+### **Endpoint:** `/api/admin/students/certificates/search`
+
+### **GET Method - Query Parameters Search**
+
+**URL:** `GET /api/admin/students/certificates/search?studentName=value&registerNumber=value&certificateNumber=value&learnerNumber=value&page=1&limit=10`
+
+#### **Query Parameters:**
+- `studentName` (string, optional): Search by student's full name (partial match, case insensitive)
+- `registerNumber` (string, optional): Search by register number (exact match, case insensitive)
+- `certificateNumber` (string, optional): Search by certificate number (exact match, case insensitive)
+- `learnerNumber` (string, optional): Search by learner number (exact match, case insensitive)
+- `page` (number, optional): Page number for pagination (default: 1)
+- `limit` (number, optional): Items per page (default: 10)
+
+#### **Example Requests:**
+```bash
+# Search by student name
+GET /api/admin/students/certificates/search?studentName=John%20Doe
+
+# Search by certificate number
+GET /api/admin/students/certificates/search?certificateNumber=CERT123
+
+# Search by multiple criteria
+GET /api/admin/students/certificates/search?studentName=John&registerNumber=REG001
+```
+
+#### **Response:**
+```json
+{
+  "students": [
+    {
+      "_id": "student_id",
+      "fullName": "John Doe",
+      "registerNumber": "REG001",
+      "certificateNumber": "CERT123",
+      "learnerNumber": "LRN456",
+      "admissionNumber": "ADM789",
+      "isActive": true,
+      "createdAt": "2023-01-01T10:00:00.000Z",
+      "updatedAt": "2023-06-15T12:30:00.000Z"
+    }
+  ],
+  "pagination": {
+    "page": 1,
+    "limit": 10,
+    "total": 5,
+    "pages": 1
+  },
+  "searchCriteria": {
+    "studentName": "John",
+    "registerNumber": "REG001",
+    "certificateNumber": "",
+    "learnerNumber": ""
+  },
+  "message": "Student certificates search completed successfully"
+}
+```
+
+### **POST Method - Advanced Search**
+
+**URL:** `POST /api/admin/students/certificates/search`
+
+#### **Request Body:**
+```json
+{
+  "searchTerms": {
+    "studentName": "John Doe",
+    "registerNumber": "REG001",
+    "certificateNumber": "CERT123",
+    "learnerNumber": "LRN456"
+  }
+}
+```
+
+#### **Response:**
+```json
+{
+  "students": [...],
+  "searchTerms": {...},
+  "totalFound": 1,
+  "message": "Advanced student certificates search completed successfully"
+}
+```
+
+---
+
 ## 🔧 **Features**
 
 ### **Centers Search Features:**
@@ -225,6 +315,14 @@ GET /api/admin/memberships/search?membershipType=Premium&membershipStatus=Active
 - ✅ Date range filtering
 - ✅ Pagination support
 - ✅ Computed fields (validity status, days until expiry, duration)
+- ✅ Advanced search with POST method
+
+### **Student Certificates Search Features:**
+- ✅ Search by student name (partial match)
+- ✅ Search by register number (exact match)
+- ✅ Search by certificate number (exact match)
+- ✅ Search by learner number (exact match)
+- ✅ Pagination support
 - ✅ Advanced search with POST method
 
 ### **Common Features:**

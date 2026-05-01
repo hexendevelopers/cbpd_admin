@@ -77,7 +77,7 @@ export async function POST(request: NextRequest) {
     await connectDB();
 
     const body = await request.json();
-    const { title, description, image, categoryId } = body;
+    const { title, description, image, categoryId, slug, overview, curriculum, jobMarket } = body;
 
     // Validate required fields
     if (!title || !description || !categoryId) {
@@ -96,9 +96,25 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const generateSlug = (str: string) => str.toLowerCase().replace(/ & | /g, "-").replace(/[^a-z0-9-]/g, "");
+    const finalSlug = slug ? slug.trim() : generateSlug(title);
+
+    // Check if slug exists
+    const existingSlug = await Course.findOne({ slug: finalSlug });
+    if (existingSlug) {
+      return NextResponse.json(
+        { error: "Course slug already exists. Please choose a different title or provide a unique slug." },
+        { status: 400 }
+      );
+    }
+
     const course = new Course({
       title,
+      slug: finalSlug,
       description,
+      overview: overview || "",
+      curriculum: curriculum || [],
+      jobMarket: jobMarket || {},
       image: image || null,
       categoryId
     });
