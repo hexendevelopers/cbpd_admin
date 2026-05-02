@@ -11,6 +11,7 @@ export const badges = {
       textSecondary: "#2E7D32"
     },
     iconType: "tick",
+    hoverTooltip: "This badge confirms the institution's current standing within the CBPD framework and is subject to ongoing compliance and review.",
     institutionalDetails: {
       definition: "Awarded to institutions that are fully approved and authorised to deliver CBPD qualifications under the CBPD Qualification Framework (CQF).",
       privileges: [
@@ -37,6 +38,7 @@ export const badges = {
       textSecondary: "#1565C0"
     },
     iconType: "tick",
+    hoverTooltip: "This badge confirms the institution's current standing within the CBPD framework and is subject to ongoing compliance and review.",
     institutionalDetails: {
       definition: "Awarded to organisations that have a formal collaboration or partnership agreement with CBPD but may not directly deliver qualifications independently.",
       privileges: [
@@ -62,6 +64,7 @@ export const badges = {
       textSecondary: "#6A1B9A"
     },
     iconType: "tick",
+    hoverTooltip: "This badge confirms the institution's current standing within the CBPD framework and is subject to ongoing compliance and review.",
     institutionalDetails: {
       definition: "Awarded to organisations that hold active CBPD membership and are recognised within the CBPD network.",
       privileges: [
@@ -87,6 +90,7 @@ export const badges = {
       textSecondary: "#C62828"
     },
     iconType: "cross",
+    hoverTooltip: "This badge confirms the institution's current standing within the CBPD framework and is subject to ongoing compliance and review.",
     institutionalDetails: {
       definition: "Applied when an institution's membership, partnership, or accreditation has expired, lapsed, or been suspended."
     }
