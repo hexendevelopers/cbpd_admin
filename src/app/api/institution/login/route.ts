@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import { NextResponse } from "next/server";
 import { comparePassword } from "@/lib/hashing";
 import connectToDB from "@/configs/mongodb";

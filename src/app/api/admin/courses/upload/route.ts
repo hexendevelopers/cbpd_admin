@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import { NextRequest, NextResponse } from "next/server";
 import { uploadImageToR2 } from "@/configs/uploadFiletoR2";
 
