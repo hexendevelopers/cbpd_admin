@@ -1,9 +1,77 @@
+export const badges = {
+  accreditedCentre: {
+    primaryText: "CBPD ACCREDITED CENTRE",
+    secondaryText: "Authorised & Quality Assured",
+    colors: {
+      background: "#E8F5E9",
+      border: "#2E7D32",
+      iconCircle: "#2E7D32",
+      iconFill: "#FFFFFF",
+      textPrimary: "#1B5E20",
+      textSecondary: "#2E7D32"
+    },
+    iconType: "tick"
+  },
+  approvedPartner: {
+    primaryText: "CBPD APPROVED PARTNER",
+    secondaryText: "Recognised Institution",
+    colors: {
+      background: "#E3F2FD",
+      border: "#1565C0",
+      iconCircle: "#1565C0",
+      iconFill: "#FFFFFF",
+      textPrimary: "#0D47A1",
+      textSecondary: "#1565C0"
+    },
+    iconType: "tick"
+  },
+  registeredMember: {
+    primaryText: "CBPD REGISTERED MEMBER",
+    secondaryText: "In Good Standing",
+    colors: {
+      background: "#F3E5F5",
+      border: "#6A1B9A",
+      iconCircle: "#6A1B9A",
+      iconFill: "#FFFFFF",
+      textPrimary: "#4A148C",
+      textSecondary: "#6A1B9A"
+    },
+    iconType: "tick"
+  },
+  inactive: {
+    primaryText: "CBPD STATUS INACTIVE",
+    secondaryText: "Not in Good Standing",
+    colors: {
+      background: "#FDECEA",
+      border: "#C62828",
+      iconCircle: "#C62828",
+      iconFill: "#FFFFFF",
+      textPrimary: "#871C1C",
+      textSecondary: "#C62828"
+    },
+    iconType: "cross"
+  },
+  pending: {
+    primaryText: "CBPD STATUS PENDING",
+    secondaryText: "Under Review",
+    colors: {
+      background: "#F5F5F5",
+      border: "#9E9E9E",
+      iconCircle: "#9E9E9E",
+      iconFill: "#FFFFFF", // assuming the hourglass path uses fill, or it's just general icon color
+      textPrimary: "#424242",
+      textSecondary: "#757575"
+    },
+    iconType: "hourglass"
+  }
+};
+
 export const verificationTemplates = {
   // ----- CERTIFICATE REPORTS -----
   certificate: {
     confirmed: {
       statusTitle: "Confirmed – Authentic Certificate",
-      statusIcon: "success", // Just a hint for frontend UI
+      statusIcon: "success",
       messages: [
         "The information provided corresponds with an official certificate record maintained by the Central Board of Professional Development (CBPD).",
         "This certificate is valid, authentic, and in good standing at the time of verification.",
@@ -26,6 +94,7 @@ export const verificationTemplates = {
     invalid: {
       statusTitle: "Invalid / Mismatch Detected",
       statusIcon: "warning",
+      badge: badges.inactive, // Attach inactive badge
       messages: [
         "The information provided appears to be incomplete or does not correspond with the official CBPD certificate records.",
         "This may be due to discrepancies in the entered details.",
@@ -39,6 +108,7 @@ export const verificationTemplates = {
     confirmed: {
       statusTitle: "Confirmed – Approved Centre",
       statusIcon: "success",
+      badge: badges.accreditedCentre, // Attach the accredited centre badge
       messages: [
         "The details provided correspond with an official record held by the Central Board of Professional Development (CBPD).",
         "This institution is a CBPD Approved Centre and is currently authorised to deliver CBPD-approved qualifications, subject to continued compliance with CBPD quality assurance and regulatory standards."
@@ -70,6 +140,7 @@ export const verificationTemplates = {
     confirmed: {
       statusTitle: "Confirmed – Valid Membership",
       statusIcon: "success",
+      badge: badges.registeredMember, // Attach the registered member badge
       messages: [
         "The details provided correspond with an official membership record maintained by the Central Board of Professional Development (CBPD).",
         "This organisation holds a valid and active CBPD membership and is currently in good standing, subject to ongoing compliance with CBPD standards and requirements."
