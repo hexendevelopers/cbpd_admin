@@ -1,7 +1,7 @@
 export const badges = {
   accreditedCentre: {
     primaryText: "CBPD ACCREDITED CENTRE",
-    secondaryText: "Authorised & Quality Assured",
+    secondaryText: "Accredited – Authorised Centre",
     colors: {
       background: "#E8F5E9",
       border: "#2E7D32",
@@ -10,11 +10,24 @@ export const badges = {
       textPrimary: "#1B5E20",
       textSecondary: "#2E7D32"
     },
-    iconType: "tick"
+    iconType: "tick",
+    institutionalDetails: {
+      definition: "Awarded to institutions that are fully approved and authorised to deliver CBPD qualifications under the CBPD Qualification Framework (CQF).",
+      privileges: [
+        "Authorised to deliver CBPD qualifications and programmes",
+        "Eligible to issue CBPD-certified awards (via approved systems)",
+        "Listed as an official Accredited Centre",
+        "Subject to full quality assurance audits and compliance reviews"
+      ],
+      conditions: [
+        "Must maintain QA compliance",
+        "Subject to periodic audits and monitoring"
+      ]
+    }
   },
   approvedPartner: {
     primaryText: "CBPD APPROVED PARTNER",
-    secondaryText: "Recognised Institution",
+    secondaryText: "Partner – Recognised Institution",
     colors: {
       background: "#E3F2FD",
       border: "#1565C0",
@@ -23,11 +36,23 @@ export const badges = {
       textPrimary: "#0D47A1",
       textSecondary: "#1565C0"
     },
-    iconType: "tick"
+    iconType: "tick",
+    institutionalDetails: {
+      definition: "Awarded to organisations that have a formal collaboration or partnership agreement with CBPD but may not directly deliver qualifications independently.",
+      privileges: [
+        "Recognised as an official CBPD Partner Organisation",
+        "May support training, recruitment, or academic collaboration",
+        "Eligible for co-branded initiatives and programmes"
+      ],
+      conditions: [
+        "Must operate within the scope of partnership agreement",
+        "Cannot issue CBPD certifications independently unless authorised"
+      ]
+    }
   },
   registeredMember: {
     primaryText: "CBPD REGISTERED MEMBER",
-    secondaryText: "In Good Standing",
+    secondaryText: "Member – In Good Standing",
     colors: {
       background: "#F3E5F5",
       border: "#6A1B9A",
@@ -36,11 +61,23 @@ export const badges = {
       textPrimary: "#4A148C",
       textSecondary: "#6A1B9A"
     },
-    iconType: "tick"
+    iconType: "tick",
+    institutionalDetails: {
+      definition: "Awarded to organisations that hold active CBPD membership and are recognised within the CBPD network.",
+      privileges: [
+        "Official recognition as a CBPD Member Organisation",
+        "Access to membership benefits and support services",
+        "Listed in the CBPD Member Registry"
+      ],
+      conditions: [
+        "Must maintain active membership status",
+        "No authority to deliver or issue CBPD qualifications"
+      ]
+    }
   },
   inactive: {
     primaryText: "CBPD STATUS INACTIVE",
-    secondaryText: "Not in Good Standing",
+    secondaryText: "Inactive – Not in Good Standing",
     colors: {
       background: "#FDECEA",
       border: "#C62828",
@@ -49,7 +86,10 @@ export const badges = {
       textPrimary: "#871C1C",
       textSecondary: "#C62828"
     },
-    iconType: "cross"
+    iconType: "cross",
+    institutionalDetails: {
+      definition: "Applied when an institution's membership, partnership, or accreditation has expired, lapsed, or been suspended."
+    }
   },
   pending: {
     primaryText: "CBPD STATUS PENDING",
