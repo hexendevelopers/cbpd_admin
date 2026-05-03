@@ -46,7 +46,7 @@ export async function PUT(
     const { 
       name, description, isActive, slug, icon, image,
       cbpdDescription, longDescription, overviewDescription, 
-      overviewItems, whyChooseUs, benefits, howToEnroll
+      overviewItems, whyChooseUs, benefits, howToEnroll, isPopular
     } = body;
 
     // Check if category exists
@@ -98,7 +98,8 @@ export async function PUT(
     if (whyChooseUs !== undefined) updateData.whyChooseUs = whyChooseUs.trim();
     if (benefits !== undefined) updateData.benefits = benefits;
     if (howToEnroll !== undefined) updateData.howToEnroll = howToEnroll;
-    if (typeof isActive === 'boolean') updateData.isActive = isActive;
+    if (isActive !== undefined) updateData.isActive = isActive;
+    if (isPopular !== undefined) updateData.isPopular = isPopular;
 
     const category = await CourseCategory.findByIdAndUpdate(
       params.id,

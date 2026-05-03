@@ -32,6 +32,10 @@ const courseCategorySchema = new mongoose.Schema({
     type: Boolean,
     default: true
   },
+  isPopular: {
+    type: Boolean,
+    default: false
+  },
   cbpdDescription: {
     type: String,
     required: false

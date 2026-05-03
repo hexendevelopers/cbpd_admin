@@ -81,7 +81,7 @@ export async function POST(request: NextRequest) {
     const { 
       name, description, slug, icon, image,
       cbpdDescription, longDescription, overviewDescription, 
-      overviewItems, whyChooseUs, benefits, howToEnroll
+      overviewItems, whyChooseUs, benefits, howToEnroll, isPopular
     } = body;
 
     // Validate required fields
@@ -128,6 +128,7 @@ export async function POST(request: NextRequest) {
       whyChooseUs: whyChooseUs?.trim() || "",
       benefits: benefits || [],
       howToEnroll: howToEnroll || [],
+      isPopular: typeof isPopular === 'boolean' ? isPopular : false,
     });
 
     await category.save();

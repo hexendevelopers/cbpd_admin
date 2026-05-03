@@ -26,6 +26,7 @@ import {
   Upload,
   Image,
   message,
+  Switch,
 } from "antd";
 import {
   SearchOutlined,
@@ -62,6 +63,7 @@ interface CourseCategory {
   howToEnroll?: string[];
   icon?: string;
   image?: string;
+  isPopular?: boolean;
   isActive: boolean;
   createdAt: string;
 }
@@ -213,7 +215,8 @@ export default function CourseCategoriesManagement() {
           "Content-Type": "application/json",
         },
         body: action !== "delete" ? JSON.stringify({
-          isActive: action === "activate"
+          isActive: action === "activate" ? true : action === "deactivate" ? false : undefined,
+          isPopular: action === "popular_true" ? true : action === "popular_false" ? false : undefined
         }) : undefined,
       });
 
@@ -363,6 +366,17 @@ export default function CourseCategoriesManagement() {
         <Text style={{ color: "#4a5568" }}>
           {text || "No description"}
         </Text>
+      ),
+    },
+    {
+      title: "Popular",
+      key: "isPopular",
+      render: (record: CourseCategory) => (
+        <Switch
+          checked={record.isPopular}
+          onChange={(checked) => handleCategoryAction(record._id, checked ? "popular_true" : "popular_false")}
+          size="small"
+        />
       ),
     },
     {
@@ -703,6 +717,14 @@ export default function CourseCategoriesManagement() {
                     {selectedCategory.isActive ? "Active" : "Inactive"}
                   </Tag>
                 </Descriptions.Item>
+                <Descriptions.Item label="Popular">
+                  <Tag 
+                    color={selectedCategory.isPopular ? "#8b5cf6" : "#cbd5e1"}
+                    style={{ borderRadius: 6, fontWeight: 500, border: "none" }}
+                  >
+                    {selectedCategory.isPopular ? "Yes" : "No"}
+                  </Tag>
+                </Descriptions.Item>
                 <Descriptions.Item label="Created">
                   {new Date(selectedCategory.createdAt).toLocaleString()}
                 </Descriptions.Item>
@@ -997,6 +1019,13 @@ export default function CourseCategoriesManagement() {
               </Form.Item>
             </Col>
           </Row>
+
+          <Form.Item
+            name="isPopular"
+            valuePropName="checked"
+          >
+            <Switch checkedChildren="Popular" unCheckedChildren="Not Popular" />
+          </Form.Item>
 
           <Form.Item style={{ textAlign: "center", marginTop: 24 }}>
             <Space size="large">
