@@ -36,6 +36,7 @@ import {
   StopOutlined,
   MoreOutlined,
   FilterOutlined,
+  MinusCircleOutlined,
 } from "@ant-design/icons";
 import AdminLayout from "@/components/AdminLayout";
 
@@ -48,6 +49,13 @@ interface CourseCategory {
   name: string;
   slug?: string;
   description: string;
+  cbpdDescription?: string;
+  longDescription?: string;
+  overviewDescription?: string;
+  overviewItems?: { title: string; description: string }[];
+  whyChooseUs?: string;
+  benefits?: string[];
+  howToEnroll?: string[];
   icon?: string;
   image?: string;
   isActive: boolean;
@@ -615,6 +623,27 @@ export default function CourseCategoriesManagement() {
                 <Descriptions.Item label="Description">
                   <Text>{selectedCategory.description || "No description"}</Text>
                 </Descriptions.Item>
+                <Descriptions.Item label="CBPD Description">
+                  <Text>{selectedCategory.cbpdDescription || "None"}</Text>
+                </Descriptions.Item>
+                <Descriptions.Item label="Long Description">
+                  <Text>{selectedCategory.longDescription || "None"}</Text>
+                </Descriptions.Item>
+                <Descriptions.Item label="Overview Description">
+                  <Text>{selectedCategory.overviewDescription || "None"}</Text>
+                </Descriptions.Item>
+                <Descriptions.Item label="Overview Items">
+                  <Text>{selectedCategory.overviewItems?.length || 0} items</Text>
+                </Descriptions.Item>
+                <Descriptions.Item label="Why Choose Us">
+                  <Text>{selectedCategory.whyChooseUs || "None"}</Text>
+                </Descriptions.Item>
+                <Descriptions.Item label="Benefits">
+                  <Text>{selectedCategory.benefits?.length || 0} items</Text>
+                </Descriptions.Item>
+                <Descriptions.Item label="How To Enrol">
+                  <Text>{selectedCategory.howToEnroll?.length || 0} items</Text>
+                </Descriptions.Item>
                 <Descriptions.Item label="Icon">
                   <Text>{selectedCategory.icon || "None"}</Text>
                 </Descriptions.Item>
@@ -675,7 +704,7 @@ export default function CourseCategoriesManagement() {
           form.resetFields();
         }}
         footer={null}
-        width={600}
+        width={800}
       >
         <Form
           form={form}
@@ -706,34 +735,185 @@ export default function CourseCategoriesManagement() {
 
           <Form.Item
             name="description"
-            label="Description"
+            label="Short Description"
           >
             <TextArea 
-              placeholder="Enter category description (optional)"
+              placeholder="Enter short description"
+              rows={2}
+              style={{ borderRadius: 6 }} 
+            />
+          </Form.Item>
+
+          <Form.Item
+            name="cbpdDescription"
+            label="CBPD Description"
+          >
+            <TextArea 
+              placeholder="Enter CBPD introductory description"
+              rows={3}
+              style={{ borderRadius: 6 }} 
+            />
+          </Form.Item>
+
+          <Form.Item
+            name="longDescription"
+            label="Long Description"
+          >
+            <TextArea 
+              placeholder="Enter full long description"
               rows={4}
               style={{ borderRadius: 6 }} 
             />
           </Form.Item>
 
           <Form.Item
-            name="icon"
-            label="Icon (Emoji)"
+            name="overviewDescription"
+            label="Programme Overview Description"
           >
-            <Input 
-              placeholder="e.g. 💼"
+            <TextArea 
+              placeholder="Enter overview text"
+              rows={3}
               style={{ borderRadius: 6 }} 
             />
           </Form.Item>
 
+          <div style={{ background: '#f8fafc', padding: '16px', borderRadius: '8px', marginBottom: '24px', border: '1px solid #e2e8f0' }}>
+            <Text strong style={{ display: 'block', marginBottom: '16px' }}>Overview Items (Accordion)</Text>
+            <Form.List name="overviewItems">
+              {(fields, { add, remove }) => (
+                <>
+                  {fields.map(({ key, name, ...restField }) => (
+                    <div key={key} style={{ display: 'flex', gap: '8px', marginBottom: '16px', alignItems: 'flex-start' }}>
+                      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                        <Form.Item
+                          {...restField}
+                          name={[name, 'title']}
+                          rules={[{ required: true, message: 'Missing title' }]}
+                          style={{ marginBottom: 0 }}
+                        >
+                          <Input placeholder="Item Title" />
+                        </Form.Item>
+                        <Form.Item
+                          {...restField}
+                          name={[name, 'description']}
+                          rules={[{ required: true, message: 'Missing description' }]}
+                          style={{ marginBottom: 0 }}
+                        >
+                          <TextArea placeholder="Item Description" rows={2} />
+                        </Form.Item>
+                      </div>
+                      <MinusCircleOutlined onClick={() => remove(name)} style={{ color: '#ef4444', marginTop: '8px', cursor: 'pointer' }} />
+                    </div>
+                  ))}
+                  <Form.Item style={{ marginBottom: 0 }}>
+                    <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
+                      Add Overview Item
+                    </Button>
+                  </Form.Item>
+                </>
+              )}
+            </Form.List>
+          </div>
+
           <Form.Item
-            name="image"
-            label="Image URL"
+            name="whyChooseUs"
+            label="Why Choose Us Description"
           >
-            <Input 
-              placeholder="Enter image URL"
+            <TextArea 
+              placeholder="Enter Why Choose Us text"
+              rows={3}
               style={{ borderRadius: 6 }} 
             />
           </Form.Item>
+
+          <div style={{ background: '#f8fafc', padding: '16px', borderRadius: '8px', marginBottom: '24px', border: '1px solid #e2e8f0' }}>
+            <Text strong style={{ display: 'block', marginBottom: '16px' }}>Benefits of Studying</Text>
+            <Form.List name="benefits">
+              {(fields, { add, remove }) => (
+                <>
+                  {fields.map((field, index) => (
+                    <Form.Item
+                      required={false}
+                      key={field.key}
+                      style={{ marginBottom: '8px' }}
+                    >
+                      <Form.Item
+                        {...field}
+                        validateTrigger={['onChange', 'onBlur']}
+                        rules={[{ required: true, whitespace: true, message: "Please input benefit point or delete this field." }]}
+                        noStyle
+                      >
+                        <Input placeholder={`Benefit point ${index + 1}`} style={{ width: '90%', marginRight: '8px' }} />
+                      </Form.Item>
+                      <MinusCircleOutlined onClick={() => remove(field.name)} style={{ color: '#ef4444', cursor: 'pointer' }} />
+                    </Form.Item>
+                  ))}
+                  <Form.Item style={{ marginBottom: 0 }}>
+                    <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
+                      Add Benefit
+                    </Button>
+                  </Form.Item>
+                </>
+              )}
+            </Form.List>
+          </div>
+
+          <div style={{ background: '#f8fafc', padding: '16px', borderRadius: '8px', marginBottom: '24px', border: '1px solid #e2e8f0' }}>
+            <Text strong style={{ display: 'block', marginBottom: '16px' }}>How To Enrol Steps</Text>
+            <Form.List name="howToEnroll">
+              {(fields, { add, remove }) => (
+                <>
+                  {fields.map((field, index) => (
+                    <Form.Item
+                      required={false}
+                      key={field.key}
+                      style={{ marginBottom: '8px' }}
+                    >
+                      <Form.Item
+                        {...field}
+                        validateTrigger={['onChange', 'onBlur']}
+                        rules={[{ required: true, whitespace: true, message: "Please input step or delete this field." }]}
+                        noStyle
+                      >
+                        <Input placeholder={`Enrolment step ${index + 1}`} style={{ width: '90%', marginRight: '8px' }} />
+                      </Form.Item>
+                      <MinusCircleOutlined onClick={() => remove(field.name)} style={{ color: '#ef4444', cursor: 'pointer' }} />
+                    </Form.Item>
+                  ))}
+                  <Form.Item style={{ marginBottom: 0 }}>
+                    <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
+                      Add Enrolment Step
+                    </Button>
+                  </Form.Item>
+                </>
+              )}
+            </Form.List>
+          </div>
+
+          <Row gutter={16}>
+            <Col span={12}>
+              <Form.Item
+                name="icon"
+                label="Icon (Emoji)"
+              >
+                <Input 
+                  placeholder="e.g. 💼"
+                  style={{ borderRadius: 6 }} 
+                />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item
+                name="image"
+                label="Background Image URL"
+              >
+                <Input 
+                  placeholder="Enter image URL"
+                  style={{ borderRadius: 6 }} 
+                />
+              </Form.Item>
+            </Col>
+          </Row>
 
           <Form.Item style={{ textAlign: "center", marginTop: 24 }}>
             <Space size="large">

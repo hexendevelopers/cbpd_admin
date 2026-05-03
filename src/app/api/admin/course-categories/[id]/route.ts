@@ -43,7 +43,11 @@ export async function PUT(
     await connectDB();
 
     const body = await request.json();
-    const { name, description, isActive, slug, icon, image } = body;
+    const { 
+      name, description, isActive, slug, icon, image,
+      cbpdDescription, longDescription, overviewDescription, 
+      overviewItems, whyChooseUs, benefits, howToEnroll
+    } = body;
 
     // Check if category exists
     const existingCategory = await CourseCategory.findById(params.id);
@@ -87,6 +91,13 @@ export async function PUT(
     if (slug !== undefined) updateData.slug = slug.trim();
     if (icon !== undefined) updateData.icon = icon.trim();
     if (image !== undefined) updateData.image = image.trim();
+    if (cbpdDescription !== undefined) updateData.cbpdDescription = cbpdDescription.trim();
+    if (longDescription !== undefined) updateData.longDescription = longDescription.trim();
+    if (overviewDescription !== undefined) updateData.overviewDescription = overviewDescription.trim();
+    if (overviewItems !== undefined) updateData.overviewItems = overviewItems;
+    if (whyChooseUs !== undefined) updateData.whyChooseUs = whyChooseUs.trim();
+    if (benefits !== undefined) updateData.benefits = benefits;
+    if (howToEnroll !== undefined) updateData.howToEnroll = howToEnroll;
     if (typeof isActive === 'boolean') updateData.isActive = isActive;
 
     const category = await CourseCategory.findByIdAndUpdate(

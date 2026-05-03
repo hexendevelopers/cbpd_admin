@@ -78,7 +78,11 @@ export async function POST(request: NextRequest) {
     await connectDB();
 
     const body = await request.json();
-    const { name, description, slug, icon, image } = body;
+    const { 
+      name, description, slug, icon, image,
+      cbpdDescription, longDescription, overviewDescription, 
+      overviewItems, whyChooseUs, benefits, howToEnroll
+    } = body;
 
     // Validate required fields
     if (!name) {
@@ -117,6 +121,13 @@ export async function POST(request: NextRequest) {
       description: description?.trim() || "",
       icon: icon?.trim() || "",
       image: image?.trim() || "",
+      cbpdDescription: cbpdDescription?.trim() || "",
+      longDescription: longDescription?.trim() || "",
+      overviewDescription: overviewDescription?.trim() || "",
+      overviewItems: overviewItems || [],
+      whyChooseUs: whyChooseUs?.trim() || "",
+      benefits: benefits || [],
+      howToEnroll: howToEnroll || [],
     });
 
     await category.save();

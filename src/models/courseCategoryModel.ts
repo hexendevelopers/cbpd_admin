@@ -31,7 +31,33 @@ const courseCategorySchema = new mongoose.Schema({
   isActive: {
     type: Boolean,
     default: true
-  }
+  },
+  cbpdDescription: {
+    type: String,
+    required: false
+  },
+  longDescription: {
+    type: String,
+    required: false
+  },
+  overviewDescription: {
+    type: String,
+    required: false
+  },
+  overviewItems: [{
+    title: { type: String, required: true },
+    description: { type: String, required: true }
+  }],
+  whyChooseUs: {
+    type: String,
+    required: false
+  },
+  benefits: [{
+    type: String
+  }],
+  howToEnroll: [{
+    type: String
+  }]
 }, {
   timestamps: true
 });
