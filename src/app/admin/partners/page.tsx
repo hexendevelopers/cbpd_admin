@@ -14,6 +14,7 @@ import {
   Dropdown,
   Menu,
   Descriptions,
+  Input,
 } from "antd";
 import {
   EyeOutlined,
@@ -21,6 +22,7 @@ import {
   CheckCircleOutlined,
   MoreOutlined,
   PhoneOutlined,
+  ReloadOutlined,
 } from "@ant-design/icons";
 import AdminLayout from "@/components/AdminLayout";
 import dayjs from "dayjs";
@@ -50,6 +52,7 @@ export default function PartnersManagement() {
   const [loading, setLoading] = useState(true);
   const [selectedPartner, setSelectedPartner] = useState<Partner | null>(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [searchText, setSearchText] = useState("");
   const [filters, setFilters] = useState({
     status: "",
     page: 1,
@@ -232,6 +235,12 @@ export default function PartnersManagement() {
     },
   ];
 
+  const filteredPartners = partners.filter((partner) =>
+    partner.organizationName.toLowerCase().includes(searchText.toLowerCase()) ||
+    partner.authorizedSignatory.toLowerCase().includes(searchText.toLowerCase()) ||
+    partner.email.toLowerCase().includes(searchText.toLowerCase())
+  );
+
   return (
     <AdminLayout>
       <div style={{ padding: 24 }}>
@@ -241,6 +250,12 @@ export default function PartnersManagement() {
             <Text type="secondary">Manage all applications to become a partner</Text>
           </div>
           <Space>
+            <Input.Search
+              placeholder="Search..."
+              allowClear
+              onChange={(e) => setSearchText(e.target.value)}
+              style={{ width: 200 }}
+            />
             <Select
               placeholder="Filter by Status"
               allowClear
@@ -251,13 +266,16 @@ export default function PartnersManagement() {
               <Select.Option value="Reviewed">Reviewed</Select.Option>
               <Select.Option value="Contacted">Contacted</Select.Option>
             </Select>
+            <Button icon={<ReloadOutlined />} onClick={fetchPartners}>
+              Refresh
+            </Button>
           </Space>
         </div>
 
         <Card bordered={false}>
           <Table
             columns={columns}
-            dataSource={partners}
+            dataSource={filteredPartners}
             rowKey="_id"
             loading={loading}
             pagination={{

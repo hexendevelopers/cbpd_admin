@@ -13,12 +13,14 @@ import {
   Select,
   Dropdown,
   Menu,
+  Input,
 } from "antd";
 import {
   EyeOutlined,
   DeleteOutlined,
   CheckCircleOutlined,
   MoreOutlined,
+  ReloadOutlined,
 } from "@ant-design/icons";
 import AdminLayout from "@/components/AdminLayout";
 import dayjs from "dayjs";
@@ -43,6 +45,7 @@ export default function ContactsManagement() {
   const [loading, setLoading] = useState(true);
   const [selectedContact, setSelectedContact] = useState<Contact | null>(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [searchText, setSearchText] = useState("");
   const [filters, setFilters] = useState({
     status: "",
     enquiryType: "",
@@ -212,6 +215,13 @@ export default function ContactsManagement() {
     },
   ];
 
+  const filteredContacts = contacts.filter((contact) =>
+    contact.firstName.toLowerCase().includes(searchText.toLowerCase()) ||
+    contact.lastName.toLowerCase().includes(searchText.toLowerCase()) ||
+    contact.email.toLowerCase().includes(searchText.toLowerCase()) ||
+    contact.phone.toLowerCase().includes(searchText.toLowerCase())
+  );
+
   return (
     <AdminLayout>
       <div style={{ padding: 24 }}>
@@ -221,6 +231,12 @@ export default function ContactsManagement() {
             <Text type="secondary">Manage all messages from the contact form</Text>
           </div>
           <Space>
+            <Input.Search
+              placeholder="Search..."
+              allowClear
+              onChange={(e) => setSearchText(e.target.value)}
+              style={{ width: 180 }}
+            />
             <Select
               placeholder="Filter by Status"
               allowClear
@@ -240,13 +256,16 @@ export default function ContactsManagement() {
               <Select.Option value="General Enquiry">General Enquiry</Select.Option>
               <Select.Option value="Programme Enquiry">Programme Enquiry</Select.Option>
             </Select>
+            <Button icon={<ReloadOutlined />} onClick={fetchContacts}>
+              Refresh
+            </Button>
           </Space>
         </div>
 
         <Card bordered={false}>
           <Table
             columns={columns}
-            dataSource={contacts}
+            dataSource={filteredContacts}
             rowKey="_id"
             loading={loading}
             pagination={{
