@@ -23,6 +23,9 @@ import {
   notification,
   Dropdown,
   Menu,
+  Upload,
+  Image,
+  message,
 } from "antd";
 import {
   SearchOutlined,
@@ -37,6 +40,7 @@ import {
   MoreOutlined,
   FilterOutlined,
   MinusCircleOutlined,
+  UploadOutlined,
 } from "@ant-design/icons";
 import AdminLayout from "@/components/AdminLayout";
 
@@ -70,6 +74,8 @@ export default function CourseCategoriesManagement() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
+  const [uploadLoading, setUploadLoading] = useState(false);
+  const [imageUrl, setImageUrl] = useState<string>("");
   const [filters, setFilters] = useState({
     search: "",
     status: "",
@@ -117,6 +123,37 @@ export default function CourseCategoriesManagement() {
       });
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleImageUpload = async (file: File) => {
+    setUploadLoading(true);
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      // Using the same upload endpoint as courses
+      const response = await fetch("/api/admin/courses/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setImageUrl(data.imageUrl);
+        form.setFieldsValue({ image: data.imageUrl });
+        message.success("Image uploaded successfully");
+        return data.imageUrl;
+      } else {
+        const errorData = await response.json();
+        message.error(errorData.error || "Upload failed");
+        return false;
+      }
+    } catch (error) {
+      message.error("Upload failed");
+      return false;
+    } finally {
+      setUploadLoading(false);
     }
   };
 
@@ -207,6 +244,11 @@ export default function CourseCategoriesManagement() {
 
   const handleSubmit = async (values: any) => {
     try {
+      const formattedValues = {
+        ...values,
+        image: imageUrl || values.image || null,
+      };
+
       const url = isEditMode 
         ? `/api/admin/course-categories/${selectedCategory?._id}`
         : "/api/admin/course-categories";
@@ -218,7 +260,7 @@ export default function CourseCategoriesManagement() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(values),
+        body: JSON.stringify(formattedValues),
       });
 
       if (response.ok) {
@@ -230,6 +272,7 @@ export default function CourseCategoriesManagement() {
         });
         setIsModalVisible(false);
         setSelectedCategory(null);
+        setImageUrl("");
         form.resetFields();
         fetchCategories();
       } else {
@@ -267,6 +310,7 @@ export default function CourseCategoriesManagement() {
         onClick={() => {
           setSelectedCategory(record);
           setIsEditMode(true);
+          setImageUrl(record.image || "");
           form.setFieldsValue(record);
           setIsModalVisible(true);
         }}
@@ -413,6 +457,7 @@ export default function CourseCategoriesManagement() {
                 icon={<PlusOutlined />}
                 onClick={() => {
                   setIsEditMode(false);
+                  setImageUrl("");
                   form.resetFields();
                   setIsModalVisible(true);
                 }}
@@ -670,6 +715,7 @@ export default function CourseCategoriesManagement() {
                 icon={<EditOutlined />}
                 onClick={() => {
                   setIsEditMode(true);
+                  setImageUrl(selectedCategory.image || "");
                   form.setFieldsValue(selectedCategory);
                   setIsModalVisible(true);
                   setIsDrawerVisible(false);
@@ -701,6 +747,7 @@ export default function CourseCategoriesManagement() {
         onCancel={() => {
           setIsModalVisible(false);
           setSelectedCategory(null);
+          setImageUrl("");
           form.resetFields();
         }}
         footer={null}
@@ -905,12 +952,48 @@ export default function CourseCategoriesManagement() {
             <Col span={12}>
               <Form.Item
                 name="image"
-                label="Background Image URL"
+                label="Background Image URL / Upload"
               >
-                <Input 
-                  placeholder="Enter image URL"
-                  style={{ borderRadius: 6 }} 
-                />
+                <Space direction="vertical" style={{ width: "100%" }}>
+                  <Input 
+                    placeholder="Enter image URL or upload below"
+                    style={{ borderRadius: 6 }} 
+                    value={imageUrl}
+                    onChange={(e) => {
+                      setImageUrl(e.target.value);
+                      form.setFieldsValue({ image: e.target.value });
+                    }}
+                  />
+                  <Upload
+                    name="file"
+                    listType="picture-card"
+                    className="avatar-uploader"
+                    showUploadList={false}
+                    beforeUpload={handleImageUpload}
+                    accept="image/*"
+                  >
+                    {imageUrl ? (
+                      <img
+                        src={imageUrl}
+                        alt="category"
+                        style={{
+                          width: "100px",
+                          height: "100px",
+                          objectFit: "cover",
+                          borderRadius: "8px"
+                        }}
+                      />
+                    ) : (
+                      <div>
+                        {uploadLoading ? <Spin /> : <UploadOutlined />}
+                        <div style={{ marginTop: 8 }}>Upload</div>
+                      </div>
+                    )}
+                  </Upload>
+                  <Text type="secondary" style={{ fontSize: 12 }}>
+                    Upload image (JPG, PNG, WebP - Max 5MB)
+                  </Text>
+                </Space>
               </Form.Item>
             </Col>
           </Row>
@@ -930,6 +1013,7 @@ export default function CourseCategoriesManagement() {
                 onClick={() => {
                   setIsModalVisible(false);
                   setSelectedCategory(null);
+                  setImageUrl("");
                   form.resetFields();
                 }}
                 style={{ borderRadius: 6, minWidth: 120 }}
