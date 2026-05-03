@@ -906,6 +906,29 @@ export default function CoursesManagement() {
                 <Descriptions.Item label="Overview">
                   <Text>{selectedCourse.overview || "N/A"}</Text>
                 </Descriptions.Item>
+                <Descriptions.Item label="Curriculum">
+                  {selectedCourse.curriculum && selectedCourse.curriculum.length > 0 ? (
+                    <ul style={{ paddingLeft: 20, margin: 0 }}>
+                      {selectedCourse.curriculum.map((item, index) => (
+                        <li key={index}>{item}</li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <Text type="secondary">No curriculum defined</Text>
+                  )}
+                </Descriptions.Item>
+                <Descriptions.Item label="Job Market">
+                  {selectedCourse.jobMarket ? (
+                    <div>
+                      <div><Text strong>Salary Range: </Text><Text>{selectedCourse.jobMarket.salaryRange || "N/A"}</Text></div>
+                      <div><Text strong>Growth Rate: </Text><Text>{selectedCourse.jobMarket.growthRate || "N/A"}</Text></div>
+                      <div><Text strong>Top Employers: </Text><Text>{selectedCourse.jobMarket.topEmployers?.join(", ") || "N/A"}</Text></div>
+                      <div style={{ marginTop: 8 }}><Text>{selectedCourse.jobMarket.description || "N/A"}</Text></div>
+                    </div>
+                  ) : (
+                    <Text type="secondary">No job market insights</Text>
+                  )}
+                </Descriptions.Item>
                 <Descriptions.Item label="Image">
                   {selectedCourse.image ? (
                     <Text copyable style={{ color: "#64748b" }}>
