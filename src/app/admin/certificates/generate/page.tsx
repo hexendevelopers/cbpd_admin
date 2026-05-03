@@ -125,7 +125,7 @@ const CertificateCanvas = forwardRef<HTMLDivElement, CertificateCanvasProps>(
           <div className="certificate-number" style={{marginTop : "112px", marginLeft : "40px"}}>{certificateNumber}</div>
           <div className="registration-number" style={{marginTop : "112px", marginLeft : "40px"}}>{registrationNumber}</div>
         </div>
-        <div className="date-issued" style={{marginBottom : "121px", marginLeft : "70px"}}>{dateIssuedText}</div>
+        <div className="date-issued" style={{marginBottom : "121px", marginLeft : "90px"}}>{dateIssuedText}</div>
       </div>
     );
   },
