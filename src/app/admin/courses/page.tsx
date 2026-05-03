@@ -274,14 +274,8 @@ export default function CoursesManagement() {
     try {
       const formattedValues = {
         ...values,
-        curriculum: typeof values.curriculum === 'string' 
-          ? values.curriculum.split('\n').map((x:string) => x.trim()).filter(Boolean) 
-          : values.curriculum,
         jobMarket: values.jobMarket ? {
           ...values.jobMarket,
-          topEmployers: typeof values.jobMarket.topEmployers === 'string' 
-            ? values.jobMarket.topEmployers.split(',').map((x:string) => x.trim()).filter(Boolean) 
-            : values.jobMarket.topEmployers
         } : undefined,
         image: imageUrl || values.image || null,
       };
@@ -962,10 +956,10 @@ export default function CoursesManagement() {
                   form.setFieldsValue({
                     ...selectedCourse,
                     categoryId: selectedCourse.categoryId?._id,
-                    curriculum: selectedCourse.curriculum?.join('\n'),
+                    curriculum: selectedCourse.curriculum || [],
                     jobMarket: selectedCourse.jobMarket ? {
                       ...selectedCourse.jobMarket,
-                      topEmployers: selectedCourse.jobMarket.topEmployers?.join(', ')
+                      topEmployers: selectedCourse.jobMarket.topEmployers || []
                     } : undefined
                   });
                   setIsModalVisible(true);
@@ -1085,16 +1079,37 @@ export default function CoursesManagement() {
             />
           </Form.Item>
 
-          <Form.Item
-            name="curriculum"
-            label="Curriculum (One item per line)"
-          >
-            <TextArea
-              placeholder="Module 1: Introduction&#10;Module 2: Advanced Topics"
-              rows={4}
-              style={{ borderRadius: 6 }}
-            />
-          </Form.Item>
+          <div style={{ background: '#f8fafc', padding: '16px', borderRadius: '8px', marginBottom: '24px', border: '1px solid #e2e8f0' }}>
+            <Text strong style={{ display: 'block', marginBottom: '16px' }}>Core Curriculum</Text>
+            <Form.List name="curriculum">
+              {(fields, { add, remove }) => (
+                <>
+                  {fields.map((field, index) => (
+                    <Form.Item
+                      required={false}
+                      key={field.key}
+                      style={{ marginBottom: '8px' }}
+                    >
+                      <Form.Item
+                        {...field}
+                        validateTrigger={['onChange', 'onBlur']}
+                        rules={[{ required: true, whitespace: true, message: "Please input curriculum module or delete this field." }]}
+                        noStyle
+                      >
+                        <Input placeholder={`Module ${index + 1}`} style={{ width: '90%', marginRight: '8px' }} />
+                      </Form.Item>
+                      <MinusCircleOutlined onClick={() => remove(field.name)} style={{ color: '#ef4444', cursor: 'pointer' }} />
+                    </Form.Item>
+                  ))}
+                  <Form.Item style={{ marginBottom: 0 }}>
+                    <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
+                      Add Curriculum Module
+                    </Button>
+                  </Form.Item>
+                </>
+              )}
+            </Form.List>
+          </div>
 
           <div style={{ padding: '16px', background: '#f8fafc', borderRadius: '8px', marginBottom: '24px', border: '1px solid #e2e8f0' }}>
             <Text strong style={{ display: 'block', marginBottom: '16px' }}>Job Market Insights</Text>
@@ -1112,9 +1127,37 @@ export default function CoursesManagement() {
               </Col>
             </Row>
 
-            <Form.Item name={['jobMarket', 'topEmployers']} label="Top Employers (Comma separated)">
-              <Input placeholder="e.g. Leading UK Companies, Global Enterprises" style={{ borderRadius: 6 }} />
-            </Form.Item>
+            <div style={{ marginBottom: '24px' }}>
+              <Text strong style={{ display: 'block', marginBottom: '8px' }}>Top Employers</Text>
+              <Form.List name={['jobMarket', 'topEmployers']}>
+                {(fields, { add, remove }) => (
+                  <>
+                    {fields.map((field, index) => (
+                      <Form.Item
+                        required={false}
+                        key={field.key}
+                        style={{ marginBottom: '8px' }}
+                      >
+                        <Form.Item
+                          {...field}
+                          validateTrigger={['onChange', 'onBlur']}
+                          rules={[{ required: true, whitespace: true, message: "Please input employer name or delete this field." }]}
+                          noStyle
+                        >
+                          <Input placeholder={`Employer ${index + 1}`} style={{ width: '90%', marginRight: '8px' }} />
+                        </Form.Item>
+                        <MinusCircleOutlined onClick={() => remove(field.name)} style={{ color: '#ef4444', cursor: 'pointer' }} />
+                      </Form.Item>
+                    ))}
+                    <Form.Item style={{ marginBottom: 0 }}>
+                      <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
+                        Add Employer
+                      </Button>
+                    </Form.Item>
+                  </>
+                )}
+              </Form.List>
+            </div>
 
             <Form.Item name={['jobMarket', 'description']} label="Market Description">
               <TextArea placeholder="Describe the job market for this discipline" rows={3} style={{ borderRadius: 6 }} />
