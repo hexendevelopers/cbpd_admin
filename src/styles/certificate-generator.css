@@ -297,3 +297,77 @@
 .accreditation-canvas .effective-date { top: 516px; left: 285px; }
 .accreditation-canvas .valid-until { top: 531px; left: 274px; }
 .accreditation-canvas .accreditation-level { top: 547px; left: 210px; width: 290px; }
+
+/* Membership certificate canvas (matches membership-cert-reference proportion). */
+.membership-canvas {
+  position: relative;
+  width: 735px;
+  height: 1040px;
+  flex-shrink: 0;
+  color: #121212;
+  font-family: "Poppins", "Avenir Next", "Helvetica Neue", Arial, sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+}
+
+.membership-canvas * {
+  font-family: inherit !important;
+  box-sizing: border-box;
+}
+
+.membership-canvas .membership-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+  user-select: none;
+}
+
+.membership-canvas .membership-field {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.membership-canvas .institution-name {
+  top: 437px;
+  left: 50%;
+  transform: translateX(-50%);
+  
+  font-size: 30px;
+  font-weight: 700;
+  font-family: "Times New Roman", Times, "Liberation Serif", Georgia, serif !important;
+  text-transform: uppercase;
+}
+
+.membership-canvas .location {
+  top: 477px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 360px;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.membership-canvas .membership-number {
+  top: 690px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300px;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.membership-canvas .commencement-date {
+  top: 802px;
+  left: 400px;
+  width: 260px;
+  text-align: left;
+  font-size: 13px;
+  font-weight: 700;
+}

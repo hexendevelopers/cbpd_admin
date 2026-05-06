@@ -29,6 +29,8 @@ const LAR_CANVAS_W = 737;
 const LAR_CANVAS_H = 1042;
 const ACC_CANVAS_W = 564;
 const ACC_CANVAS_H = 796;
+const MEM_CANVAS_W = 735;
+const MEM_CANVAS_H = 1040;
 const UNIT_ROWS = 10;
 
 type CertificateFormValues = {
@@ -92,6 +94,13 @@ type AccreditationFormValues = {
   effectiveDate: Dayjs;
   validUntil: Dayjs;
   accreditationLevel: string;
+};
+
+type MembershipFormValues = {
+  institutionName: string;
+  location: string;
+  membershipNumber: string;
+  commencementDate: Dayjs;
 };
 
 const CertificateCanvas = forwardRef<HTMLDivElement, CertificateCanvasProps>(
@@ -276,6 +285,39 @@ const AccreditationCanvas = forwardRef<HTMLDivElement, AccreditationCanvasProps>
   },
 );
 
+type MembershipCanvasProps = {
+  institutionName: string;
+  location: string;
+  membershipNumber: string;
+  commencementDateText: string;
+};
+
+const MembershipCanvas = forwardRef<HTMLDivElement, MembershipCanvasProps>(
+  function MembershipCanvas(
+    { institutionName, location, membershipNumber, commencementDateText },
+    ref,
+  ) {
+    return (
+      <div ref={ref} className="membership-canvas">
+        <img
+          src="/membership-cert-template.jpeg"
+          alt=""
+          className="membership-bg"
+          width={MEM_CANVAS_W}
+          height={MEM_CANVAS_H}
+          draggable={false}
+        />
+        <div className="membership-field institution-name">{institutionName}</div>
+        <div className="membership-field location">{location}</div>
+        <div className="membership-field membership-number">{membershipNumber}</div>
+        <div className="membership-field commencement-date">
+          {commencementDateText}
+        </div>
+      </div>
+    );
+  },
+);
+
 const buildDefaultUnits = () =>
   Array.from({ length: UNIT_ROWS }, () => ({
     unitCode: "",
@@ -292,12 +334,15 @@ export default function GenerateCertificatePage() {
   const [form] = Form.useForm<CertificateFormValues>();
   const [larForm] = Form.useForm<LarFormValues>();
   const [accreditationForm] = Form.useForm<AccreditationFormValues>();
+  const [membershipForm] = Form.useForm<MembershipFormValues>();
   const certificateRef = useRef<HTMLDivElement>(null);
   const larRef = useRef<HTMLDivElement>(null);
   const accreditationRef = useRef<HTMLDivElement>(null);
+  const membershipRef = useRef<HTMLDivElement>(null);
   const [pdfLoading, setPdfLoading] = useState(false);
   const [larPdfLoading, setLarPdfLoading] = useState(false);
   const [accreditationPdfLoading, setAccreditationPdfLoading] = useState(false);
+  const [membershipPdfLoading, setMembershipPdfLoading] = useState(false);
 
   const scrollToPreview = () => {
     certificateRef.current?.scrollIntoView({
@@ -554,6 +599,95 @@ export default function GenerateCertificatePage() {
     }
   }, [accreditationForm]);
 
+  const handleMembershipPreview = async () => {
+    try {
+      await membershipForm.validateFields();
+      notification.success({
+        message: "Membership preview updated",
+        description: "Membership certificate values are shown in preview.",
+        placement: "topRight",
+      });
+      membershipRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    } catch {
+      notification.warning({
+        message: "Check the form",
+        description: "Please fill all required membership fields before previewing.",
+        placement: "topRight",
+      });
+    }
+  };
+
+  const handleMembershipDownloadPdf = useCallback(async () => {
+    let values: MembershipFormValues;
+    try {
+      values = await membershipForm.validateFields();
+    } catch {
+      notification.warning({
+        message: "Check the form",
+        description: "Please fill all required membership fields before downloading.",
+        placement: "topRight",
+      });
+      return;
+    }
+
+    const el = membershipRef.current;
+    if (!el) {
+      notification.error({
+        message: "Preview not ready",
+        description: "Could not find the membership certificate element.",
+        placement: "topRight",
+      });
+      return;
+    }
+
+    setMembershipPdfLoading(true);
+    try {
+      const [{ default: html2canvas }, { jsPDF }] = await Promise.all([
+        import("html2canvas"),
+        import("jspdf"),
+      ]);
+
+      const canvas = await html2canvas(el, {
+        scale: 4,
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: "#ffffff",
+        width: MEM_CANVAS_W,
+        height: MEM_CANVAS_H,
+        windowWidth: MEM_CANVAS_W,
+        windowHeight: MEM_CANVAS_H,
+      });
+
+      const img = canvas.toDataURL("image/png");
+      const pdf = new jsPDF({
+        orientation: "portrait",
+        unit: "px",
+        format: [MEM_CANVAS_W, MEM_CANVAS_H],
+      });
+      pdf.addImage(img, "PNG", 0, 0, MEM_CANVAS_W, MEM_CANVAS_H);
+
+      const safeNo = (values.membershipNumber || "membership").replace(
+        /[^a-zA-Z0-9/_-]+/g,
+        "_",
+      );
+      pdf.save(`membership-certificate-${safeNo}.pdf`);
+
+      notification.success({
+        message: "Membership PDF downloaded",
+        placement: "topRight",
+      });
+    } catch (e) {
+      console.error(e);
+      notification.error({
+        message: "Membership PDF export failed",
+        description: e instanceof Error ? e.message : "Unknown error",
+        placement: "topRight",
+      });
+    } finally {
+      setMembershipPdfLoading(false);
+    }
+  }, [membershipForm]);
+
   const watched = Form.useWatch(undefined, form) as
     | Partial<CertificateFormValues>
     | undefined;
@@ -562,6 +696,9 @@ export default function GenerateCertificatePage() {
     | undefined;
   const accreditationWatched = Form.useWatch(undefined, accreditationForm) as
     | Partial<AccreditationFormValues>
+    | undefined;
+  const membershipWatched = Form.useWatch(undefined, membershipForm) as
+    | Partial<MembershipFormValues>
     | undefined;
 
   const studentName = (watched?.studentName ?? "").trim();
@@ -594,6 +731,14 @@ export default function GenerateCertificatePage() {
     : "";
   const validUntilText = accreditationWatched?.validUntil
     ? dayjs(accreditationWatched.validUntil).format("D MMMM YYYY")
+    : "";
+  const membershipInstitutionName = (
+    membershipWatched?.institutionName ?? ""
+  ).trim();
+  const membershipLocation = (membershipWatched?.location ?? "").trim();
+  const membershipNumber = (membershipWatched?.membershipNumber ?? "").trim();
+  const membershipCommencementDateText = membershipWatched?.commencementDate
+    ? dayjs(membershipWatched.commencementDate).format("D MMMM YYYY")
     : "";
 
   return (
@@ -1159,6 +1304,118 @@ export default function GenerateCertificatePage() {
                             effectiveDateText={effectiveDateText}
                             validUntilText={validUntilText}
                             accreditationLevel={accreditationLevel}
+                          />
+                        </div>
+                      </div>
+                    </Card>
+                  </Col>
+                </Row>
+              ),
+            },
+            {
+              key: "membership",
+              label: "Membership Certificate",
+              children: (
+                <Row gutter={[24, 24]}>
+                  <Col xs={24} lg={10}>
+                    <Card title="Membership details" bordered={false}>
+                      <Form<MembershipFormValues>
+                        form={membershipForm}
+                        layout="vertical"
+                        requiredMark="optional"
+                        initialValues={{
+                          commencementDate: dayjs(),
+                        }}
+                      >
+                        <Form.Item
+                          name="institutionName"
+                          label="Institution Name"
+                          rules={[
+                            {
+                              required: true,
+                              message: "Institution name is required",
+                            },
+                          ]}
+                        >
+                          <Input placeholder="e.g. EDWIN ACADEMY" autoComplete="off" />
+                        </Form.Item>
+                        <Form.Item
+                          name="location"
+                          label="Location"
+                          rules={[{ required: true, message: "Location is required" }]}
+                        >
+                          <Input placeholder="e.g. Kannur, Kerala, India" autoComplete="off" />
+                        </Form.Item>
+                        <Form.Item
+                          name="membershipNumber"
+                          label="Membership Number"
+                          rules={[
+                            {
+                              required: true,
+                              message: "Membership number is required",
+                            },
+                          ]}
+                        >
+                          <Input placeholder="e.g. EDA/26/00136" autoComplete="off" />
+                        </Form.Item>
+                        <Form.Item
+                          name="commencementDate"
+                          label="Date of Commencement"
+                          rules={[
+                            {
+                              required: true,
+                              message: "Commencement date is required",
+                            },
+                          ]}
+                        >
+                          <DatePicker
+                            style={{ width: "100%" }}
+                            format="D MMMM YYYY"
+                          />
+                        </Form.Item>
+                        <Space wrap>
+                          <Button
+                            type="primary"
+                            icon={<EyeOutlined />}
+                            onClick={handleMembershipPreview}
+                          >
+                            Preview Membership Certificate
+                          </Button>
+                          <Button
+                            icon={<DownloadOutlined />}
+                            loading={membershipPdfLoading}
+                            onClick={handleMembershipDownloadPdf}
+                          >
+                            Download PDF
+                          </Button>
+                        </Space>
+                      </Form>
+                    </Card>
+                  </Col>
+                  <Col xs={24} lg={14}>
+                    <Card title="Membership preview (735 × 1040 px)" bordered={false}>
+                      <Text
+                        type="secondary"
+                        style={{ display: "block", marginBottom: 16 }}
+                      >
+                        Preview uses the membership template with value overlays only.
+                      </Text>
+                      <div
+                        style={{
+                          overflow: "auto",
+                          maxHeight: "min(85vh, 1200px)",
+                          background: "#e2e8f0",
+                          borderRadius: 8,
+                          padding: 16,
+                        }}
+                      >
+                        <div style={{ display: "flex", justifyContent: "center" }}>
+                          <MembershipCanvas
+                            ref={membershipRef}
+                            institutionName={membershipInstitutionName}
+                            location={membershipLocation}
+                            membershipNumber={membershipNumber}
+                            commencementDateText={membershipCommencementDateText}
                           />
                         </div>
                       </div>
