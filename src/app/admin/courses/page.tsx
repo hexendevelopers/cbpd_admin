@@ -30,6 +30,7 @@ import {
 import {
   SearchOutlined,
   PlusOutlined,
+  MinusCircleOutlined,
   EditOutlined,
   DeleteOutlined,
   EyeOutlined,
