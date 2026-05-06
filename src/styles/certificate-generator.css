@@ -223,3 +223,77 @@
 }
 .lar-canvas .certificate-no { top: 788px; left: 566px; width: 160px; }
 .lar-canvas .registration-no { top: 811px; left: 566px; width: 160px; }
+
+/* Accreditation certificate canvas (matches accredation-cert-template.jpeg). */
+.accreditation-canvas {
+  position: relative;
+  width: 564px;
+  height: 796px;
+  flex-shrink: 0;
+  color: #121212;
+  font-family: "Poppins", "Avenir Next", "Helvetica Neue", Arial, sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+}
+
+.accreditation-canvas * {
+  font-family: inherit !important;
+  box-sizing: border-box;
+}
+
+.accreditation-canvas .accreditation-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+  user-select: none;
+}
+
+.accreditation-canvas .accreditation-field {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  line-height: 1.2;
+}
+
+.accreditation-canvas .institution-name {
+  top: 290px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 420px;
+  font-size: 25px;
+  font-weight: 600;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+
+.accreditation-canvas .location {
+  top: 330px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.accreditation-canvas .accreditation-no,
+.accreditation-canvas .accreditation-status,
+.accreditation-canvas .effective-date,
+.accreditation-canvas .valid-until,
+.accreditation-canvas .accreditation-level {
+  transform: none;
+  width: 245px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.accreditation-canvas .accreditation-no { top: 484px; left: 275px; }
+.accreditation-canvas .accreditation-status { top: 499px; left: 305px; }
+.accreditation-canvas .effective-date { top: 516px; left: 285px; }
+.accreditation-canvas .valid-until { top: 531px; left: 274px; }
+.accreditation-canvas .accreditation-level { top: 547px; left: 210px; width: 290px; }

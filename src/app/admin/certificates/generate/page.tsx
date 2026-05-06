@@ -27,6 +27,8 @@ const CANVAS_W = 1234;
 const CANVAS_H = 1738;
 const LAR_CANVAS_W = 737;
 const LAR_CANVAS_H = 1042;
+const ACC_CANVAS_W = 564;
+const ACC_CANVAS_H = 796;
 const UNIT_ROWS = 10;
 
 type CertificateFormValues = {
@@ -80,6 +82,16 @@ type LarFormValues = {
   qualificationAwarded?: string;
   certificateNo?: string;
   registrationNo?: string;
+};
+
+type AccreditationFormValues = {
+  institutionName: string;
+  location: string;
+  accreditationNo: string;
+  accreditationStatus: string;
+  effectiveDate: Dayjs;
+  validUntil: Dayjs;
+  accreditationLevel: string;
 };
 
 const CertificateCanvas = forwardRef<HTMLDivElement, CertificateCanvasProps>(
@@ -219,6 +231,51 @@ const LarCanvas = forwardRef<HTMLDivElement, LarCanvasProps>(function LarCanvas(
   );
 });
 
+type AccreditationCanvasProps = {
+  institutionName: string;
+  location: string;
+  accreditationNo: string;
+  accreditationStatus: string;
+  effectiveDateText: string;
+  validUntilText: string;
+  accreditationLevel: string;
+};
+
+const AccreditationCanvas = forwardRef<HTMLDivElement, AccreditationCanvasProps>(
+  function AccreditationCanvas(
+    {
+      institutionName,
+      location,
+      accreditationNo,
+      accreditationStatus,
+      effectiveDateText,
+      validUntilText,
+      accreditationLevel,
+    },
+    ref,
+  ) {
+    return (
+      <div ref={ref} className="accreditation-canvas">
+        <img
+          src="/accredation-cert-template.jpeg"
+          alt=""
+          className="accreditation-bg"
+          width={ACC_CANVAS_W}
+          height={ACC_CANVAS_H}
+          draggable={false}
+        />
+        <div className="accreditation-field institution-name">{institutionName}</div>
+        <div className="accreditation-field location">{location}</div>
+        <div className="accreditation-field accreditation-no">{accreditationNo}</div>
+        <div className="accreditation-field accreditation-status">{accreditationStatus}</div>
+        <div className="accreditation-field effective-date">{effectiveDateText}</div>
+        <div className="accreditation-field valid-until">{validUntilText}</div>
+        <div className="accreditation-field accreditation-level">{accreditationLevel}</div>
+      </div>
+    );
+  },
+);
+
 const buildDefaultUnits = () =>
   Array.from({ length: UNIT_ROWS }, () => ({
     unitCode: "",
@@ -234,10 +291,13 @@ const buildDefaultUnits = () =>
 export default function GenerateCertificatePage() {
   const [form] = Form.useForm<CertificateFormValues>();
   const [larForm] = Form.useForm<LarFormValues>();
+  const [accreditationForm] = Form.useForm<AccreditationFormValues>();
   const certificateRef = useRef<HTMLDivElement>(null);
   const larRef = useRef<HTMLDivElement>(null);
+  const accreditationRef = useRef<HTMLDivElement>(null);
   const [pdfLoading, setPdfLoading] = useState(false);
   const [larPdfLoading, setLarPdfLoading] = useState(false);
+  const [accreditationPdfLoading, setAccreditationPdfLoading] = useState(false);
 
   const scrollToPreview = () => {
     certificateRef.current?.scrollIntoView({
@@ -404,11 +464,104 @@ export default function GenerateCertificatePage() {
     }
   }, [larForm]);
 
+  const handleAccreditationPreview = async () => {
+    try {
+      await accreditationForm.validateFields();
+      notification.success({
+        message: "Accreditation preview updated",
+        description: "Accreditation certificate values are shown in preview.",
+        placement: "topRight",
+      });
+      accreditationRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    } catch {
+      notification.warning({
+        message: "Check the form",
+        description: "Please fill all required accreditation fields before previewing.",
+        placement: "topRight",
+      });
+    }
+  };
+
+  const handleAccreditationDownloadPdf = useCallback(async () => {
+    let values: AccreditationFormValues;
+    try {
+      values = await accreditationForm.validateFields();
+    } catch {
+      notification.warning({
+        message: "Check the form",
+        description:
+          "Please fill all required accreditation fields before downloading.",
+        placement: "topRight",
+      });
+      return;
+    }
+
+    const el = accreditationRef.current;
+    if (!el) {
+      notification.error({
+        message: "Preview not ready",
+        description: "Could not find the accreditation certificate element.",
+        placement: "topRight",
+      });
+      return;
+    }
+
+    setAccreditationPdfLoading(true);
+    try {
+      const [{ default: html2canvas }, { jsPDF }] = await Promise.all([
+        import("html2canvas"),
+        import("jspdf"),
+      ]);
+
+      const canvas = await html2canvas(el, {
+        scale: 2,
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: "#ffffff",
+        width: ACC_CANVAS_W,
+        height: ACC_CANVAS_H,
+        windowWidth: ACC_CANVAS_W,
+        windowHeight: ACC_CANVAS_H,
+      });
+
+      const img = canvas.toDataURL("image/png");
+      const pdf = new jsPDF({
+        orientation: "portrait",
+        unit: "px",
+        format: [ACC_CANVAS_W, ACC_CANVAS_H],
+      });
+      pdf.addImage(img, "PNG", 0, 0, ACC_CANVAS_W, ACC_CANVAS_H);
+
+      const safeCert = (values.accreditationNo || "accreditation").replace(
+        /[^a-zA-Z0-9/_-]+/g,
+        "_",
+      );
+      pdf.save(`accreditation-certificate-${safeCert}.pdf`);
+
+      notification.success({
+        message: "Accreditation PDF downloaded",
+        placement: "topRight",
+      });
+    } catch (e) {
+      console.error(e);
+      notification.error({
+        message: "Accreditation PDF export failed",
+        description: e instanceof Error ? e.message : "Unknown error",
+        placement: "topRight",
+      });
+    } finally {
+      setAccreditationPdfLoading(false);
+    }
+  }, [accreditationForm]);
+
   const watched = Form.useWatch(undefined, form) as
     | Partial<CertificateFormValues>
     | undefined;
   const larWatched = Form.useWatch(undefined, larForm) as
     | Partial<LarFormValues>
+    | undefined;
+  const accreditationWatched = Form.useWatch(undefined, accreditationForm) as
+    | Partial<AccreditationFormValues>
     | undefined;
 
   const studentName = (watched?.studentName ?? "").trim();
@@ -426,6 +579,21 @@ export default function GenerateCertificatePage() {
     : "";
   const dateOfAwardText = larValues.dateOfAward
     ? dayjs(larValues.dateOfAward).format("D MMMM YYYY")
+    : "";
+  const institutionName = (accreditationWatched?.institutionName ?? "").trim();
+  const location = (accreditationWatched?.location ?? "").trim();
+  const accreditationNo = (accreditationWatched?.accreditationNo ?? "").trim();
+  const accreditationStatus = (
+    accreditationWatched?.accreditationStatus ?? ""
+  ).trim();
+  const accreditationLevel = (
+    accreditationWatched?.accreditationLevel ?? ""
+  ).trim();
+  const effectiveDateText = accreditationWatched?.effectiveDate
+    ? dayjs(accreditationWatched.effectiveDate).format("D MMMM YYYY")
+    : "";
+  const validUntilText = accreditationWatched?.validUntil
+    ? dayjs(accreditationWatched.validUntil).format("D MMMM YYYY")
     : "";
 
   return (
@@ -823,6 +991,174 @@ export default function GenerateCertificatePage() {
                             values={larValues}
                             dateOfBirthText={dateOfBirthText}
                             dateOfAwardText={dateOfAwardText}
+                          />
+                        </div>
+                      </div>
+                    </Card>
+                  </Col>
+                </Row>
+              ),
+            },
+            {
+              key: "accreditation",
+              label: "Accreditation Certificate",
+              children: (
+                <Row gutter={[24, 24]}>
+                  <Col xs={24} lg={10}>
+                    <Card title="Accreditation details" bordered={false}>
+                      <Form<AccreditationFormValues>
+                        form={accreditationForm}
+                        layout="vertical"
+                        requiredMark="optional"
+                        initialValues={{
+                          effectiveDate: dayjs(),
+                          validUntil: dayjs().add(2, "year"),
+                        }}
+                      >
+                        <Form.Item
+                          name="institutionName"
+                          label="Institution Name"
+                          rules={[
+                            {
+                              required: true,
+                              message: "Institution name is required",
+                            },
+                          ]}
+                        >
+                          <Input placeholder="e.g. INSIGHT EDUCATION" autoComplete="off" />
+                        </Form.Item>
+                        <Form.Item
+                          name="location"
+                          label="Location"
+                          rules={[{ required: true, message: "Location is required" }]}
+                        >
+                          <Input placeholder="e.g. Calicut, Kerala, India" autoComplete="off" />
+                        </Form.Item>
+                        <Form.Item
+                          name="accreditationNo"
+                          label="Accreditation No"
+                          rules={[
+                            {
+                              required: true,
+                              message: "Accreditation number is required",
+                            },
+                          ]}
+                        >
+                          <Input autoComplete="off" />
+                        </Form.Item>
+                        <Form.Item
+                          name="accreditationStatus"
+                          label="Accreditation Status"
+                          rules={[
+                            {
+                              required: true,
+                              message: "Accreditation status is required",
+                            },
+                          ]}
+                        >
+                          <Input placeholder="e.g. Full Accreditation" autoComplete="off" />
+                        </Form.Item>
+                        <Row gutter={12}>
+                          <Col span={12}>
+                            <Form.Item
+                              name="effectiveDate"
+                              label="Effective Date"
+                              rules={[
+                                {
+                                  required: true,
+                                  message: "Effective date is required",
+                                },
+                              ]}
+                            >
+                              <DatePicker
+                                style={{ width: "100%" }}
+                                format="D MMMM YYYY"
+                              />
+                            </Form.Item>
+                          </Col>
+                          <Col span={12}>
+                            <Form.Item
+                              name="validUntil"
+                              label="Valid Until"
+                              rules={[
+                                {
+                                  required: true,
+                                  message: "Valid until date is required",
+                                },
+                              ]}
+                            >
+                              <DatePicker
+                                style={{ width: "100%" }}
+                                format="D MMMM YYYY"
+                              />
+                            </Form.Item>
+                          </Col>
+                        </Row>
+                        <Form.Item
+                          name="accreditationLevel"
+                          label="Accreditation Level"
+                          rules={[
+                            {
+                              required: true,
+                              message: "Accreditation level is required",
+                            },
+                          ]}
+                        >
+                          <Input
+                            placeholder="e.g. Institutional / Program / International Partner"
+                            autoComplete="off"
+                          />
+                        </Form.Item>
+                        <Space wrap>
+                          <Button
+                            type="primary"
+                            icon={<EyeOutlined />}
+                            onClick={handleAccreditationPreview}
+                          >
+                            Preview Accreditation Certificate
+                          </Button>
+                          <Button
+                            icon={<DownloadOutlined />}
+                            loading={accreditationPdfLoading}
+                            onClick={handleAccreditationDownloadPdf}
+                          >
+                            Download PDF
+                          </Button>
+                        </Space>
+                      </Form>
+                    </Card>
+                  </Col>
+                  <Col xs={24} lg={14}>
+                    <Card
+                      title="Accreditation preview (564 × 796 px)"
+                      bordered={false}
+                    >
+                      <Text
+                        type="secondary"
+                        style={{ display: "block", marginBottom: 16 }}
+                      >
+                        Preview uses the accreditation template with calibrated text
+                        overlays for pixel-level alignment.
+                      </Text>
+                      <div
+                        style={{
+                          overflow: "auto",
+                          maxHeight: "min(85vh, 1200px)",
+                          background: "#e2e8f0",
+                          borderRadius: 8,
+                          padding: 16,
+                        }}
+                      >
+                        <div style={{ display: "flex", justifyContent: "center" }}>
+                          <AccreditationCanvas
+                            ref={accreditationRef}
+                            institutionName={institutionName}
+                            location={location}
+                            accreditationNo={accreditationNo}
+                            accreditationStatus={accreditationStatus}
+                            effectiveDateText={effectiveDateText}
+                            validUntilText={validUntilText}
+                            accreditationLevel={accreditationLevel}
                           />
                         </div>
                       </div>
