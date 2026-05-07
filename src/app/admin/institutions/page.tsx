@@ -195,11 +195,13 @@ export default function InstitutionsManagement() {
 
   useEffect(() => {
     const status = searchParams.get("status");
-    if (status) {
+    if (status && filters.status !== status) {
       setFilters((prev) => ({ ...prev, status }));
+    } else {
+      fetchInstitutions();
     }
-    fetchInstitutions();
-  }, [filters]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filters, searchParams]);
 
   const fetchInstitutions = async () => {
     try {
