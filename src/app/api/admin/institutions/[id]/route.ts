@@ -151,15 +151,20 @@ export async function PUT(
       try {
         const contactName = `${institution.firstName} ${institution.lastName}`;
 
+        const recipients = [institution.email, institution.emailAddress]
+          .filter(Boolean)
+          .filter((v, i, a) => a.indexOf(v) === i)
+          .join(", ");
+
         console.log("Sending approval email to organization:", {
-          recipientEmail: institution.email,
+          recipientEmail: recipients,
           institutionName: institution.orgName,
           contactName,
           loginEmail: institution.email,
         });
 
         const emailSent = await EmailService.sendApprovalNotification(
-          institution.email, // Send to organization email
+          recipients, // Send to organization email
           institution.orgName,
           contactName,
           institution.email // Use organization email as login email
