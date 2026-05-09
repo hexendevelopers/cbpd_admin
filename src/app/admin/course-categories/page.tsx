@@ -350,6 +350,48 @@ export default function CourseCategoriesManagement() {
 
   const columns = [
     {
+      title: "Icon",
+      dataIndex: "icon",
+      key: "icon",
+      width: 80,
+      align: "center" as const,
+      render: (icon: string) => (
+        <span style={{ fontSize: '24px' }}>{icon || "—"}</span>
+      ),
+    },
+    {
+      title: "Image",
+      dataIndex: "image",
+      key: "image",
+      width: 100,
+      render: (image: string) => (
+        image ? (
+          <Image
+            src={image}
+            alt="category"
+            width={60}
+            height={40}
+            style={{ objectFit: 'cover', borderRadius: '4px' }}
+            fallback="/images/placeholder.png"
+          />
+        ) : (
+          <div style={{ 
+            width: 60, 
+            height: 40, 
+            background: '#f1f5f9', 
+            borderRadius: '4px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: '#94a3b8',
+            fontSize: '12px'
+          }}>
+            No Img
+          </div>
+        )
+      ),
+    },
+    {
       title: "Category Name",
       dataIndex: "name",
       key: "name",
