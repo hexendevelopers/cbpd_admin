@@ -60,6 +60,14 @@ export async function GET(request: NextRequest) {
       query.gender = gender;
     }
 
+    const idsParam = searchParams.get("ids");
+    if (idsParam) {
+      const ids = idsParam.split(",").filter(id => id.trim() !== "");
+      if (ids.length > 0) {
+        query._id = { $in: ids };
+      }
+    }
+
     // Fetch all students matching the filter with complete institution data
     const students = await Student.find(query)
       .populate("institutionId") // Populate complete institution data

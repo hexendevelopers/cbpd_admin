@@ -54,6 +54,7 @@ import {
   FireOutlined,
 } from "@ant-design/icons";
 import AdminLayout from "@/components/AdminLayout";
+import BulkImportModal from "@/components/BulkImportModal";
 import dayjs from "dayjs";
 
 const { Option } = Select;
@@ -145,6 +146,7 @@ export default function StudentsManagement() {
   const [loading, setLoading] = useState(true);
   const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
   const [selectedStudents, setSelectedStudents] = useState<string[]>([]);
+  const [isBulkImportVisible, setIsBulkImportVisible] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -180,6 +182,7 @@ export default function StudentsManagement() {
         ...(filters.course && { course: filters.course }),
         ...(filters.semester && { semester: filters.semester }),
         ...(filters.gender && { gender: filters.gender }),
+        ...(selectedStudents.length > 0 && { ids: selectedStudents.join(",") }),
       });
 
       if (format === "csv") {
@@ -680,9 +683,17 @@ export default function StudentsManagement() {
                 trigger={["click"]}
               >
                 <Button icon={<DownloadOutlined />} style={{ borderRadius: 6 }}>
-                  Export
+                  {selectedStudents.length > 0 ? `Export Selected (${selectedStudents.length})` : "Export"}
                 </Button>
               </Dropdown>
+
+              <Button
+                icon={<PlusOutlined />}
+                onClick={() => setIsBulkImportVisible(true)}
+                style={{ borderRadius: 6 }}
+              >
+                Import Students
+              </Button>
 
               <Button
                 type="primary"
@@ -1766,6 +1777,17 @@ export default function StudentsManagement() {
           </Form.Item>
         </Form>
       </Modal>
+
+      <BulkImportModal 
+        visible={isBulkImportVisible}
+        onCancel={() => setIsBulkImportVisible(false)}
+        onSuccess={() => {
+          setIsBulkImportVisible(false);
+          fetchStudents();
+          fetchStatistics();
+        }}
+        institutions={institutions}
+      />
     </AdminLayout>
   );
 }
