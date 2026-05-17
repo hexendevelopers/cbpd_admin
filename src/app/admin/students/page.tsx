@@ -988,13 +988,30 @@ export default function StudentsManagement() {
               >
                 Deactivate
               </Button>
-              <Button
-                icon={<DownloadOutlined />}
-                size="small"
-                style={{ borderRadius: 6 }}
+              <Dropdown
+                overlay={
+                  <Menu>
+                    <Menu.Item key="csv" onClick={() => handleExport("csv")}>
+                      Export as CSV
+                    </Menu.Item>
+                    <Menu.Item
+                      key="excel"
+                      onClick={() => handleExport("excel")}
+                    >
+                      Export as Excel
+                    </Menu.Item>
+                  </Menu>
+                }
+                trigger={["click"]}
               >
-                Export Selected
-              </Button>
+                <Button
+                  icon={<DownloadOutlined />}
+                  size="small"
+                  style={{ borderRadius: 6 }}
+                >
+                  Export Selected
+                </Button>
+              </Dropdown>
             </Space>
           </Card>
         )}
