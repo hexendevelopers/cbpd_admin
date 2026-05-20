@@ -338,7 +338,7 @@
   left: 50%;
   transform: translateX(-50%);
   
-  font-size: 30px;
+  font-size: 14px;
   font-weight: 700;
   font-family: "Times New Roman", Times, "Liberation Serif", Georgia, serif !important;
   text-transform: uppercase;
@@ -370,4 +370,21 @@
   text-align: left;
   font-size: 13px;
   font-weight: 700;
+}
+
+/* 6-Subject Learners Achievement Record overrides */
+.lar-canvas.lar-6 .total-credits {
+  top: 682px;
+}
+.lar-canvas.lar-6 .overall-classification {
+  top: 699px;
+}
+.lar-canvas.lar-6 .qualification-awarded {
+  top: 717px;
+}
+.lar-canvas.lar-6 .certificate-no {
+  top: 685px;
+}
+.lar-canvas.lar-6 .registration-no {
+  top: 708px;
 }

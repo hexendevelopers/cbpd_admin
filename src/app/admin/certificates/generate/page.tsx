@@ -13,6 +13,7 @@ import {
   Space,
   Tabs,
   notification,
+  Radio,
 } from "antd";
 import { EyeOutlined, DownloadOutlined } from "@ant-design/icons";
 import type { Dayjs } from "dayjs";
@@ -65,6 +66,7 @@ type LarUnitRow = {
 };
 
 type LarFormValues = {
+  templateType?: "10" | "6";
   learnerName?: string;
   learnerNo?: string;
   dateOfBirth?: Dayjs;
@@ -154,20 +156,24 @@ const CertificateCanvas = forwardRef<HTMLDivElement, CertificateCanvasProps>(
 
 type LarCanvasProps = {
   values: Partial<LarFormValues>;
+  templateType: "10" | "6";
   dateOfBirthText: string;
   dateOfAwardText: string;
 };
 
 const LarCanvas = forwardRef<HTMLDivElement, LarCanvasProps>(function LarCanvas(
-  { values, dateOfBirthText, dateOfAwardText },
+  { values, templateType, dateOfBirthText, dateOfAwardText },
   ref,
 ) {
   const units = values.units ?? [];
+  const isLar6 = templateType === "6";
+  const rowCount = isLar6 ? 6 : 10;
+  const rowSpacing = isLar6 ? 23.8 : 26;
 
   return (
-    <div ref={ref} className="lar-canvas">
+    <div ref={ref} className={`lar-canvas ${isLar6 ? "lar-6" : ""}`}>
       <img
-        src="/lar-template.jpeg"
+        src={isLar6 ? "/lar-6.jpeg" : "/lar-template.jpeg"}
         alt=""
         className="lar-bg"
         width={LAR_CANVAS_W}
@@ -194,9 +200,9 @@ const LarCanvas = forwardRef<HTMLDivElement, LarCanvasProps>(function LarCanvas(
       <div className="lar-field language-assessment">{values.languageOfAssessment}</div>
       <div className="lar-field date-of-award">{dateOfAwardText}</div>
 
-      {Array.from({ length: UNIT_ROWS }).map((_, index) => {
+      {Array.from({ length: rowCount }).map((_, index) => {
         const row = units[index] ?? {};
-        const top = 520 + index * 26;
+        const top = 520 + index * rowSpacing;
         return (
           <div key={`lar-row-${index}`}>
             <div className="lar-field unit-code" style={{ top }}>
@@ -711,6 +717,7 @@ export default function GenerateCertificatePage() {
     ? dayjs(watched.dateIssued).format("D MMMM YYYY")
     : "";
   const larValues = larWatched ?? {};
+  const larTemplateType = larValues.templateType ?? "10";
   const dateOfBirthText = larValues.dateOfBirth
     ? dayjs(larValues.dateOfBirth).format("D MMMM YYYY")
     : "";
@@ -909,8 +916,15 @@ export default function GenerateCertificatePage() {
                         form={larForm}
                         layout="vertical"
                         requiredMark={false}
-                        initialValues={{ units: buildDefaultUnits() }}
+                        initialValues={{ templateType: "10", units: buildDefaultUnits() }}
                       >
+                        <Form.Item name="templateType" label="Template Type" style={{ marginBottom: 20 }}>
+                          <Radio.Group optionType="button" buttonStyle="solid">
+                            <Radio.Button value="10">10 Subjects (Standard)</Radio.Button>
+                            <Radio.Button value="6">6 Subjects</Radio.Button>
+                          </Radio.Group>
+                        </Form.Item>
+
                         <Row gutter={12}>
                           <Col span={12}>
                             <Form.Item name="learnerName" label="Learner Name">
@@ -1001,63 +1015,73 @@ export default function GenerateCertificatePage() {
                             </Form.Item>
                           </Col>
                         </Row>
-                        <Title level={5}>Units (up to 10 rows)</Title>
-                        {Array.from({ length: UNIT_ROWS }).map((_, index) => (
-                          <Row key={`unit-row-${index}`} gutter={8}>
-                            <Col span={6}>
-                              <Form.Item name={["units", index, "unitCode"]} label="Code">
-                                <Input size="small" autoComplete="off" />
-                              </Form.Item>
-                            </Col>
-                            <Col span={10}>
-                              <Form.Item
-                                name={["units", index, "unitTitle"]}
-                                label="Title"
-                              >
-                                <Input size="small" autoComplete="off" />
-                              </Form.Item>
-                            </Col>
-                            <Col span={4}>
-                              <Form.Item name={["units", index, "level"]} label="Level">
-                                <Input size="small" autoComplete="off" />
-                              </Form.Item>
-                            </Col>
-                            <Col span={4}>
-                              <Form.Item name={["units", index, "hours"]} label="Hours">
-                                <Input size="small" autoComplete="off" />
-                              </Form.Item>
-                            </Col>
-                            <Col span={4}>
-                              <Form.Item
-                                name={["units", index, "credits"]}
-                                label="Credits"
-                              >
-                                <Input size="small" autoComplete="off" />
-                              </Form.Item>
-                            </Col>
-                            <Col span={4}>
-                              <Form.Item name={["units", index, "unitMark"]} label="Mark %">
-                                <Input size="small" autoComplete="off" />
-                              </Form.Item>
-                            </Col>
-                            <Col span={4}>
-                              <Form.Item
-                                name={["units", index, "decision"]}
-                                label="Decision"
-                              >
-                                <Input size="small" autoComplete="off" />
-                              </Form.Item>
-                            </Col>
-                            <Col span={8}>
-                              <Form.Item
-                                name={["units", index, "academicSession"]}
-                                label="Session"
-                              >
-                                <Input size="small" autoComplete="off" />
-                              </Form.Item>
-                            </Col>
-                          </Row>
-                        ))}
+
+                        {(() => {
+                          const isLar6Form = larTemplateType === "6";
+                          const formRowsCount = isLar6Form ? 6 : 10;
+                          return (
+                            <>
+                              <Title level={5}>Units ({formRowsCount} rows)</Title>
+                              {Array.from({ length: formRowsCount }).map((_, index) => (
+                                <Row key={`unit-row-${index}`} gutter={8}>
+                                  <Col span={6}>
+                                    <Form.Item name={["units", index, "unitCode"]} label="Code">
+                                      <Input size="small" autoComplete="off" />
+                                    </Form.Item>
+                                  </Col>
+                                  <Col span={10}>
+                                    <Form.Item
+                                      name={["units", index, "unitTitle"]}
+                                      label="Title"
+                                    >
+                                      <Input size="small" autoComplete="off" />
+                                    </Form.Item>
+                                  </Col>
+                                  <Col span={4}>
+                                    <Form.Item name={["units", index, "level"]} label="Level">
+                                      <Input size="small" autoComplete="off" />
+                                    </Form.Item>
+                                  </Col>
+                                  <Col span={4}>
+                                    <Form.Item name={["units", index, "hours"]} label="Hours">
+                                      <Input size="small" autoComplete="off" />
+                                    </Form.Item>
+                                  </Col>
+                                  <Col span={4}>
+                                    <Form.Item
+                                      name={["units", index, "credits"]}
+                                      label="Credits"
+                                    >
+                                      <Input size="small" autoComplete="off" />
+                                    </Form.Item>
+                                  </Col>
+                                  <Col span={4}>
+                                    <Form.Item name={["units", index, "unitMark"]} label="Mark %">
+                                      <Input size="small" autoComplete="off" />
+                                    </Form.Item>
+                                  </Col>
+                                  <Col span={4}>
+                                    <Form.Item
+                                      name={["units", index, "decision"]}
+                                      label="Decision"
+                                    >
+                                      <Input size="small" autoComplete="off" />
+                                    </Form.Item>
+                                  </Col>
+                                  <Col span={8}>
+                                    <Form.Item
+                                      name={["units", index, "academicSession"]}
+                                      label="Session"
+                                    >
+                                      <Input size="small" autoComplete="off" />
+                                    </Form.Item>
+                                  </Col>
+                                </Row>
+                              ))}
+                            </>
+                          );
+                        })()}
+
                         <Row gutter={12}>
                           <Col span={12}>
                             <Form.Item
@@ -1114,7 +1138,7 @@ export default function GenerateCertificatePage() {
                     </Card>
                   </Col>
                   <Col xs={24} lg={14}>
-                    <Card title="LAR preview (737 × 1042 px)" bordered={false}>
+                    <Card title={`LAR preview (${larTemplateType === "6" ? "6 Subjects" : "10 Subjects"})`} bordered={false}>
                       <Text
                         type="secondary"
                         style={{ display: "block", marginBottom: 16 }}
@@ -1134,6 +1158,7 @@ export default function GenerateCertificatePage() {
                           <LarCanvas
                             ref={larRef}
                             values={larValues}
+                            templateType={larTemplateType}
                             dateOfBirthText={dateOfBirthText}
                             dateOfAwardText={dateOfAwardText}
                           />
