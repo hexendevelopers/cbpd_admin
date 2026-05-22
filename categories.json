@@ -1,0 +1,708 @@
+[
+  {
+    "_id": "69f6fef1ba924850f7f5b8ae",
+    "name": "Business Programmes",
+    "slug": "business",
+    "description": "Business Management professionals play a critical role in organisational growth and strategic decision-making. Globally recognised qualifications enhance leadership capabilities and improve career progression opportunities.",
+    "icon": "💼",
+    "image": "https://muhammedjasir908.github.io/cbpd/images/external/1552664730-d307ca884978.jpg",
+    "isActive": true,
+    "__v": 1,
+    "benefits": [
+      "Practical, job-focused learning with immediate workplace application.",
+      "Flexible delivery modes to suit busy professionals and organisations.",
+      "Prestigious UK-issued CBPD certification recognised internationally.",
+      "Clear pathways for career progression and further CBPD qualifications.",
+      "Delivered exclusively through quality-assured CBPD authorised partners."
+    ],
+    "cbpdDescription": "The Central Board of Professional Development (CBPD) offers a comprehensive range of practical Business Programmes designed to accelerate career growth and enhance business performance, efficiency, and sustainable growth.",
+    "howToEnroll": [
+      "Select the CBPD programme that best matches your goals.",
+      "Contact or enrol through an authorised CBPD partner (online or in your region).",
+      "Complete the focused learning and practical assessment.",
+      "Receive your official CBPD digital certificate with unique verification."
+    ],
+    "longDescription": "CBPD Business Programmes certifications focus on real-world application, strategic thinking, leadership, and operational excellence — helping individuals advance their careers faster.",
+    "overviewDescription": "CBPD provides targeted, high-impact programmes across vital disciplines. Each programme is tailored for busy professionals and delivers immediately measurable workplace results.",
+    "overviewItems": [],
+    "whyChooseUs": "CBPD delivers shorter, more practical, and highly flexible credentials when compared with many traditional, rigid academic qualifications.\n\nOur dynamic programmes seamlessly combine esteemed UK professional standards with modern, in-demand skills. This unique fusion helps ambitious professionals and forward-thinking organisations achieve faster time-to-value and highly measurable, sustainable results.",
+    "isPopular": true
+  },
+  {
+    "_id": "69f6fef2ba924850f7f5b8bf",
+    "name": "Information Technology Programmes",
+    "slug": "information-technology",
+    "description": "The IT sector remains one of the fastest-growing industries worldwide. Skilled professionals in software, cybersecurity, and systems management are in high demand.",
+    "icon": "💻",
+    "image": "https://muhammedjasir908.github.io/cbpd/images/external/1550751827-4bd374c3f58b.jpg",
+    "isActive": true,
+    "__v": 1,
+    "benefits": [
+      "Practical, job-focused learning with immediate workplace application.",
+      "Flexible delivery modes to suit busy professionals and organisations.",
+      "Prestigious UK-issued CBPD certification recognised internationally.",
+      "Clear pathways for career progression and further CBPD qualifications.",
+      "Delivered exclusively through quality-assured CBPD authorised partners."
+    ],
+    "cbpdDescription": "The Central Board of Professional Development (CBPD) offers a comprehensive range of practical Information Technology Programmes designed to accelerate career growth and enhance business performance, efficiency, and sustainable growth.",
+    "howToEnroll": [
+      "Select the CBPD programme that best matches your goals.",
+      "Contact or enrol through an authorised CBPD partner (online or in your region).",
+      "Complete the focused learning and practical assessment.",
+      "Receive your official CBPD digital certificate with unique verification."
+    ],
+    "longDescription": "CBPD Information Technology Programmes certifications focus on real-world application, strategic thinking, leadership, and operational excellence — helping individuals advance their careers faster.",
+    "overviewDescription": "CBPD provides targeted, high-impact programmes across vital disciplines. Each programme is tailored for busy professionals and delivers immediately measurable workplace results.",
+    "overviewItems": [],
+    "whyChooseUs": "CBPD delivers shorter, more practical, and highly flexible credentials when compared with many traditional, rigid academic qualifications.\n\nOur dynamic programmes seamlessly combine esteemed UK professional standards with modern, in-demand skills. This unique fusion helps ambitious professionals and forward-thinking organisations achieve faster time-to-value and highly measurable, sustainable results.",
+    "isPopular": true
+  },
+  {
+    "_id": "69f6fef3ba924850f7f5b8d3",
+    "name": "Design Programmes",
+    "slug": "design",
+    "description": "The demand for skilled professionals in UI/UX and Digital Design continues to grow rapidly as organisations prioritise user-centric digital experiences. Certification in this field provides a strong competitive advantage and is highly valued across global markets.",
+    "icon": "🎨",
+    "image": "https://muhammedjasir908.github.io/cbpd/images/external/1561070791-2526d30994b5.jpg",
+    "isActive": true,
+    "__v": 1,
+    "benefits": [
+      "Practical, job-focused learning with immediate workplace application.",
+      "Flexible delivery modes to suit busy professionals and organisations.",
+      "Prestigious UK-issued CBPD certification recognised internationally.",
+      "Clear pathways for career progression and further CBPD qualifications.",
+      "Delivered exclusively through quality-assured CBPD authorised partners."
+    ],
+    "cbpdDescription": "The Central Board of Professional Development (CBPD) offers a comprehensive range of practical Design Programmes designed to accelerate career growth and enhance business performance, efficiency, and sustainable growth.",
+    "howToEnroll": [
+      "Select the CBPD programme that best matches your goals.",
+      "Contact or enrol through an authorised CBPD partner (online or in your region).",
+      "Complete the focused learning and practical assessment.",
+      "Receive your official CBPD digital certificate with unique verification."
+    ],
+    "longDescription": "CBPD Design Programmes certifications focus on real-world application, strategic thinking, leadership, and operational excellence — helping individuals advance their careers faster.",
+    "overviewDescription": "CBPD provides targeted, high-impact programmes across vital disciplines. Each programme is tailored for busy professionals and delivers immediately measurable workplace results.",
+    "overviewItems": [],
+    "whyChooseUs": "CBPD delivers shorter, more practical, and highly flexible credentials when compared with many traditional, rigid academic qualifications.\n\nOur dynamic programmes seamlessly combine esteemed UK professional standards with modern, in-demand skills. This unique fusion helps ambitious professionals and forward-thinking organisations achieve faster time-to-value and highly measurable, sustainable results.",
+    "isPopular": true
+  },
+  {
+    "_id": "69f6fef4ba924850f7f5b8e4",
+    "name": "Education Programmes",
+    "slug": "education",
+    "description": "The education sector continues to grow globally, with increasing demand for qualified educators and trainers. Professional certification enhances teaching standards and career opportunities.",
+    "icon": "🎓",
+    "image": "https://muhammedjasir908.github.io/cbpd/images/external/1509062522246-3755977927d7.jpg",
+    "isActive": true,
+    "__v": 1,
+    "benefits": [
+      "Practical, job-focused learning with immediate workplace application.",
+      "Flexible delivery modes to suit busy professionals and organisations.",
+      "Prestigious UK-issued CBPD certification recognised internationally.",
+      "Clear pathways for career progression and further CBPD qualifications.",
+      "Delivered exclusively through quality-assured CBPD authorised partners."
+    ],
+    "cbpdDescription": "The Central Board of Professional Development (CBPD) offers a comprehensive range of practical Education Programmes designed to accelerate career growth and enhance business performance, efficiency, and sustainable growth.",
+    "howToEnroll": [
+      "Select the CBPD programme that best matches your goals.",
+      "Contact or enrol through an authorised CBPD partner (online or in your region).",
+      "Complete the focused learning and practical assessment.",
+      "Receive your official CBPD digital certificate with unique verification."
+    ],
+    "longDescription": "CBPD Education Programmes certifications focus on real-world application, strategic thinking, leadership, and operational excellence — helping individuals advance their careers faster.",
+    "overviewDescription": "CBPD provides targeted, high-impact programmes across vital disciplines. Each programme is tailored for busy professionals and delivers immediately measurable workplace results.",
+    "overviewItems": [],
+    "whyChooseUs": "CBPD delivers shorter, more practical, and highly flexible credentials when compared with many traditional, rigid academic qualifications.\n\nOur dynamic programmes seamlessly combine esteemed UK professional standards with modern, in-demand skills. This unique fusion helps ambitious professionals and forward-thinking organisations achieve faster time-to-value and highly measurable, sustainable results."
+  },
+  {
+    "_id": "69f6fef5ba924850f7f5b8f5",
+    "name": "Technical Programmes",
+    "slug": "technical",
+    "description": "The UK faces a significant shortage of qualified technical tradespeople, making this a highly secure and lucrative sector. Certified technicians are in constant demand for residential, commercial, and infrastructure projects.",
+    "icon": "🔧",
+    "image": "https://muhammedjasir908.github.io/cbpd/images/external/1581092580497-e0d23cbdf1dc.jpg",
+    "isActive": true,
+    "__v": 1,
+    "benefits": [
+      "Practical, job-focused learning with immediate workplace application.",
+      "Flexible delivery modes to suit busy professionals and organisations.",
+      "Prestigious UK-issued CBPD certification recognised internationally.",
+      "Clear pathways for career progression and further CBPD qualifications.",
+      "Delivered exclusively through quality-assured CBPD authorised partners."
+    ],
+    "cbpdDescription": "The Central Board of Professional Development (CBPD) offers a comprehensive range of practical Technical Programmes designed to accelerate career growth and enhance business performance, efficiency, and sustainable growth.",
+    "howToEnroll": [
+      "Select the CBPD programme that best matches your goals.",
+      "Contact or enrol through an authorised CBPD partner (online or in your region).",
+      "Complete the focused learning and practical assessment.",
+      "Receive your official CBPD digital certificate with unique verification."
+    ],
+    "longDescription": "CBPD Technical Programmes certifications focus on real-world application, strategic thinking, leadership, and operational excellence — helping individuals advance their careers faster.",
+    "overviewDescription": "CBPD provides targeted, high-impact programmes across vital disciplines. Each programme is tailored for busy professionals and delivers immediately measurable workplace results.",
+    "overviewItems": [],
+    "whyChooseUs": "CBPD delivers shorter, more practical, and highly flexible credentials when compared with many traditional, rigid academic qualifications.\n\nOur dynamic programmes seamlessly combine esteemed UK professional standards with modern, in-demand skills. This unique fusion helps ambitious professionals and forward-thinking organisations achieve faster time-to-value and highly measurable, sustainable results."
+  },
+  {
+    "_id": "69f6fef6ba924850f7f5b906",
+    "name": "Engineering Programmes",
+    "slug": "engineering",
+    "description": "Engineering remains a cornerstone of the UK economy, with critical shortages in civil, electrical, and mechanical fields. Professional certification accelerates career progression.",
+    "icon": "⚙️",
+    "image": "https://muhammedjasir908.github.io/cbpd/images/external/1581092160562-40aa08e78837.jpg",
+    "isActive": true,
+    "__v": 1,
+    "benefits": [
+      "Practical, job-focused learning with immediate workplace application.",
+      "Flexible delivery modes to suit busy professionals and organisations.",
+      "Prestigious UK-issued CBPD certification recognised internationally.",
+      "Clear pathways for career progression and further CBPD qualifications.",
+      "Delivered exclusively through quality-assured CBPD authorised partners."
+    ],
+    "cbpdDescription": "The Central Board of Professional Development (CBPD) offers a comprehensive range of practical Engineering Programmes designed to accelerate career growth and enhance business performance, efficiency, and sustainable growth.",
+    "howToEnroll": [
+      "Select the CBPD programme that best matches your goals.",
+      "Contact or enrol through an authorised CBPD partner (online or in your region).",
+      "Complete the focused learning and practical assessment.",
+      "Receive your official CBPD digital certificate with unique verification."
+    ],
+    "longDescription": "CBPD Engineering Programmes certifications focus on real-world application, strategic thinking, leadership, and operational excellence — helping individuals advance their careers faster.",
+    "overviewDescription": "CBPD provides targeted, high-impact programmes across vital disciplines. Each programme is tailored for busy professionals and delivers immediately measurable workplace results.",
+    "overviewItems": [],
+    "whyChooseUs": "CBPD delivers shorter, more practical, and highly flexible credentials when compared with many traditional, rigid academic qualifications.\n\nOur dynamic programmes seamlessly combine esteemed UK professional standards with modern, in-demand skills. This unique fusion helps ambitious professionals and forward-thinking organisations achieve faster time-to-value and highly measurable, sustainable results.",
+    "isPopular": true
+  },
+  {
+    "_id": "69f6fef7ba924850f7f5b917",
+    "name": "Construction Programmes",
+    "slug": "construction",
+    "description": "The UK construction sector is expanding with major infrastructure projects and housing developments. Qualified site managers, quantity surveyors, and safety officers are critical to project delivery.",
+    "icon": "🏗️",
+    "image": "https://muhammedjasir908.github.io/cbpd/_next/static/media/construction.b89ebc11.png",
+    "isActive": true,
+    "__v": 1,
+    "benefits": [
+      "Practical, job-focused learning with immediate workplace application.",
+      "Flexible delivery modes to suit busy professionals and organisations.",
+      "Prestigious UK-issued CBPD certification recognised internationally.",
+      "Clear pathways for career progression and further CBPD qualifications.",
+      "Delivered exclusively through quality-assured CBPD authorised partners."
+    ],
+    "cbpdDescription": "The Central Board of Professional Development (CBPD) offers a comprehensive range of practical Construction Programmes designed to accelerate career growth and enhance business performance, efficiency, and sustainable growth.",
+    "howToEnroll": [
+      "Select the CBPD programme that best matches your goals.",
+      "Contact or enrol through an authorised CBPD partner (online or in your region).",
+      "Complete the focused learning and practical assessment.",
+      "Receive your official CBPD digital certificate with unique verification."
+    ],
+    "longDescription": "CBPD Construction Programmes certifications focus on real-world application, strategic thinking, leadership, and operational excellence — helping individuals advance their careers faster.",
+    "overviewDescription": "CBPD provides targeted, high-impact programmes across vital disciplines. Each programme is tailored for busy professionals and delivers immediately measurable workplace results.",
+    "overviewItems": [],
+    "whyChooseUs": "CBPD delivers shorter, more practical, and highly flexible credentials when compared with many traditional, rigid academic qualifications.\n\nOur dynamic programmes seamlessly combine esteemed UK professional standards with modern, in-demand skills. This unique fusion helps ambitious professionals and forward-thinking organisations achieve faster time-to-value and highly measurable, sustainable results."
+  },
+  {
+    "_id": "69f6fef8ba924850f7f5b928",
+    "name": "Energy Programmes",
+    "slug": "energy",
+    "description": "The transition to green energy has created a massive skills gap in the UK. Professionals certified in renewable energy systems, smart grids, and sustainable practices are highly sought after.",
+    "icon": "⚡",
+    "image": "https://muhammedjasir908.github.io/cbpd/images/external/1466611653911-95081537e5b7.jpg",
+    "isActive": true,
+    "__v": 1,
+    "benefits": [
+      "Practical, job-focused learning with immediate workplace application.",
+      "Flexible delivery modes to suit busy professionals and organisations.",
+      "Prestigious UK-issued CBPD certification recognised internationally.",
+      "Clear pathways for career progression and further CBPD qualifications.",
+      "Delivered exclusively through quality-assured CBPD authorised partners."
+    ],
+    "cbpdDescription": "The Central Board of Professional Development (CBPD) offers a comprehensive range of practical Energy Programmes designed to accelerate career growth and enhance business performance, efficiency, and sustainable growth.",
+    "howToEnroll": [
+      "Select the CBPD programme that best matches your goals.",
+      "Contact or enrol through an authorised CBPD partner (online or in your region).",
+      "Complete the focused learning and practical assessment.",
+      "Receive your official CBPD digital certificate with unique verification."
+    ],
+    "longDescription": "CBPD Energy Programmes certifications focus on real-world application, strategic thinking, leadership, and operational excellence — helping individuals advance their careers faster.",
+    "overviewDescription": "CBPD provides targeted, high-impact programmes across vital disciplines. Each programme is tailored for busy professionals and delivers immediately measurable workplace results.",
+    "overviewItems": [],
+    "whyChooseUs": "CBPD delivers shorter, more practical, and highly flexible credentials when compared with many traditional, rigid academic qualifications.\n\nOur dynamic programmes seamlessly combine esteemed UK professional standards with modern, in-demand skills. This unique fusion helps ambitious professionals and forward-thinking organisations achieve faster time-to-value and highly measurable, sustainable results."
+  },
+  {
+    "_id": "69f6fef8ba924850f7f5b939",
+    "name": "Finance Programmes",
+    "slug": "finance",
+    "description": "Accounting and finance professionals are essential to business operations and financial planning. Globally recognised certifications enhance career stability and growth opportunities.",
+    "icon": "📈",
+    "image": "https://muhammedjasir908.github.io/cbpd/images/external/1554224155-8d04cb21cd6c.jpg",
+    "isActive": true,
+    "__v": 1,
+    "benefits": [
+      "Practical, job-focused learning with immediate workplace application.",
+      "Flexible delivery modes to suit busy professionals and organisations.",
+      "Prestigious UK-issued CBPD certification recognised internationally.",
+      "Clear pathways for career progression and further CBPD qualifications.",
+      "Delivered exclusively through quality-assured CBPD authorised partners."
+    ],
+    "cbpdDescription": "The Central Board of Professional Development (CBPD) offers a comprehensive range of practical Finance Programmes designed to accelerate career growth and enhance business performance, efficiency, and sustainable growth.",
+    "howToEnroll": [
+      "Select the CBPD programme that best matches your goals.",
+      "Contact or enrol through an authorised CBPD partner (online or in your region).",
+      "Complete the focused learning and practical assessment.",
+      "Receive your official CBPD digital certificate with unique verification."
+    ],
+    "longDescription": "CBPD Finance Programmes certifications focus on real-world application, strategic thinking, leadership, and operational excellence — helping individuals advance their careers faster.",
+    "overviewDescription": "CBPD provides targeted, high-impact programmes across vital disciplines. Each programme is tailored for busy professionals and delivers immediately measurable workplace results.",
+    "overviewItems": [],
+    "whyChooseUs": "CBPD delivers shorter, more practical, and highly flexible credentials when compared with many traditional, rigid academic qualifications.\n\nOur dynamic programmes seamlessly combine esteemed UK professional standards with modern, in-demand skills. This unique fusion helps ambitious professionals and forward-thinking organisations achieve faster time-to-value and highly measurable, sustainable results.",
+    "isPopular": true
+  },
+  {
+    "_id": "69f6fef9ba924850f7f5b94a",
+    "name": "Healthcare & Medical Programmes",
+    "slug": "healthcare-medical",
+    "description": "The healthcare sector continues to expand globally, with increasing demand for qualified professionals in patient care and support services. Certification enhances employability and professional credibility.",
+    "icon": "🏥",
+    "image": "https://muhammedjasir908.github.io/cbpd/images/external/1516549655169-df83a0774514.jpg",
+    "isActive": true,
+    "__v": 1,
+    "benefits": [
+      "Practical, job-focused learning with immediate workplace application.",
+      "Flexible delivery modes to suit busy professionals and organisations.",
+      "Prestigious UK-issued CBPD certification recognised internationally.",
+      "Clear pathways for career progression and further CBPD qualifications.",
+      "Delivered exclusively through quality-assured CBPD authorised partners."
+    ],
+    "cbpdDescription": "The Central Board of Professional Development (CBPD) offers a comprehensive range of practical Healthcare & Medical Programmes designed to accelerate career growth and enhance business performance, efficiency, and sustainable growth.",
+    "howToEnroll": [
+      "Select the CBPD programme that best matches your goals.",
+      "Contact or enrol through an authorised CBPD partner (online or in your region).",
+      "Complete the focused learning and practical assessment.",
+      "Receive your official CBPD digital certificate with unique verification."
+    ],
+    "longDescription": "CBPD Healthcare & Medical Programmes certifications focus on real-world application, strategic thinking, leadership, and operational excellence — helping individuals advance their careers faster.",
+    "overviewDescription": "CBPD provides targeted, high-impact programmes across vital disciplines. Each programme is tailored for busy professionals and delivers immediately measurable workplace results.",
+    "overviewItems": [],
+    "whyChooseUs": "CBPD delivers shorter, more practical, and highly flexible credentials when compared with many traditional, rigid academic qualifications.\n\nOur dynamic programmes seamlessly combine esteemed UK professional standards with modern, in-demand skills. This unique fusion helps ambitious professionals and forward-thinking organisations achieve faster time-to-value and highly measurable, sustainable results.",
+    "isPopular": true
+  },
+  {
+    "_id": "69f6fefaba924850f7f5b95b",
+    "name": "Fire & Safety Programmes",
+    "slug": "fire-safety",
+    "description": "Following updated UK building safety regulations, the demand for certified fire safety and risk assessment professionals has skyrocketed to ensure compliance and protect lives.",
+    "icon": "🧯",
+    "image": "https://muhammedjasir908.github.io/cbpd/_next/static/media/fire-safety.35c7e0c4.png",
+    "isActive": true,
+    "__v": 1,
+    "benefits": [
+      "Practical, job-focused learning with immediate workplace application.",
+      "Flexible delivery modes to suit busy professionals and organisations.",
+      "Prestigious UK-issued CBPD certification recognised internationally.",
+      "Clear pathways for career progression and further CBPD qualifications.",
+      "Delivered exclusively through quality-assured CBPD authorised partners."
+    ],
+    "cbpdDescription": "The Central Board of Professional Development (CBPD) offers a comprehensive range of practical Fire & Safety Programmes designed to accelerate career growth and enhance business performance, efficiency, and sustainable growth.",
+    "howToEnroll": [
+      "Select the CBPD programme that best matches your goals.",
+      "Contact or enrol through an authorised CBPD partner (online or in your region).",
+      "Complete the focused learning and practical assessment.",
+      "Receive your official CBPD digital certificate with unique verification."
+    ],
+    "longDescription": "CBPD Fire & Safety Programmes certifications focus on real-world application, strategic thinking, leadership, and operational excellence — helping individuals advance their careers faster.",
+    "overviewDescription": "CBPD provides targeted, high-impact programmes across vital disciplines. Each programme is tailored for busy professionals and delivers immediately measurable workplace results.",
+    "overviewItems": [],
+    "whyChooseUs": "CBPD delivers shorter, more practical, and highly flexible credentials when compared with many traditional, rigid academic qualifications.\n\nOur dynamic programmes seamlessly combine esteemed UK professional standards with modern, in-demand skills. This unique fusion helps ambitious professionals and forward-thinking organisations achieve faster time-to-value and highly measurable, sustainable results."
+  },
+  {
+    "_id": "69f6fefbba924850f7f5b96c",
+    "name": "Human Resources Programmes",
+    "slug": "human-resources",
+    "description": "HR professionals are essential for managing talent, compliance, and organizational culture. Certified HR practitioners gain credibility and faster paths to leadership roles.",
+    "icon": "👥",
+    "image": "https://muhammedjasir908.github.io/cbpd/images/external/1522071820081-009f0129c71c.jpg",
+    "isActive": true,
+    "__v": 1,
+    "benefits": [
+      "Practical, job-focused learning with immediate workplace application.",
+      "Flexible delivery modes to suit busy professionals and organisations.",
+      "Prestigious UK-issued CBPD certification recognised internationally.",
+      "Clear pathways for career progression and further CBPD qualifications.",
+      "Delivered exclusively through quality-assured CBPD authorised partners."
+    ],
+    "cbpdDescription": "The Central Board of Professional Development (CBPD) offers a comprehensive range of practical Human Resources Programmes designed to accelerate career growth and enhance business performance, efficiency, and sustainable growth.",
+    "howToEnroll": [
+      "Select the CBPD programme that best matches your goals.",
+      "Contact or enrol through an authorised CBPD partner (online or in your region).",
+      "Complete the focused learning and practical assessment.",
+      "Receive your official CBPD digital certificate with unique verification."
+    ],
+    "longDescription": "CBPD Human Resources Programmes certifications focus on real-world application, strategic thinking, leadership, and operational excellence — helping individuals advance their careers faster.",
+    "overviewDescription": "CBPD provides targeted, high-impact programmes across vital disciplines. Each programme is tailored for busy professionals and delivers immediately measurable workplace results.",
+    "overviewItems": [],
+    "whyChooseUs": "CBPD delivers shorter, more practical, and highly flexible credentials when compared with many traditional, rigid academic qualifications.\n\nOur dynamic programmes seamlessly combine esteemed UK professional standards with modern, in-demand skills. This unique fusion helps ambitious professionals and forward-thinking organisations achieve faster time-to-value and highly measurable, sustainable results."
+  },
+  {
+    "_id": "69f6fefcba924850f7f5b97d",
+    "name": "Hospitality Programmes",
+    "slug": "hospitality",
+    "description": "The hospitality and tourism sector is a major global industry, offering diverse career opportunities. Professional qualifications enhance service standards and career progression.",
+    "icon": "🏨",
+    "image": "https://muhammedjasir908.github.io/cbpd/images/external/1566073771259-6a8506099945.jpg",
+    "isActive": true,
+    "__v": 1,
+    "benefits": [
+      "Practical, job-focused learning with immediate workplace application.",
+      "Flexible delivery modes to suit busy professionals and organisations.",
+      "Prestigious UK-issued CBPD certification recognised internationally.",
+      "Clear pathways for career progression and further CBPD qualifications.",
+      "Delivered exclusively through quality-assured CBPD authorised partners."
+    ],
+    "cbpdDescription": "The Central Board of Professional Development (CBPD) offers a comprehensive range of practical Hospitality Programmes designed to accelerate career growth and enhance business performance, efficiency, and sustainable growth.",
+    "howToEnroll": [
+      "Select the CBPD programme that best matches your goals.",
+      "Contact or enrol through an authorised CBPD partner (online or in your region).",
+      "Complete the focused learning and practical assessment.",
+      "Receive your official CBPD digital certificate with unique verification."
+    ],
+    "longDescription": "CBPD Hospitality Programmes certifications focus on real-world application, strategic thinking, leadership, and operational excellence — helping individuals advance their careers faster.",
+    "overviewDescription": "CBPD provides targeted, high-impact programmes across vital disciplines. Each programme is tailored for busy professionals and delivers immediately measurable workplace results.",
+    "overviewItems": [],
+    "whyChooseUs": "CBPD delivers shorter, more practical, and highly flexible credentials when compared with many traditional, rigid academic qualifications.\n\nOur dynamic programmes seamlessly combine esteemed UK professional standards with modern, in-demand skills. This unique fusion helps ambitious professionals and forward-thinking organisations achieve faster time-to-value and highly measurable, sustainable results."
+  },
+  {
+    "_id": "69f6fefdba924850f7f5b98e",
+    "name": "Science Programmes",
+    "slug": "science",
+    "description": "The UK is a global leader in scientific research and biotechnology. Certified laboratory technicians and data analysts are vital to driving innovation and clinical advancements.",
+    "icon": "🔬",
+    "image": "https://muhammedjasir908.github.io/cbpd/images/external/1532094349884-543bc11b234d.jpg",
+    "isActive": true,
+    "__v": 1,
+    "benefits": [
+      "Practical, job-focused learning with immediate workplace application.",
+      "Flexible delivery modes to suit busy professionals and organisations.",
+      "Prestigious UK-issued CBPD certification recognised internationally.",
+      "Clear pathways for career progression and further CBPD qualifications.",
+      "Delivered exclusively through quality-assured CBPD authorised partners."
+    ],
+    "cbpdDescription": "The Central Board of Professional Development (CBPD) offers a comprehensive range of practical Science Programmes designed to accelerate career growth and enhance business performance, efficiency, and sustainable growth.",
+    "howToEnroll": [
+      "Select the CBPD programme that best matches your goals.",
+      "Contact or enrol through an authorised CBPD partner (online or in your region).",
+      "Complete the focused learning and practical assessment.",
+      "Receive your official CBPD digital certificate with unique verification."
+    ],
+    "longDescription": "CBPD Science Programmes certifications focus on real-world application, strategic thinking, leadership, and operational excellence — helping individuals advance their careers faster.",
+    "overviewDescription": "CBPD provides targeted, high-impact programmes across vital disciplines. Each programme is tailored for busy professionals and delivers immediately measurable workplace results.",
+    "overviewItems": [],
+    "whyChooseUs": "CBPD delivers shorter, more practical, and highly flexible credentials when compared with many traditional, rigid academic qualifications.\n\nOur dynamic programmes seamlessly combine esteemed UK professional standards with modern, in-demand skills. This unique fusion helps ambitious professionals and forward-thinking organisations achieve faster time-to-value and highly measurable, sustainable results."
+  },
+  {
+    "_id": "69f6fefeba924850f7f5b99f",
+    "name": "Media Programmes",
+    "slug": "media",
+    "description": "The digital media landscape requires versatile professionals skilled in content creation, journalism, and broadcasting. Certification provides a distinct edge in a highly competitive market.",
+    "icon": "🎥",
+    "image": "https://muhammedjasir908.github.io/cbpd/images/external/1478720568477-152d9b164e26.jpg",
+    "isActive": true,
+    "__v": 1,
+    "benefits": [
+      "Practical, job-focused learning with immediate workplace application.",
+      "Flexible delivery modes to suit busy professionals and organisations.",
+      "Prestigious UK-issued CBPD certification recognised internationally.",
+      "Clear pathways for career progression and further CBPD qualifications.",
+      "Delivered exclusively through quality-assured CBPD authorised partners."
+    ],
+    "cbpdDescription": "The Central Board of Professional Development (CBPD) offers a comprehensive range of practical Media Programmes designed to accelerate career growth and enhance business performance, efficiency, and sustainable growth.",
+    "howToEnroll": [
+      "Select the CBPD programme that best matches your goals.",
+      "Contact or enrol through an authorised CBPD partner (online or in your region).",
+      "Complete the focused learning and practical assessment.",
+      "Receive your official CBPD digital certificate with unique verification."
+    ],
+    "longDescription": "CBPD Media Programmes certifications focus on real-world application, strategic thinking, leadership, and operational excellence — helping individuals advance their careers faster.",
+    "overviewDescription": "CBPD provides targeted, high-impact programmes across vital disciplines. Each programme is tailored for busy professionals and delivers immediately measurable workplace results.",
+    "overviewItems": [],
+    "whyChooseUs": "CBPD delivers shorter, more practical, and highly flexible credentials when compared with many traditional, rigid academic qualifications.\n\nOur dynamic programmes seamlessly combine esteemed UK professional standards with modern, in-demand skills. This unique fusion helps ambitious professionals and forward-thinking organisations achieve faster time-to-value and highly measurable, sustainable results."
+  },
+  {
+    "_id": "69f6fefeba924850f7f5b9b0",
+    "name": "Marine Programmes",
+    "slug": "marine",
+    "description": "The maritime sector is essential for global trade. Certified marine engineers and logistics professionals ensure efficient port operations and maritime safety worldwide.",
+    "icon": "⚓",
+    "image": "https://muhammedjasir908.github.io/cbpd/_next/static/media/marine.3de1f8fc.png",
+    "isActive": true,
+    "__v": 1,
+    "benefits": [
+      "Practical, job-focused learning with immediate workplace application.",
+      "Flexible delivery modes to suit busy professionals and organisations.",
+      "Prestigious UK-issued CBPD certification recognised internationally.",
+      "Clear pathways for career progression and further CBPD qualifications.",
+      "Delivered exclusively through quality-assured CBPD authorised partners."
+    ],
+    "cbpdDescription": "The Central Board of Professional Development (CBPD) offers a comprehensive range of practical Marine Programmes designed to accelerate career growth and enhance business performance, efficiency, and sustainable growth.",
+    "howToEnroll": [
+      "Select the CBPD programme that best matches your goals.",
+      "Contact or enrol through an authorised CBPD partner (online or in your region).",
+      "Complete the focused learning and practical assessment.",
+      "Receive your official CBPD digital certificate with unique verification."
+    ],
+    "longDescription": "CBPD Marine Programmes certifications focus on real-world application, strategic thinking, leadership, and operational excellence — helping individuals advance their careers faster.",
+    "overviewDescription": "CBPD provides targeted, high-impact programmes across vital disciplines. Each programme is tailored for busy professionals and delivers immediately measurable workplace results.",
+    "overviewItems": [],
+    "whyChooseUs": "CBPD delivers shorter, more practical, and highly flexible credentials when compared with many traditional, rigid academic qualifications.\n\nOur dynamic programmes seamlessly combine esteemed UK professional standards with modern, in-demand skills. This unique fusion helps ambitious professionals and forward-thinking organisations achieve faster time-to-value and highly measurable, sustainable results."
+  },
+  {
+    "_id": "69f6feffba924850f7f5b9c1",
+    "name": "International Programmes",
+    "slug": "international",
+    "description": "In a globalized economy, professionals who understand cross-cultural management and international commerce are invaluable for business expansion and global supply chains.",
+    "icon": "🌍",
+    "image": "https://muhammedjasir908.github.io/cbpd/images/external/1521295121783-8a321d551ad2.jpg",
+    "isActive": true,
+    "__v": 1,
+    "benefits": [
+      "Practical, job-focused learning with immediate workplace application.",
+      "Flexible delivery modes to suit busy professionals and organisations.",
+      "Prestigious UK-issued CBPD certification recognised internationally.",
+      "Clear pathways for career progression and further CBPD qualifications.",
+      "Delivered exclusively through quality-assured CBPD authorised partners."
+    ],
+    "cbpdDescription": "The Central Board of Professional Development (CBPD) offers a comprehensive range of practical International Programmes designed to accelerate career growth and enhance business performance, efficiency, and sustainable growth.",
+    "howToEnroll": [
+      "Select the CBPD programme that best matches your goals.",
+      "Contact or enrol through an authorised CBPD partner (online or in your region).",
+      "Complete the focused learning and practical assessment.",
+      "Receive your official CBPD digital certificate with unique verification."
+    ],
+    "longDescription": "CBPD International Programmes certifications focus on real-world application, strategic thinking, leadership, and operational excellence — helping individuals advance their careers faster.",
+    "overviewDescription": "CBPD provides targeted, high-impact programmes across vital disciplines. Each programme is tailored for busy professionals and delivers immediately measurable workplace results.",
+    "overviewItems": [],
+    "whyChooseUs": "CBPD delivers shorter, more practical, and highly flexible credentials when compared with many traditional, rigid academic qualifications.\n\nOur dynamic programmes seamlessly combine esteemed UK professional standards with modern, in-demand skills. This unique fusion helps ambitious professionals and forward-thinking organisations achieve faster time-to-value and highly measurable, sustainable results."
+  },
+  {
+    "_id": "69f6ff01ba924850f7f5b9d2",
+    "name": "Beauty & Wellness Programmes",
+    "slug": "beauty-wellness",
+    "description": "The beauty and wellness industry is expanding rapidly, driven by global demand for personal care and aesthetic services. Certified professionals gain a strong competitive advantage.",
+    "icon": "✨",
+    "image": "https://muhammedjasir908.github.io/cbpd/images/external/1560066984-138dadb4c035.jpg",
+    "isActive": true,
+    "__v": 1,
+    "benefits": [
+      "Practical, job-focused learning with immediate workplace application.",
+      "Flexible delivery modes to suit busy professionals and organisations.",
+      "Prestigious UK-issued CBPD certification recognised internationally.",
+      "Clear pathways for career progression and further CBPD qualifications.",
+      "Delivered exclusively through quality-assured CBPD authorised partners."
+    ],
+    "cbpdDescription": "The Central Board of Professional Development (CBPD) offers a comprehensive range of practical Beauty & Wellness Programmes designed to accelerate career growth and enhance business performance, efficiency, and sustainable growth.",
+    "howToEnroll": [
+      "Select the CBPD programme that best matches your goals.",
+      "Contact or enrol through an authorised CBPD partner (online or in your region).",
+      "Complete the focused learning and practical assessment.",
+      "Receive your official CBPD digital certificate with unique verification."
+    ],
+    "longDescription": "CBPD Beauty & Wellness Programmes certifications focus on real-world application, strategic thinking, leadership, and operational excellence — helping individuals advance their careers faster.",
+    "overviewDescription": "CBPD provides targeted, high-impact programmes across vital disciplines. Each programme is tailored for busy professionals and delivers immediately measurable workplace results.",
+    "overviewItems": [],
+    "whyChooseUs": "CBPD delivers shorter, more practical, and highly flexible credentials when compared with many traditional, rigid academic qualifications.\n\nOur dynamic programmes seamlessly combine esteemed UK professional standards with modern, in-demand skills. This unique fusion helps ambitious professionals and forward-thinking organisations achieve faster time-to-value and highly measurable, sustainable results."
+  },
+  {
+    "_id": "69f6ff02ba924850f7f5b9e3",
+    "name": "Property Programmes",
+    "slug": "property-real-estate",
+    "description": "The dynamic UK property market requires skilled professionals in valuation, facility management, and real estate investment to maximize asset performance.",
+    "icon": "🏢",
+    "image": "https://muhammedjasir908.github.io/cbpd/images/external/1486406146926-c627a92ad1ab.jpg",
+    "isActive": true,
+    "__v": 1,
+    "benefits": [
+      "Practical, job-focused learning with immediate workplace application.",
+      "Flexible delivery modes to suit busy professionals and organisations.",
+      "Prestigious UK-issued CBPD certification recognised internationally.",
+      "Clear pathways for career progression and further CBPD qualifications.",
+      "Delivered exclusively through quality-assured CBPD authorised partners."
+    ],
+    "cbpdDescription": "The Central Board of Professional Development (CBPD) offers a comprehensive range of practical Property Programmes designed to accelerate career growth and enhance business performance, efficiency, and sustainable growth.",
+    "howToEnroll": [
+      "Select the CBPD programme that best matches your goals.",
+      "Contact or enrol through an authorised CBPD partner (online or in your region).",
+      "Complete the focused learning and practical assessment.",
+      "Receive your official CBPD digital certificate with unique verification."
+    ],
+    "longDescription": "CBPD Property Programmes certifications focus on real-world application, strategic thinking, leadership, and operational excellence — helping individuals advance their careers faster.",
+    "overviewDescription": "CBPD provides targeted, high-impact programmes across vital disciplines. Each programme is tailored for busy professionals and delivers immediately measurable workplace results.",
+    "overviewItems": [],
+    "whyChooseUs": "CBPD delivers shorter, more practical, and highly flexible credentials when compared with many traditional, rigid academic qualifications.\n\nOur dynamic programmes seamlessly combine esteemed UK professional standards with modern, in-demand skills. This unique fusion helps ambitious professionals and forward-thinking organisations achieve faster time-to-value and highly measurable, sustainable results."
+  },
+  {
+    "_id": "69f6ff03ba924850f7f5b9f4",
+    "name": "Transport Programmes",
+    "slug": "transport-logistics",
+    "description": "With global trade expansion, logistics and supply chain professionals are in high demand. Certification provides the skills needed for efficient operations and global coordination.",
+    "icon": "🚛",
+    "image": "https://muhammedjasir908.github.io/cbpd/_next/static/media/transport.dbfcf5a6.png",
+    "isActive": true,
+    "__v": 1,
+    "benefits": [
+      "Practical, job-focused learning with immediate workplace application.",
+      "Flexible delivery modes to suit busy professionals and organisations.",
+      "Prestigious UK-issued CBPD certification recognised internationally.",
+      "Clear pathways for career progression and further CBPD qualifications.",
+      "Delivered exclusively through quality-assured CBPD authorised partners."
+    ],
+    "cbpdDescription": "The Central Board of Professional Development (CBPD) offers a comprehensive range of practical Transport Programmes designed to accelerate career growth and enhance business performance, efficiency, and sustainable growth.",
+    "howToEnroll": [
+      "Select the CBPD programme that best matches your goals.",
+      "Contact or enrol through an authorised CBPD partner (online or in your region).",
+      "Complete the focused learning and practical assessment.",
+      "Receive your official CBPD digital certificate with unique verification."
+    ],
+    "longDescription": "CBPD Transport Programmes certifications focus on real-world application, strategic thinking, leadership, and operational excellence — helping individuals advance their careers faster.",
+    "overviewDescription": "CBPD provides targeted, high-impact programmes across vital disciplines. Each programme is tailored for busy professionals and delivers immediately measurable workplace results.",
+    "overviewItems": [],
+    "whyChooseUs": "CBPD delivers shorter, more practical, and highly flexible credentials when compared with many traditional, rigid academic qualifications.\n\nOur dynamic programmes seamlessly combine esteemed UK professional standards with modern, in-demand skills. This unique fusion helps ambitious professionals and forward-thinking organisations achieve faster time-to-value and highly measurable, sustainable results."
+  },
+  {
+    "_id": "69f6ff03ba924850f7f5ba05",
+    "name": "Tourism Programmes",
+    "slug": "travel-tourism",
+    "description": "The hospitality and tourism sector is a major global industry, offering diverse career opportunities. Professional qualifications enhance service standards and career progression.",
+    "icon": "✈️",
+    "image": "https://muhammedjasir908.github.io/cbpd/images/external/1436491865332-7a61a109cc05.jpg",
+    "isActive": true,
+    "__v": 1,
+    "benefits": [
+      "Practical, job-focused learning with immediate workplace application.",
+      "Flexible delivery modes to suit busy professionals and organisations.",
+      "Prestigious UK-issued CBPD certification recognised internationally.",
+      "Clear pathways for career progression and further CBPD qualifications.",
+      "Delivered exclusively through quality-assured CBPD authorised partners."
+    ],
+    "cbpdDescription": "The Central Board of Professional Development (CBPD) offers a comprehensive range of practical Tourism Programmes designed to accelerate career growth and enhance business performance, efficiency, and sustainable growth.",
+    "howToEnroll": [
+      "Select the CBPD programme that best matches your goals.",
+      "Contact or enrol through an authorised CBPD partner (online or in your region).",
+      "Complete the focused learning and practical assessment.",
+      "Receive your official CBPD digital certificate with unique verification."
+    ],
+    "longDescription": "CBPD Tourism Programmes certifications focus on real-world application, strategic thinking, leadership, and operational excellence — helping individuals advance their careers faster.",
+    "overviewDescription": "CBPD provides targeted, high-impact programmes across vital disciplines. Each programme is tailored for busy professionals and delivers immediately measurable workplace results.",
+    "overviewItems": [],
+    "whyChooseUs": "CBPD delivers shorter, more practical, and highly flexible credentials when compared with many traditional, rigid academic qualifications.\n\nOur dynamic programmes seamlessly combine esteemed UK professional standards with modern, in-demand skills. This unique fusion helps ambitious professionals and forward-thinking organisations achieve faster time-to-value and highly measurable, sustainable results."
+  },
+  {
+    "_id": "69f6ff04ba924850f7f5ba16",
+    "name": "Telecommunications Programmes",
+    "slug": "telecommunications",
+    "description": "The rollout of 5G and fiber-optic networks has created a surge in demand for certified telecommunications engineers and network managers to build next-generation connectivity.",
+    "icon": "📡",
+    "image": "https://muhammedjasir908.github.io/cbpd/images/external/1544465544-1b71aee9dfa3.jpg",
+    "isActive": true,
+    "__v": 1,
+    "benefits": [
+      "Practical, job-focused learning with immediate workplace application.",
+      "Flexible delivery modes to suit busy professionals and organisations.",
+      "Prestigious UK-issued CBPD certification recognised internationally.",
+      "Clear pathways for career progression and further CBPD qualifications.",
+      "Delivered exclusively through quality-assured CBPD authorised partners."
+    ],
+    "cbpdDescription": "The Central Board of Professional Development (CBPD) offers a comprehensive range of practical Telecommunications Programmes designed to accelerate career growth and enhance business performance, efficiency, and sustainable growth.",
+    "howToEnroll": [
+      "Select the CBPD programme that best matches your goals.",
+      "Contact or enrol through an authorised CBPD partner (online or in your region).",
+      "Complete the focused learning and practical assessment.",
+      "Receive your official CBPD digital certificate with unique verification."
+    ],
+    "longDescription": "CBPD Telecommunications Programmes certifications focus on real-world application, strategic thinking, leadership, and operational excellence — helping individuals advance their careers faster.",
+    "overviewDescription": "CBPD provides targeted, high-impact programmes across vital disciplines. Each programme is tailored for busy professionals and delivers immediately measurable workplace results.",
+    "overviewItems": [],
+    "whyChooseUs": "CBPD delivers shorter, more practical, and highly flexible credentials when compared with many traditional, rigid academic qualifications.\n\nOur dynamic programmes seamlessly combine esteemed UK professional standards with modern, in-demand skills. This unique fusion helps ambitious professionals and forward-thinking organisations achieve faster time-to-value and highly measurable, sustainable results."
+  },
+  {
+    "_id": "69f6ff05ba924850f7f5ba27",
+    "name": "Sport Programmes",
+    "slug": "sport",
+    "description": "The health and wellness boom has led to increased demand for certified sports coaches, nutritionists, and fitness managers. Professional qualifications are essential for credibility.",
+    "icon": "🏅",
+    "image": "https://muhammedjasir908.github.io/cbpd/images/external/1517836357463-d25dfeac3438.jpg",
+    "isActive": true,
+    "__v": 1,
+    "benefits": [
+      "Practical, job-focused learning with immediate workplace application.",
+      "Flexible delivery modes to suit busy professionals and organisations.",
+      "Prestigious UK-issued CBPD certification recognised internationally.",
+      "Clear pathways for career progression and further CBPD qualifications.",
+      "Delivered exclusively through quality-assured CBPD authorised partners."
+    ],
+    "cbpdDescription": "The Central Board of Professional Development (CBPD) offers a comprehensive range of practical Sport Programmes designed to accelerate career growth and enhance business performance, efficiency, and sustainable growth.",
+    "howToEnroll": [
+      "Select the CBPD programme that best matches your goals.",
+      "Contact or enrol through an authorised CBPD partner (online or in your region).",
+      "Complete the focused learning and practical assessment.",
+      "Receive your official CBPD digital certificate with unique verification."
+    ],
+    "longDescription": "CBPD Sport Programmes certifications focus on real-world application, strategic thinking, leadership, and operational excellence — helping individuals advance their careers faster.",
+    "overviewDescription": "CBPD provides targeted, high-impact programmes across vital disciplines. Each programme is tailored for busy professionals and delivers immediately measurable workplace results.",
+    "overviewItems": [],
+    "whyChooseUs": "CBPD delivers shorter, more practical, and highly flexible credentials when compared with many traditional, rigid academic qualifications.\n\nOur dynamic programmes seamlessly combine esteemed UK professional standards with modern, in-demand skills. This unique fusion helps ambitious professionals and forward-thinking organisations achieve faster time-to-value and highly measurable, sustainable results."
+  },
+  {
+    "_id": "69f6ff06ba924850f7f5ba38",
+    "name": "Social Care Programmes",
+    "slug": "social-care",
+    "description": "The UK's aging population and increased focus on mental health have made social care one of the most critical sectors. Certified professionals ensure high-quality care and leadership.",
+    "icon": "🤝",
+    "image": "https://muhammedjasir908.github.io/cbpd/images/external/1576765608535-5f04d1e3f289.jpg",
+    "isActive": true,
+    "__v": 1,
+    "benefits": [
+      "Practical, job-focused learning with immediate workplace application.",
+      "Flexible delivery modes to suit busy professionals and organisations.",
+      "Prestigious UK-issued CBPD certification recognised internationally.",
+      "Clear pathways for career progression and further CBPD qualifications.",
+      "Delivered exclusively through quality-assured CBPD authorised partners."
+    ],
+    "cbpdDescription": "The Central Board of Professional Development (CBPD) offers a comprehensive range of practical Social Care Programmes designed to accelerate career growth and enhance business performance, efficiency, and sustainable growth.",
+    "howToEnroll": [
+      "Select the CBPD programme that best matches your goals.",
+      "Contact or enrol through an authorised CBPD partner (online or in your region).",
+      "Complete the focused learning and practical assessment.",
+      "Receive your official CBPD digital certificate with unique verification."
+    ],
+    "longDescription": "CBPD Social Care Programmes certifications focus on real-world application, strategic thinking, leadership, and operational excellence — helping individuals advance their careers faster.",
+    "overviewDescription": "CBPD provides targeted, high-impact programmes across vital disciplines. Each programme is tailored for busy professionals and delivers immediately measurable workplace results.",
+    "overviewItems": [],
+    "whyChooseUs": "CBPD delivers shorter, more practical, and highly flexible credentials when compared with many traditional, rigid academic qualifications.\n\nOur dynamic programmes seamlessly combine esteemed UK professional standards with modern, in-demand skills. This unique fusion helps ambitious professionals and forward-thinking organisations achieve faster time-to-value and highly measurable, sustainable results."
+  },
+  {
+    "_id": "69f6ff07ba924850f7f5ba49",
+    "name": "Security Programmes",
+    "slug": "security",
+    "description": "As physical and digital threats evolve, qualified security professionals are essential for protecting corporate assets, data, and personnel globally.",
+    "icon": "🛡️",
+    "image": "https://muhammedjasir908.github.io/cbpd/_next/static/media/security.8b73fdb8.png",
+    "isActive": true,
+    "__v": 1,
+    "benefits": [
+      "Practical, job-focused learning with immediate workplace application.",
+      "Flexible delivery modes to suit busy professionals and organisations.",
+      "Prestigious UK-issued CBPD certification recognised internationally.",
+      "Clear pathways for career progression and further CBPD qualifications.",
+      "Delivered exclusively through quality-assured CBPD authorised partners."
+    ],
+    "cbpdDescription": "The Central Board of Professional Development (CBPD) offers a comprehensive range of practical Security Programmes designed to accelerate career growth and enhance business performance, efficiency, and sustainable growth.",
+    "howToEnroll": [
+      "Select the CBPD programme that best matches your goals.",
+      "Contact or enrol through an authorised CBPD partner (online or in your region).",
+      "Complete the focused learning and practical assessment.",
+      "Receive your official CBPD digital certificate with unique verification."
+    ],
+    "longDescription": "CBPD Security Programmes certifications focus on real-world application, strategic thinking, leadership, and operational excellence — helping individuals advance their careers faster.",
+    "overviewDescription": "CBPD provides targeted, high-impact programmes across vital disciplines. Each programme is tailored for busy professionals and delivers immediately measurable workplace results.",
+    "overviewItems": [],
+    "whyChooseUs": "CBPD delivers shorter, more practical, and highly flexible credentials when compared with many traditional, rigid academic qualifications.\n\nOur dynamic programmes seamlessly combine esteemed UK professional standards with modern, in-demand skills. This unique fusion helps ambitious professionals and forward-thinking organisations achieve faster time-to-value and highly measurable, sustainable results."
+  }
+]

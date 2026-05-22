@@ -86,13 +86,16 @@ export async function PUT(
     const textFields = [
       "fullName", "gender", "phoneNumber", "dateOfBirth", "joiningDate",
       "state", "district", "county", "currentCourse", "department", 
-      "semester", "admissionNumber", "institutionId", "isActive"
+      "semester", "admissionNumber", "institutionId", "isActive",
+      "emailAddress", "qualificationLevel", "qualificationType", 
+      "studyMode", "completionDate", "resultGrade", 
+      "approvedCentreName", "centreCode", "trainerTutorName"
     ];
 
     textFields.forEach(field => {
       const value = formData.get(field);
       if (value !== null) {
-        if (field === "dateOfBirth" || field === "joiningDate") {
+        if (field === "dateOfBirth" || field === "joiningDate" || field === "completionDate") {
           updateData[field] = new Date(value as string);
         } else if (field === "isActive") {
           updateData[field] = value === "true";
@@ -101,6 +104,11 @@ export async function PUT(
         }
       }
     });
+
+    const guidedLearningHours = formData.get("guidedLearningHours");
+    if (guidedLearningHours !== null) {
+      updateData.guidedLearningHours = Number(guidedLearningHours);
+    }
 
     // Check if another student has the same admission number (excluding current student)
     if (updateData.admissionNumber) {
@@ -188,7 +196,7 @@ export async function PUT(
   }
 }
 
-// DELETE - Delete student by ID (soft delete by setting isActive to false)
+// DELETE - Soft delete student by ID
 export async function DELETE(
   request: NextRequest,
   { params }: { params: { id: string } }
@@ -207,12 +215,12 @@ export async function DELETE(
       return NextResponse.json(invalidIdResponse, { status: 400 });
     }
 
-    // Soft delete by setting isActive to false
+    // Soft delete by updating isActive to false
     const deletedStudent = await Student.findByIdAndUpdate(
       id,
       { isActive: false },
       { new: true }
-    ).populate("institutionId", "orgName email");
+    );
 
     if (!deletedStudent) {
       const notFoundResponse: ApiResponse<never> = {
@@ -224,7 +232,6 @@ export async function DELETE(
 
     const successResponse: ApiResponse<typeof deletedStudent> = {
       success: true,
-      data: deletedStudent,
       message: "Student deactivated successfully",
     };
 

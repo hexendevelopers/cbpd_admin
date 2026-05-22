@@ -26,6 +26,10 @@ const studentSchema = new mongoose.Schema(
       required: [true, "Phone number is required"],
       trim: true,
     },
+    emailAddress: {
+      type: String,
+      trim: true,
+    },
     dateOfBirth: {
       type: Date,
       required: [true, "Date of birth is required"],
@@ -73,6 +77,15 @@ const studentSchema = new mongoose.Schema(
       unique: true,
       trim: true,
     },
+    qualificationLevel: { type: String, trim: true },
+    qualificationType: { type: String, trim: true },
+    studyMode: { type: String, trim: true },
+    completionDate: { type: Date },
+    guidedLearningHours: { type: Number },
+    resultGrade: { type: String, trim: true },
+    approvedCentreName: { type: String, trim: true },
+    centreCode: { type: String, trim: true },
+    trainerTutorName: { type: String, trim: true },
     registerNumber: {
       type: String,
       trim: true,

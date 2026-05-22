@@ -104,19 +104,27 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     const textFields = [
       "fullName", "gender", "phoneNumber", "dateOfBirth", "joiningDate",
       "state", "district", "county", "currentCourse", "department", 
-      "semester", "admissionNumber", "institutionId"
+      "semester", "admissionNumber", "institutionId",
+      "emailAddress", "qualificationLevel", "qualificationType", 
+      "studyMode", "completionDate", "resultGrade", 
+      "approvedCentreName", "centreCode", "trainerTutorName"
     ];
 
     textFields.forEach(field => {
       const value = formData.get(field);
       if (value) {
-        if (field === "dateOfBirth" || field === "joiningDate") {
+        if (field === "dateOfBirth" || field === "joiningDate" || field === "completionDate") {
           studentData[field] = new Date(value as string);
         } else {
           studentData[field] = value as string;
         }
       }
     });
+
+    const guidedLearningHours = formData.get("guidedLearningHours");
+    if (guidedLearningHours) {
+      studentData.guidedLearningHours = Number(guidedLearningHours);
+    }
 
     // Check if student with admission number already exists
     const existingStudent = await Student.findOne({
