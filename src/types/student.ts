@@ -13,10 +13,20 @@ export interface IStudent {
   department: string;
   semester: string;
   admissionNumber: string;
+  emailAddress?: string;
+  qualificationLevel?: string;
+  qualificationType?: string;
+  studyMode?: string;
+  completionDate?: Date | string;
+  guidedLearningHours?: number | string;
+  resultGrade?: string;
+  approvedCentreName?: string;
+  centreCode?: string;
+  trainerTutorName?: string;
   marksheets: string[];
   passportPhoto: string;
   isActive: boolean;
-  institutionId: string; // Now required
+  institutionId: any; // Allow nested objects for .orgName
   createdAt?: Date;
   updatedAt?: Date;
 }
