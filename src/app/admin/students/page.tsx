@@ -75,6 +75,16 @@ interface Student {
   department: string;
   semester: string;
   admissionNumber: string;
+  emailAddress?: string;
+  qualificationLevel?: string;
+  qualificationType?: string;
+  studyMode?: string;
+  completionDate?: string | null;
+  guidedLearningHours?: number | string;
+  resultGrade?: string;
+  approvedCentreName?: string;
+  centreCode?: string;
+  trainerTutorName?: string;
   marksheets?: string[];
   passportPhoto?: string;
   isActive: boolean;
