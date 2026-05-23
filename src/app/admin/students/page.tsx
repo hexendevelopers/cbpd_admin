@@ -1386,7 +1386,7 @@ export default function StudentsManagement() {
                 <Descriptions.Item label="Department">
                   {selectedStudent.department}
                 </Descriptions.Item>
-                <Descriptions.Item label="Semester">
+                <Descriptions.Item label="Batch Number">
                   {selectedStudent.semester}
                 </Descriptions.Item>
                 <Descriptions.Item label="Gender">
@@ -1720,8 +1720,8 @@ export default function StudentsManagement() {
               <Col span={8}>
                 <Form.Item
                   name="semester"
-                  label="Semester"
-                  rules={[{ required: true, message: "Please enter semester" }]}
+                  label="Batch Number"
+                  rules={[{ required: true, message: "Please enter batch number" }]}
                 >
                   <Input style={{ borderRadius: 6 }} />
                 </Form.Item>
