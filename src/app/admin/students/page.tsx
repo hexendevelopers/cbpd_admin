@@ -411,6 +411,9 @@ export default function StudentsManagement() {
         joiningDate: values.joiningDate
           ? dayjs(values.joiningDate).toISOString()
           : null,
+        completionDate: values.completionDate
+          ? dayjs(values.completionDate).toISOString()
+          : null,
       };
 
       const url = isEditMode
@@ -1380,17 +1383,14 @@ export default function StudentsManagement() {
                 <Descriptions.Item label="Institution">
                   <Text strong>{selectedStudent.institutionId.orgName}</Text>
                 </Descriptions.Item>
-                <Descriptions.Item label="Course">
-                  {selectedStudent.currentCourse}
-                </Descriptions.Item>
-                <Descriptions.Item label="Department">
-                  {selectedStudent.department}
-                </Descriptions.Item>
-                <Descriptions.Item label="Batch Number">
-                  {selectedStudent.semester}
+                <Descriptions.Item label="Learner Full Name">
+                  {selectedStudent.fullName}
                 </Descriptions.Item>
                 <Descriptions.Item label="Gender">
                   {selectedStudent.gender}
+                </Descriptions.Item>
+                <Descriptions.Item label="Email Address">
+                  {selectedStudent.emailAddress ? <Text copyable>{selectedStudent.emailAddress}</Text> : "-"}
                 </Descriptions.Item>
                 <Descriptions.Item label="Phone">
                   <Text copyable>{selectedStudent.phoneNumber}</Text>
@@ -1398,11 +1398,6 @@ export default function StudentsManagement() {
                 <Descriptions.Item label="Date of Birth">
                   {selectedStudent.dateOfBirth
                     ? new Date(selectedStudent.dateOfBirth).toLocaleDateString()
-                    : "-"}
-                </Descriptions.Item>
-                <Descriptions.Item label="Joining Date">
-                  {selectedStudent.joiningDate
-                    ? new Date(selectedStudent.joiningDate).toLocaleDateString()
                     : "-"}
                 </Descriptions.Item>
                 <Descriptions.Item label="Location">
@@ -1416,6 +1411,67 @@ export default function StudentsManagement() {
                   {selectedStudent.createdAt
                     ? new Date(selectedStudent.createdAt).toLocaleDateString()
                     : "-"}
+                </Descriptions.Item>
+              </Descriptions>
+            </Card>
+
+            <Card
+              title="Qualification Information"
+              style={{ marginBottom: 16, borderRadius: 8 }}
+              size="small"
+            >
+              <Descriptions column={1} bordered size="small">
+                <Descriptions.Item label="Programme">
+                  {selectedStudent.department}
+                </Descriptions.Item>
+                <Descriptions.Item label="Qualification Title">
+                  {selectedStudent.currentCourse}
+                </Descriptions.Item>
+                <Descriptions.Item label="Qualification Level">
+                  {selectedStudent.qualificationLevel || "-"}
+                </Descriptions.Item>
+                <Descriptions.Item label="Qualification Type">
+                  {selectedStudent.qualificationType || "-"}
+                </Descriptions.Item>
+                <Descriptions.Item label="Study Mode">
+                  {selectedStudent.studyMode || "-"}
+                </Descriptions.Item>
+                <Descriptions.Item label="Batch Number">
+                  {selectedStudent.semester}
+                </Descriptions.Item>
+                <Descriptions.Item label="Start Date">
+                  {selectedStudent.joiningDate
+                    ? new Date(selectedStudent.joiningDate).toLocaleDateString()
+                    : "-"}
+                </Descriptions.Item>
+                <Descriptions.Item label="Completion Date">
+                  {selectedStudent.completionDate
+                    ? new Date(selectedStudent.completionDate).toLocaleDateString()
+                    : "-"}
+                </Descriptions.Item>
+                <Descriptions.Item label="Guided Learning Hours">
+                  {selectedStudent.guidedLearningHours || "-"}
+                </Descriptions.Item>
+                <Descriptions.Item label="Result/Grade">
+                  {selectedStudent.resultGrade || "-"}
+                </Descriptions.Item>
+              </Descriptions>
+            </Card>
+
+            <Card
+              title="Centre Information"
+              style={{ marginBottom: 16, borderRadius: 8 }}
+              size="small"
+            >
+              <Descriptions column={1} bordered size="small">
+                <Descriptions.Item label="Approved Centre Name">
+                  {selectedStudent.approvedCentreName || "-"}
+                </Descriptions.Item>
+                <Descriptions.Item label="Centre Code">
+                  {selectedStudent.centreCode || "-"}
+                </Descriptions.Item>
+                <Descriptions.Item label="Trainer/Tutor Name">
+                  {selectedStudent.trainerTutorName || "-"}
                 </Descriptions.Item>
               </Descriptions>
             </Card>
@@ -1536,6 +1592,9 @@ export default function StudentsManagement() {
                     joiningDate: selectedStudent.joiningDate
                       ? dayjs(selectedStudent.joiningDate)
                       : null,
+                    completionDate: selectedStudent.completionDate
+                      ? dayjs(selectedStudent.completionDate)
+                      : null,
                     institutionId: selectedStudent.institutionId._id,
                   });
                   setIsModalVisible(true);
@@ -1612,6 +1671,16 @@ export default function StudentsManagement() {
                   ]}
                 >
                   <Input style={{ borderRadius: 6 }} />
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row gutter={16}>
+              <Col span={24}>
+                <Form.Item
+                  name="emailAddress"
+                  label="Email Address"
+                >
+                  <Input type="email" style={{ borderRadius: 6 }} />
                 </Form.Item>
               </Col>
             </Row>
@@ -1698,9 +1767,9 @@ export default function StudentsManagement() {
               <Col span={8}>
                 <Form.Item
                   name="currentCourse"
-                  label="Current Course"
+                  label="Qualification Title"
                   rules={[
-                    { required: true, message: "Please enter current course" },
+                    { required: true, message: "Please enter qualification title" },
                   ]}
                 >
                   <Input style={{ borderRadius: 6 }} />
@@ -1709,9 +1778,9 @@ export default function StudentsManagement() {
               <Col span={8}>
                 <Form.Item
                   name="department"
-                  label="Department"
+                  label="Programme Selection"
                   rules={[
-                    { required: true, message: "Please enter department" },
+                    { required: true, message: "Please select programme" },
                   ]}
                 >
                   <Input style={{ borderRadius: 6 }} />
@@ -1729,18 +1798,84 @@ export default function StudentsManagement() {
             </Row>
 
             <Row gutter={16}>
-              <Col span={12}>
+              <Col span={8}>
+                <Form.Item
+                  name="qualificationLevel"
+                  label="Qualification Level"
+                >
+                  <Input style={{ borderRadius: 6 }} />
+                </Form.Item>
+              </Col>
+              <Col span={8}>
+                <Form.Item
+                  name="qualificationType"
+                  label="Qualification Type"
+                >
+                  <Select style={{ borderRadius: 6 }}>
+                    <Option value="Level 1 Professional Certificate">Level 1 Professional Certificate</Option>
+                    <Option value="Level 2 International Certificate">Level 2 International Certificate</Option>
+                    <Option value="Level 3 International Diploma">Level 3 International Diploma</Option>
+                    <Option value="Level 4 Professional Diploma">Level 4 Professional Diploma</Option>
+                    <Option value="Level 5 Advanced Diploma">Level 5 Advanced Diploma</Option>
+                    <Option value="Level 6 Higher Diploma">Level 6 Higher Diploma</Option>
+                    <Option value="Level 7 Postgraduate Diploma">Level 7 Postgraduate Diploma</Option>
+                  </Select>
+                </Form.Item>
+              </Col>
+              <Col span={8}>
+                <Form.Item
+                  name="studyMode"
+                  label="Study Mode"
+                >
+                  <Select style={{ borderRadius: 6 }}>
+                    <Option value="Online">Online</Option>
+                    <Option value="Blended">Blended</Option>
+                    <Option value="Classroom">Classroom</Option>
+                  </Select>
+                </Form.Item>
+              </Col>
+            </Row>
+
+            <Row gutter={16}>
+              <Col span={8}>
+                <Form.Item
+                  name="guidedLearningHours"
+                  label="Guided Learning Hours"
+                >
+                  <Input type="number" style={{ borderRadius: 6 }} />
+                </Form.Item>
+              </Col>
+              <Col span={8}>
+                <Form.Item
+                  name="resultGrade"
+                  label="Result / Grade"
+                >
+                  <Input style={{ borderRadius: 6 }} />
+                </Form.Item>
+              </Col>
+            </Row>
+
+            <Row gutter={16}>
+              <Col span={8}>
                 <Form.Item
                   name="joiningDate"
-                  label="Joining Date"
+                  label="Start Date"
                   rules={[
-                    { required: true, message: "Please select joining date" },
+                    { required: true, message: "Please select start date" },
                   ]}
                 >
                   <DatePicker style={{ width: "100%", borderRadius: 6 }} />
                 </Form.Item>
               </Col>
-              <Col span={12}>
+              <Col span={8}>
+                <Form.Item
+                  name="completionDate"
+                  label="Completion Date"
+                >
+                  <DatePicker style={{ width: "100%", borderRadius: 6 }} />
+                </Form.Item>
+              </Col>
+              <Col span={8}>
                 <Form.Item
                   name="institutionId"
                   label="Institution"
@@ -1764,6 +1899,38 @@ export default function StudentsManagement() {
                       </Option>
                     ))}
                   </Select>
+                </Form.Item>
+              </Col>
+            </Row>
+          </Card>
+
+          <Card
+            title="Centre Information"
+            style={{ marginBottom: 24, borderRadius: 8 }}
+          >
+            <Row gutter={16}>
+              <Col span={8}>
+                <Form.Item
+                  name="approvedCentreName"
+                  label="Approved Centre Name"
+                >
+                  <Input style={{ borderRadius: 6 }} />
+                </Form.Item>
+              </Col>
+              <Col span={8}>
+                <Form.Item
+                  name="centreCode"
+                  label="Centre Code"
+                >
+                  <Input style={{ borderRadius: 6 }} />
+                </Form.Item>
+              </Col>
+              <Col span={8}>
+                <Form.Item
+                  name="trainerTutorName"
+                  label="Trainer / Tutor Name"
+                >
+                  <Input style={{ borderRadius: 6 }} />
                 </Form.Item>
               </Col>
             </Row>
