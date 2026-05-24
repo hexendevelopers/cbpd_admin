@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { Card, Table, Typography, message, Tag, Button, Row, Col } from "antd";
-import { DownloadOutlined } from "@ant-design/icons";
+import { Card, Table, Typography, message, Tag, Button, Row, Col, Space, Avatar, Dropdown, Menu } from "antd";
+import { DownloadOutlined, FileDoneOutlined, MoreOutlined } from "@ant-design/icons";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 
@@ -81,46 +81,102 @@ export default function ReceiptHistory() {
 
   const columns = [
     {
-      title: "Receipt #",
-      dataIndex: "invoiceNumber",
-      key: "invoiceNumber",
-    },
-    {
-      title: "Date",
-      dataIndex: "invoiceDate",
-      key: "invoiceDate",
+      title: "Receipt",
+      key: "receipt",
+      render: (record: any) => (
+        <Space>
+          <Avatar
+            icon={<FileDoneOutlined />}
+            style={{
+              background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+              boxShadow: "0 4px 12px rgba(102, 126, 234, 0.3)",
+            }}
+          />
+          <div>
+            <div style={{ fontWeight: 600, color: "#1a1a1a" }}>
+              {record.invoiceNumber}
+            </div>
+            <Typography.Text type="secondary" style={{ fontSize: 12 }}>
+              {record.invoiceDate}
+            </Typography.Text>
+          </div>
+        </Space>
+      ),
     },
     {
       title: "Bill To",
       dataIndex: "billTo",
       key: "billTo",
-      render: (text: string) => <div style={{ whiteSpace: "pre-wrap", maxWidth: "200px" }}>{text}</div>,
+      render: (text: string) => {
+        const lines = text?.split("\n") || [];
+        return (
+          <div>
+            <div style={{ fontWeight: 600, color: "#1a1a1a" }}>
+              {lines[0]}
+            </div>
+            {lines.slice(1).map((line, idx) => (
+              <div key={idx} style={{ fontSize: 12, color: "#666" }}>
+                {line}
+              </div>
+            ))}
+          </div>
+        );
+      },
     },
     {
       title: "Total GBP",
       dataIndex: "totalGBP",
       key: "totalGBP",
-      render: (val: number) => `£${val?.toFixed(2)}`,
+      render: (val: number) => (
+        <span style={{ fontWeight: 600 }}>£{val?.toFixed(2)}</span>
+      ),
     },
     {
       title: "Status",
       dataIndex: "status",
       key: "status",
-      render: (status: string) => <Tag color="green">{status}</Tag>,
+      render: (status: string) => (
+        <Tag
+          color="success"
+          icon={<FileDoneOutlined />}
+          style={{
+            borderRadius: 12,
+            fontWeight: 600,
+            boxShadow: "0 2px 4px rgba(82, 196, 26, 0.3)",
+          }}
+        >
+          {status}
+        </Tag>
+      ),
     },
     {
-      title: "Action",
-      key: "action",
-      render: (_: any, record: any) => (
-        <Button
-          type="primary"
-          icon={<DownloadOutlined />}
-          size="small"
-          loading={generatingReceiptId === record._id}
-          onClick={() => generateReceiptPDF(record)}
+      title: "Actions",
+      key: "actions",
+      render: (record: any) => (
+        <Dropdown
+          overlay={
+            <Menu>
+              <Menu.Item
+                key="download"
+                icon={<DownloadOutlined />}
+                onClick={() => generateReceiptPDF(record)}
+                disabled={generatingReceiptId === record._id}
+              >
+                {generatingReceiptId === record._id ? "Generating..." : "Download Receipt"}
+              </Menu.Item>
+            </Menu>
+          }
+          trigger={["click"]}
         >
-          Download Receipt
-        </Button>
+          <Button
+            type="text"
+            icon={<MoreOutlined />}
+            style={{
+              borderRadius: 8,
+              background: "#f5f5f5",
+            }}
+          />
+        </Dropdown>
       ),
     },
   ];
@@ -131,13 +187,25 @@ export default function ReceiptHistory() {
         Receipt History
       </Title>
 
-      <Card style={{ borderRadius: 8 }}>
+      <Card
+        style={{
+          borderRadius: 16,
+          border: "none",
+          boxShadow: "0 8px 32px rgba(0,0,0,0.08)",
+        }}
+        bodyStyle={{ padding: 0 }}
+      >
         <Table
+          className="w-full"
           columns={columns}
           dataSource={history}
           rowKey="_id"
           loading={loading}
-          pagination={{ pageSize: 10 }}
+          pagination={{
+            pageSize: 10,
+            style: { padding: "16px 24px" },
+          }}
+          style={{ borderRadius: 16 }}
         />
       </Card>
 

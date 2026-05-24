@@ -16,6 +16,9 @@ import {
   Table,
   Tag,
   Space,
+  Avatar,
+  Dropdown,
+  Menu,
 } from "antd";
 import {
   PlusOutlined,
@@ -23,6 +26,8 @@ import {
   DownloadOutlined,
   HistoryOutlined,
   FileDoneOutlined,
+  FileTextOutlined,
+  MoreOutlined,
 } from "@ant-design/icons";
 import dayjs from "dayjs";
 import html2canvas from "html2canvas";
@@ -253,49 +258,107 @@ export default function InvoiceGenerator() {
 
   const columns = [
     {
-      title: "Invoice #",
-      dataIndex: "invoiceNumber",
-      key: "invoiceNumber",
-    },
-    {
-      title: "Date",
-      dataIndex: "invoiceDate",
-      key: "invoiceDate",
+      title: "Invoice",
+      key: "invoice",
+      render: (record: any) => (
+        <Space>
+          <Avatar
+            icon={<FileTextOutlined />}
+            style={{
+              background: "linear-gradient(135deg, #1890ff 0%, #0050b3 100%)",
+              boxShadow: "0 4px 12px rgba(24, 144, 255, 0.3)",
+            }}
+          />
+          <div>
+            <div style={{ fontWeight: 600, color: "#1a1a1a" }}>
+              {record.invoiceNumber}
+            </div>
+            <Typography.Text type="secondary" style={{ fontSize: 12 }}>
+              {record.invoiceDate}
+            </Typography.Text>
+          </div>
+        </Space>
+      ),
     },
     {
       title: "Bill To",
       dataIndex: "billTo",
       key: "billTo",
-      render: (text: string) => <div style={{ whiteSpace: "pre-wrap", maxWidth: "150px" }}>{text}</div>,
+      render: (text: string) => {
+        const lines = text?.split("\n") || [];
+        return (
+          <div>
+            <div style={{ fontWeight: 600, color: "#1a1a1a" }}>
+              {lines[0]}
+            </div>
+            {lines.slice(1).map((line, idx) => (
+              <div key={idx} style={{ fontSize: 12, color: "#666" }}>
+                {line}
+              </div>
+            ))}
+          </div>
+        );
+      },
     },
     {
       title: "Total GBP",
       dataIndex: "totalGBP",
       key: "totalGBP",
-      render: (val: number) => `£${val?.toFixed(2)}`,
+      render: (val: number) => (
+        <span style={{ fontWeight: 600 }}>£{val?.toFixed(2)}</span>
+      ),
     },
     {
       title: "Status",
       dataIndex: "status",
       key: "status",
       render: (status: string) => {
-        const color = status === "Receipt Generated" ? "green" : "blue";
-        return <Tag color={color}>{status || "Invoice Generated"}</Tag>;
+        const isReceipt = status === "Receipt Generated";
+        return (
+          <Tag
+            color={isReceipt ? "success" : "processing"}
+            icon={isReceipt ? <FileDoneOutlined /> : <FileTextOutlined />}
+            style={{
+              borderRadius: 12,
+              fontWeight: 600,
+              boxShadow: isReceipt 
+                ? "0 2px 4px rgba(82, 196, 26, 0.3)"
+                : "0 2px 4px rgba(24, 144, 255, 0.3)",
+            }}
+          >
+            {status || "Invoice Generated"}
+          </Tag>
+        );
       },
     },
     {
-      title: "Action",
-      key: "action",
-      render: (_: any, record: any) => (
-        <Button
-          type="primary"
-          icon={<FileDoneOutlined />}
-          size="small"
-          loading={generatingReceiptId === record._id}
-          onClick={() => generateReceipt(record)}
+      title: "Actions",
+      key: "actions",
+      render: (record: any) => (
+        <Dropdown
+          overlay={
+            <Menu>
+              <Menu.Item
+                key="generate_receipt"
+                icon={<FileDoneOutlined />}
+                onClick={() => generateReceipt(record)}
+                disabled={generatingReceiptId === record._id}
+              >
+                {generatingReceiptId === record._id ? "Generating..." : "Generate Receipt"}
+              </Menu.Item>
+            </Menu>
+          }
+          trigger={["click"]}
         >
-          Receipt
-        </Button>
+          <Button
+            type="text"
+            icon={<MoreOutlined />}
+            style={{
+              borderRadius: 8,
+              background: "#f5f5f5",
+            }}
+          />
+        </Dropdown>
       ),
     },
   ];
