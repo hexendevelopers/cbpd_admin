@@ -12,7 +12,7 @@ export class EmailService {
   private static async sendEmail(options: EmailOptions): Promise<boolean> {
     try {
       const mailOptions = {
-        from: `hexenwebcreators@gmail.com`,
+        from: process.env.SMTP_USER || process.env.GMAIL_USER || `info@cbpd.co.uk`,
         to: options.to,
         subject: options.subject,
         html: options.html,

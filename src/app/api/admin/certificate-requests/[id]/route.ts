@@ -50,27 +50,35 @@ export async function PUT(
     }
 
     // Fetch the institution to get the email address
+    console.log("Fetching institution with ID:", updatedRequest.institutionId);
     const institution = await Organization.findById(updatedRequest.institutionId);
+    
+    console.log("Institution found:", institution ? institution.orgName : "No", "Email:", institution?.email);
 
     if (institution && institution.email) {
+      console.log("Sending email for status:", status);
+      let emailResult = false;
       if (status === "Under Review") {
-        await EmailService.sendCertificateUnderReview(
+        emailResult = await EmailService.sendCertificateUnderReview(
           institution.email,
           institution.orgName || updatedRequest.instituteName
         );
       } else if (status === "Approved") {
-        await EmailService.sendCertificateApproved(
+        emailResult = await EmailService.sendCertificateApproved(
           institution.email,
           institution.orgName || updatedRequest.instituteName,
           updatedRequest.batchNumber
         );
       } else if (status === "Rejected") {
-        await EmailService.sendCertificateRejected(
+        emailResult = await EmailService.sendCertificateRejected(
           institution.email,
           institution.orgName || updatedRequest.instituteName,
           updatedRequest.batchNumber
         );
       }
+      console.log("Email sending result:", emailResult);
+    } else {
+      console.log("Not sending email because institution or email is missing");
     }
 
     return NextResponse.json({
