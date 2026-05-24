@@ -20,6 +20,7 @@ export interface IInvoice extends Document {
   subtotal: number;
   totalVat: number;
   totalGBP: number;
+  status: string;
   createdAt: Date;
 }
 
@@ -44,6 +45,7 @@ const invoiceSchema = new Schema<IInvoice>(
     subtotal: { type: Number, required: true },
     totalVat: { type: Number, required: true },
     totalGBP: { type: Number, required: true },
+    status: { type: String, default: "Invoice Generated" },
   },
   { timestamps: true }
 );
