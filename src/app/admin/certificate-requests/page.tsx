@@ -42,7 +42,12 @@ export default function CertificateRequestsPage() {
   const fetchRequests = async () => {
     try {
       setLoading(true);
-      const response = await fetch("/api/certificate-requests");
+      const token = localStorage.getItem("adminToken");
+      const response = await fetch("/api/admin/certificate-requests", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const data = await response.json();
       if (data.success) {
         setRequests(data.data);
@@ -60,9 +65,13 @@ export default function CertificateRequestsPage() {
   const updateStatus = async (id: string, newStatus: string) => {
     try {
       setLoading(true);
-      const response = await fetch(`/api/certificate-requests/${id}`, {
+      const token = localStorage.getItem("adminToken");
+      const response = await fetch(`/api/admin/certificate-requests/${id}`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify({ status: newStatus }),
       });
       const data = await response.json();
@@ -92,8 +101,12 @@ export default function CertificateRequestsPage() {
       onOk: async () => {
         try {
           setLoading(true);
-          const response = await fetch(`/api/certificate-requests/${id}`, {
+          const token = localStorage.getItem("adminToken");
+          const response = await fetch(`/api/admin/certificate-requests/${id}`, {
             method: "DELETE",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           });
           const data = await response.json();
           
