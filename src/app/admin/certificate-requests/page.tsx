@@ -87,7 +87,7 @@ export default function CertificateRequestsPage() {
       if (data.success) {
         setRequests(data.data);
       } else {
-        message.error("Failed to load certificate requests");
+        message.error("Failed to load certificate request");
       }
     } catch (error) {
       console.error("Error fetching requests:", error);
@@ -281,7 +281,7 @@ export default function CertificateRequestsPage() {
       <div style={{ marginBottom: 24, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <div>
           <Title level={2} style={{ margin: 0 }}>
-            Certificate Requests
+            Certificate Request
           </Title>
           <Text type="secondary">
             Manage certificate printing and dispatch requests from institutions.

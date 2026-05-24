@@ -74,4 +74,48 @@ export class EmailService {
       text: template.text,
     });
   }
+
+  static async sendCertificateUnderReview(
+    email: string,
+    institutionName: string
+  ): Promise<boolean> {
+    const template = emailTemplates.certificateUnderReview(institutionName);
+    
+    return await this.sendEmail({
+      to: email,
+      subject: template.subject,
+      html: template.html,
+      text: template.text,
+    });
+  }
+
+  static async sendCertificateApproved(
+    email: string,
+    institutionName: string,
+    batchNumber: string
+  ): Promise<boolean> {
+    const template = emailTemplates.certificateApproved(institutionName, batchNumber);
+    
+    return await this.sendEmail({
+      to: email,
+      subject: template.subject,
+      html: template.html,
+      text: template.text,
+    });
+  }
+
+  static async sendCertificateRejected(
+    email: string,
+    institutionName: string,
+    batchNumber: string
+  ): Promise<boolean> {
+    const template = emailTemplates.certificateRejected(institutionName, batchNumber);
+    
+    return await this.sendEmail({
+      to: email,
+      subject: template.subject,
+      html: template.html,
+      text: template.text,
+    });
+  }
 }

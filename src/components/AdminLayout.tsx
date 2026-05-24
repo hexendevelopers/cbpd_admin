@@ -319,7 +319,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
         },
         {
           key: "/admin/certificate-requests",
-          label: "Certificate Requests",
+          label: "Certificate Request",
         },
       ],
     },
@@ -389,7 +389,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
           title = "Certificates";
         }
         if (segment === "certificate-requests") {
-          title = "Certificate Requests";
+          title = "Certificate Request";
         }
         if (segment === "student-certificates") {
           title = "Student Certificates";

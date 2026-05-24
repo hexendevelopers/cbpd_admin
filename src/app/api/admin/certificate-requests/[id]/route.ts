@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import connectToDB from "@/configs/mongodb";
 import CertificateRequest from "@/models/certificateRequestModel";
 import { verifyAdminToken } from "@/lib/verifyToken";
+import Organization from "@/models/institutionModel";
+import { EmailService } from "@/lib/emailService";
 
 export async function PUT(
   request: NextRequest,
@@ -45,6 +47,30 @@ export async function PUT(
         { success: false, error: "Certificate request not found" },
         { status: 404 }
       );
+    }
+
+    // Fetch the institution to get the email address
+    const institution = await Organization.findById(updatedRequest.institutionId);
+
+    if (institution && institution.email) {
+      if (status === "Under Review") {
+        await EmailService.sendCertificateUnderReview(
+          institution.email,
+          institution.orgName || updatedRequest.instituteName
+        );
+      } else if (status === "Approved") {
+        await EmailService.sendCertificateApproved(
+          institution.email,
+          institution.orgName || updatedRequest.instituteName,
+          updatedRequest.batchNumber
+        );
+      } else if (status === "Rejected") {
+        await EmailService.sendCertificateRejected(
+          institution.email,
+          institution.orgName || updatedRequest.instituteName,
+          updatedRequest.batchNumber
+        );
+      }
     }
 
     return NextResponse.json({

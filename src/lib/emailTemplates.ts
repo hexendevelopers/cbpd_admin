@@ -438,4 +438,221 @@ export const emailTemplates = {
       CBPD
     `,
   }),
+  // Certificate Request Under Review
+  certificateUnderReview: (
+    institutionName: string,
+  ) => ({
+    subject: "Certificate Request Status - Under Review",
+    html: `
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Certificate Request Status</title>
+        <style>
+          body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f4f4f4; }
+          .container { background-color: #ffffff; padding: 40px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); }
+          .header { text-align: center; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 3px solid #ffc107; }
+          .logo { font-size: 28px; font-weight: bold; color: #ffc107; margin-bottom: 10px; }
+          .content { margin-bottom: 30px; }
+          .footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee; text-align: left; color: #333; font-size: 14px; }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <div class="header">
+            <div class="logo">CBPD</div>
+            <div style="color: #666; font-size: 16px;">Central Board Of Professional Development</div>
+          </div>
+          
+          <div class="content">
+            <p>Dear ${institutionName},</p>
+            
+            <p>Thank you for contacting the CBPD Certification Services regarding your certificate status request.</p>
+            
+            <p>We confirm that your submitted learner records and certification documents have been received successfully and are currently <strong>under review</strong> by our Certification & Compliance team.</p>
+            
+            <p>Our team is presently conducting the internal verification and quality assurance review process. Once the review is completed, the status will be updated in your institution CRM dashboard accordingly.</p>
+            
+            <p>We kindly request your patience while this process is underway. If any additional information or supporting documentation is required, our team will notify you through the portal or by email.</p>
+            
+            <p>Thank you for your cooperation.</p>
+          </div>
+          
+          <div class="footer">
+            <p>Warm regards,</p>
+            <p><strong>Cole Bennett</strong><br>Certification & Compliance Officer<br>The CBPD Certification Services</p>
+            <p>1 Canada Square<br>Canary Wharf<br>London E14 5DY<br>United Kingdom.</p>
+          </div>
+        </div>
+      </body>
+      </html>
+    `,
+    text: `
+      Dear ${institutionName},
+      
+      Thank you for contacting the CBPD Certification Services regarding your certificate status request.
+      
+      We confirm that your submitted learner records and certification documents have been received successfully and are currently under review by our Certification & Compliance team.
+      
+      Our team is presently conducting the internal verification and quality assurance review process. Once the review is completed, the status will be updated in your institution CRM dashboard accordingly.
+      
+      We kindly request your patience while this process is underway. If any additional information or supporting documentation is required, our team will notify you through the portal or by email.
+      
+      Thank you for your cooperation.
+      
+      Warm regards,
+      Cole Bennett
+      Certification & Compliance Officer
+      The CBPD Certification Services
+      1 Canada Square, Canary Wharf, London E14 5DY, United Kingdom.
+    `,
+  }),
+
+  // Certificate Request Approved
+  certificateApproved: (
+    institutionName: string,
+    batchNumber: string
+  ) => ({
+    subject: "Certificate Request Status - Approved",
+    html: `
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Certificate Request Status</title>
+        <style>
+          body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f4f4f4; }
+          .container { background-color: #ffffff; padding: 40px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); }
+          .header { text-align: center; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 3px solid #28a745; }
+          .logo { font-size: 28px; font-weight: bold; color: #28a745; margin-bottom: 10px; }
+          .content { margin-bottom: 30px; }
+          .footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee; text-align: left; color: #333; font-size: 14px; }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <div class="header">
+            <div class="logo">CBPD</div>
+            <div style="color: #666; font-size: 16px;">Central Board Of Professional Development</div>
+          </div>
+          
+          <div class="content">
+            <p>Dear ${institutionName},</p>
+            
+            <p>Thank you for your certificate status enquiry.</p>
+            
+            <p>We are pleased to confirm that your submitted learner records have been successfully <strong>reviewed and approved</strong> by the CBPD Certification & Compliance team.</p>
+            
+            <p>The certification request <strong>for Batch ${batchNumber}</strong> has now moved to <strong>the next stage of processing</strong>. Certificate preparation / printing will proceed accordingly, and <strong>dispatch details will be updated in your institution dashboard</strong> once available.</p>
+            
+            <p>Thank you for your continued cooperation and for <strong>maintaining the required submission standards</strong>.</p>
+          </div>
+          
+          <div class="footer">
+            <p>Warm regards,</p>
+            <p><strong>Cole Bennett</strong><br>Certification & Compliance Officer<br>The CBPD Certification Services</p>
+            <p>1 Canada Square<br>Canary Wharf<br>London E14 5DY<br>United Kingdom.</p>
+          </div>
+        </div>
+      </body>
+      </html>
+    `,
+    text: `
+      Dear ${institutionName},
+      
+      Thank you for your certificate status enquiry.
+      
+      We are pleased to confirm that your submitted learner records have been successfully reviewed and approved by the CBPD Certification & Compliance team.
+      
+      The certification request for Batch ${batchNumber} has now moved to the next stage of processing. Certificate preparation / printing will proceed accordingly, and dispatch details will be updated in your institution dashboard once available.
+      
+      Thank you for your continued cooperation and for maintaining the required submission standards.
+      
+      Warm regards,
+      Cole Bennett
+      Certification & Compliance Officer
+      The CBPD Certification Services
+      1 Canada Square, Canary Wharf, London E14 5DY, United Kingdom.
+    `,
+  }),
+
+  // Certificate Request Rejected
+  certificateRejected: (
+    institutionName: string,
+    batchNumber: string
+  ) => ({
+    subject: "Certificate Request Status - Requires Correction",
+    html: `
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Certificate Request Status</title>
+        <style>
+          body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f4f4f4; }
+          .container { background-color: #ffffff; padding: 40px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); }
+          .header { text-align: center; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 3px solid #dc3545; }
+          .logo { font-size: 28px; font-weight: bold; color: #dc3545; margin-bottom: 10px; }
+          .content { margin-bottom: 30px; }
+          .footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee; text-align: left; color: #333; font-size: 14px; }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <div class="header">
+            <div class="logo">CBPD</div>
+            <div style="color: #666; font-size: 16px;">Central Board Of Professional Development</div>
+          </div>
+          
+          <div class="content">
+            <p>Dear ${institutionName},</p>
+            
+            <p>Thank you for your recent certificate status request.</p>
+            
+            <p>Following our review, we regret to inform you that the submitted learner records for <strong>Batch ${batchNumber}</strong> could not be approved at this stage and currently require correction before certification can proceed.</p>
+            
+            <p>Our review team has identified one or more issues within the submission, such as incomplete documentation, missing learner information, or discrepancies in the submitted records.</p>
+            
+            <p>We kindly request that you review the submission and upload the required corrections through your institution CRM portal. Once updated, our Certification & Compliance team will re-review the records as a priority.</p>
+            
+            <p>Should you require any support regarding the required amendments, please feel free to contact us.</p>
+            
+            <p>Thank you for your cooperation.</p>
+          </div>
+          
+          <div class="footer">
+            <p>Warm regards,</p>
+            <p><strong>Cole Bennett</strong><br>Certification & Compliance Officer<br>The CBPD Certification Services</p>
+            <p>1 Canada Square<br>Canary Wharf<br>London E14 5DY<br>United Kingdom.</p>
+          </div>
+        </div>
+      </body>
+      </html>
+    `,
+    text: `
+      Dear ${institutionName},
+      
+      Thank you for your recent certificate status request.
+      
+      Following our review, we regret to inform you that the submitted learner records for Batch ${batchNumber} could not be approved at this stage and currently require correction before certification can proceed.
+      
+      Our review team has identified one or more issues within the submission, such as incomplete documentation, missing learner information, or discrepancies in the submitted records.
+      
+      We kindly request that you review the submission and upload the required corrections through your institution CRM portal. Once updated, our Certification & Compliance team will re-review the records as a priority.
+      
+      Should you require any support regarding the required amendments, please feel free to contact us.
+      
+      Thank you for your cooperation.
+      
+      Warm regards,
+      Cole Bennett
+      Certification & Compliance Officer
+      The CBPD Certification Services
+      1 Canada Square, Canary Wharf, London E14 5DY, United Kingdom.
+    `,
+  }),
 };
