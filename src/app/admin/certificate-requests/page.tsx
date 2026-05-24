@@ -13,6 +13,7 @@ import {
   Space,
 } from "antd";
 import { DownOutlined, ExclamationCircleOutlined, DeleteOutlined } from "@ant-design/icons";
+import AdminLayout from "@/components/AdminLayout";
 
 const { Title, Text } = Typography;
 const { confirm } = Modal;
@@ -230,7 +231,8 @@ export default function CertificateRequestsPage() {
   ];
 
   return (
-    <div style={{ padding: "0 24px" }}>
+    <AdminLayout>
+      <div style={{ padding: "0 24px" }}>
       <div style={{ marginBottom: 24, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <div>
           <Title level={2} style={{ margin: 0 }}>
@@ -257,5 +259,6 @@ export default function CertificateRequestsPage() {
         />
       </Card>
     </div>
+    </AdminLayout>
   );
 }
