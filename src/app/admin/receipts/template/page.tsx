@@ -473,54 +473,61 @@ export default function ReceiptTemplate() {
                     </table>
                   </div>
 
-                  {/* Totals Section */}
-                  <div style={{ width: "40%", marginLeft: "auto", marginTop: "20px", fontSize: "13px" }}>
-                    <Row style={{ marginBottom: "10px" }}>
-                      <Col span={16} style={{ textAlign: "right", paddingRight: "30px" }}>Subtotal</Col>
-                      <Col span={8} style={{ textAlign: "right" }}>{subtotal.toFixed(0)}</Col>
-                    </Row>
-                    <Row style={{ marginBottom: "15px" }}>
-                      <Col span={16} style={{ textAlign: "right", paddingRight: "30px" }}>TOTAL VAT 00%</Col>
-                      <Col span={8} style={{ textAlign: "right" }}>{totalVat.toFixed(3).substring(0, 3)}</Col>
-                    </Row>
-                    <div style={{ borderTop: "2px solid #000", borderBottom: "2px solid #000", padding: "10px 0", marginBottom: "30px" }}>
-                      <Row style={{ fontWeight: "bold" }}>
-                        <Col span={16} style={{ textAlign: "right", paddingRight: "30px" }}>TOTAL GBP</Col>
-                        <Col span={8} style={{ textAlign: "right" }}>{totalGBP.toFixed(0)}</Col>
-                      </Row>
-                    </div>
-                    <div style={{ borderBottom: "2px solid #000", paddingBottom: "10px" }}>
-                      <Row style={{ fontWeight: "bold" }}>
-                        <Col span={16} style={{ textAlign: "right", paddingRight: "30px" }}>AMOUNT DUE GBP</Col>
-                        <Col span={8} style={{ textAlign: "right" }}>{Number(receiptData.amountDue).toFixed(2)}</Col>
-                      </Row>
-                    </div>
-                  </div>
+                  {/* Totals & Payment Details Section */}
+                  <Row style={{ marginTop: "30px" }}>
+                    {/* Left Column: Payment Details */}
+                    <Col span={12}>
+                      <div style={{ fontSize: "13px", paddingRight: "20px" }}>
+                        <div style={{ fontWeight: "bold", marginBottom: "12px", fontSize: "14px", borderBottom: "1px solid #eee", paddingBottom: "5px", width: "90%" }}>Payment Details</div>
+                        <table style={{ width: "100%", fontSize: "13px", textAlign: "left", borderCollapse: "collapse" }}>
+                          <tbody>
+                            <tr>
+                              <td style={{ paddingBottom: "8px", width: "150px", color: "#555" }}>Payment Method:</td>
+                              <td style={{ paddingBottom: "8px", fontWeight: "500" }}>{receiptData.paymentMethod === "Other" ? receiptData.otherPaymentMethod : receiptData.paymentMethod}</td>
+                            </tr>
+                            <tr>
+                              <td style={{ paddingBottom: "8px", color: "#555" }}>Transaction Ref No:</td>
+                              <td style={{ paddingBottom: "8px", fontWeight: "500" }}>{receiptData.transactionRef}</td>
+                            </tr>
+                            <tr>
+                              <td style={{ paddingBottom: "8px", color: "#555" }}>Date Received:</td>
+                              <td style={{ paddingBottom: "8px", fontWeight: "500" }}>{receiptData.datePaymentReceived}</td>
+                            </tr>
+                            <tr>
+                              <td style={{ paddingBottom: "8px", color: "#555", paddingTop: "5px" }}>Status:</td>
+                              <td style={{ paddingBottom: "8px", color: "#28a745", fontWeight: "bold", paddingTop: "5px", fontSize: "14px" }}>PAID IN FULL ✅</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </Col>
 
-                  {/* Payment Details Section (Clean, Professional) */}
-                  <div style={{ marginTop: "10px", fontSize: "13px", maxWidth: "60%" }}>
-                    <div style={{ fontWeight: "bold", marginBottom: "12px", fontSize: "14px", borderBottom: "1px solid #eee", paddingBottom: "5px" }}>Payment Details</div>
-                    <table style={{ width: "100%", fontSize: "13px", textAlign: "left", borderCollapse: "collapse" }}>
-                      <tbody>
-                        <tr>
-                          <td style={{ paddingBottom: "8px", width: "180px", color: "#555" }}>Payment Method:</td>
-                          <td style={{ paddingBottom: "8px", fontWeight: "500" }}>{receiptData.paymentMethod === "Other" ? receiptData.otherPaymentMethod : receiptData.paymentMethod}</td>
-                        </tr>
-                        <tr>
-                          <td style={{ paddingBottom: "8px", color: "#555" }}>Transaction Reference No:</td>
-                          <td style={{ paddingBottom: "8px", fontWeight: "500" }}>{receiptData.transactionRef}</td>
-                        </tr>
-                        <tr>
-                          <td style={{ paddingBottom: "8px", color: "#555" }}>Date Payment Received:</td>
-                          <td style={{ paddingBottom: "8px", fontWeight: "500" }}>{receiptData.datePaymentReceived}</td>
-                        </tr>
-                        <tr>
-                          <td style={{ paddingBottom: "8px", color: "#555", paddingTop: "5px" }}>Status:</td>
-                          <td style={{ paddingBottom: "8px", color: "#28a745", fontWeight: "bold", paddingTop: "5px", fontSize: "14px" }}>PAID IN FULL ✅</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
+                    {/* Right Column: Totals */}
+                    <Col span={12}>
+                      <div style={{ width: "80%", marginLeft: "auto", fontSize: "13px" }}>
+                        <Row style={{ marginBottom: "10px" }}>
+                          <Col span={16} style={{ textAlign: "right", paddingRight: "30px" }}>Subtotal</Col>
+                          <Col span={8} style={{ textAlign: "right" }}>{subtotal.toFixed(0)}</Col>
+                        </Row>
+                        <Row style={{ marginBottom: "15px" }}>
+                          <Col span={16} style={{ textAlign: "right", paddingRight: "30px" }}>TOTAL VAT 00%</Col>
+                          <Col span={8} style={{ textAlign: "right" }}>{totalVat.toFixed(3).substring(0, 3)}</Col>
+                        </Row>
+                        <div style={{ borderTop: "2px solid #000", borderBottom: "2px solid #000", padding: "10px 0", marginBottom: "30px" }}>
+                          <Row style={{ fontWeight: "bold" }}>
+                            <Col span={16} style={{ textAlign: "right", paddingRight: "30px" }}>TOTAL GBP</Col>
+                            <Col span={8} style={{ textAlign: "right" }}>{totalGBP.toFixed(0)}</Col>
+                          </Row>
+                        </div>
+                        <div style={{ borderBottom: "2px solid #000", paddingBottom: "10px" }}>
+                          <Row style={{ fontWeight: "bold" }}>
+                            <Col span={16} style={{ textAlign: "right", paddingRight: "30px" }}>AMOUNT DUE GBP</Col>
+                            <Col span={8} style={{ textAlign: "right" }}>{Number(receiptData.amountDue).toFixed(2)}</Col>
+                          </Row>
+                        </div>
+                      </div>
+                    </Col>
+                  </Row>
 
                   {/* Footer Section (Notes & Seal) */}
                   <div style={{ position: "absolute", bottom: "40mm", left: "20mm", right: "20mm" }}>
