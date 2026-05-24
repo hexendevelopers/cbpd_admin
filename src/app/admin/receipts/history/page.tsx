@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { Card, Table, Typography, message, Tag, Button, Row, Col, Space, Avatar, Dropdown, Menu } from "antd";
-import { DownloadOutlined, FileDoneOutlined, MoreOutlined } from "@ant-design/icons";
+import { Card, Table, Typography, message, Tag, Button, Row, Col, Space, Avatar, Dropdown, Menu, Modal } from "antd";
+import { DownloadOutlined, FileDoneOutlined, MoreOutlined, DeleteOutlined } from "@ant-design/icons";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import AdminLayout from "@/components/AdminLayout";
@@ -78,6 +78,38 @@ export default function ReceiptHistory() {
         setCurrentReceiptData(null);
       }
     }, 500);
+  };
+
+  const handleDelete = (id: string) => {
+    Modal.confirm({
+      title: "Are you sure you want to delete this receipt?",
+      content: "This action cannot be undone.",
+      okText: "Yes, Delete",
+      okType: "danger",
+      cancelText: "Cancel",
+      onOk: async () => {
+        try {
+          const token = localStorage.getItem("adminToken");
+          const res = await fetch(`/api/admin/invoices/${id}`, {
+            method: "DELETE",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          if (res.ok) {
+            message.success("Receipt deleted successfully");
+            fetchHistory();
+          } else {
+            const data = await res.json();
+            message.error(data.message || "Failed to delete receipt");
+          }
+        } catch (error) {
+          console.error("Error deleting receipt:", error);
+          message.error("An error occurred while deleting receipt");
+        }
+      },
+    });
   };
 
   const columns = [
@@ -158,12 +190,21 @@ export default function ReceiptHistory() {
           overlay={
             <Menu>
               <Menu.Item
-                key="download"
+                key="download_receipt"
                 icon={<DownloadOutlined />}
                 onClick={() => generateReceiptPDF(record)}
                 disabled={generatingReceiptId === record._id}
               >
-                {generatingReceiptId === record._id ? "Generating..." : "Download Receipt"}
+                {generatingReceiptId === record._id ? "Downloading..." : "Download Receipt"}
+              </Menu.Item>
+              <Menu.Divider />
+              <Menu.Item
+                key="delete"
+                icon={<DeleteOutlined />}
+                danger
+                onClick={() => handleDelete(record._id)}
+              >
+                Delete
               </Menu.Item>
             </Menu>
           }

@@ -14,11 +14,13 @@ import {
   Dropdown,
   Menu,
   Button,
+  Modal,
 } from "antd";
 import {
   FileDoneOutlined,
   FileTextOutlined,
   MoreOutlined,
+  DeleteOutlined,
 } from "@ant-design/icons";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
@@ -113,6 +115,38 @@ export default function InvoiceHistory() {
     }, 500);
   };
 
+  const handleDelete = (id: string) => {
+    Modal.confirm({
+      title: "Are you sure you want to delete this invoice?",
+      content: "This action cannot be undone.",
+      okText: "Yes, Delete",
+      okType: "danger",
+      cancelText: "Cancel",
+      onOk: async () => {
+        try {
+          const token = localStorage.getItem("adminToken");
+          const res = await fetch(`/api/admin/invoices/${id}`, {
+            method: "DELETE",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          if (res.ok) {
+            message.success("Invoice deleted successfully");
+            fetchHistory();
+          } else {
+            const data = await res.json();
+            message.error(data.message || "Failed to delete invoice");
+          }
+        } catch (error) {
+          console.error("Error deleting invoice:", error);
+          message.error("An error occurred while deleting invoice");
+        }
+      },
+    });
+  };
+
   const columns = [
     {
       title: "Invoice",
@@ -202,6 +236,15 @@ export default function InvoiceHistory() {
                 disabled={generatingReceiptId === record._id}
               >
                 {generatingReceiptId === record._id ? "Generating..." : "Generate Receipt"}
+              </Menu.Item>
+              <Menu.Divider />
+              <Menu.Item
+                key="delete"
+                icon={<DeleteOutlined />}
+                danger
+                onClick={() => handleDelete(record._id)}
+              >
+                Delete
               </Menu.Item>
             </Menu>
           }
