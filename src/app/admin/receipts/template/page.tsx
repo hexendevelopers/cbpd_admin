@@ -363,7 +363,6 @@ export default function ReceiptTemplate() {
                 <Form.Item label="Notes" name="bankDetails">
                   <TextArea rows={4} style={{ borderRadius: 6 }} />
                 </Form.Item>
-                </Form.Item>
               </Form>
             </Card>
           </Col>
