@@ -177,6 +177,32 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       label: "Centers",
     },
     {
+      key: "/admin/invoices",
+      icon: (
+        <svg
+          width="20"
+          height="20"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          transform="rotate(0 0 0)"
+        >
+          <path
+            d="M5 4C4.44772 4 4 4.44772 4 5V19C4 19.5523 4.44772 20 5 20H19C19.5523 20 20 19.5523 20 19V5C20 4.44772 19.5523 4 19 4H5ZM6 6H18V18H6V6Z"
+            fill="#ffffff"
+          />
+          <path
+            d="M8 9H16V11H8V9Z"
+            fill="#ffffff"
+          />
+          <path
+            d="M8 13H12V15H8V13Z"
+            fill="#ffffff"
+          />
+        </svg>
+      ),
+      label: "Invoices",
+    },
+    {
       key: "/admin/memberships",
       icon: (
         <svg
