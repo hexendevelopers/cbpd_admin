@@ -177,7 +177,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       label: "Centers",
     },
     {
-      key: "/admin/invoices",
+      key: "invoices",
       icon: (
         <svg
           width="20"
@@ -201,6 +201,16 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
         </svg>
       ),
       label: "Invoices",
+      children: [
+        {
+          key: "/admin/invoices/generate",
+          label: "Generate Invoice",
+        },
+        {
+          key: "/admin/invoices/history",
+          label: "Invoice History",
+        },
+      ],
     },
     {
       key: "receipts",
@@ -411,6 +421,9 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
     }
     if (pathname.includes("/admin/receipts")) {
       keys.push("receipts");
+    }
+    if (pathname.includes("/admin/invoices")) {
+      keys.push("invoices");
     }
     if (pathname.includes("/admin/student-certificates")) {
       keys.push("student-certificates");

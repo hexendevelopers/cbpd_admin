@@ -5,6 +5,7 @@ import { Card, Table, Typography, message, Tag, Button, Row, Col, Space, Avatar,
 import { DownloadOutlined, FileDoneOutlined, MoreOutlined } from "@ant-design/icons";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import AdminLayout from "@/components/AdminLayout";
 
 const { Title } = Typography;
 
@@ -182,32 +183,33 @@ export default function ReceiptHistory() {
   ];
 
   return (
-    <div style={{ padding: "24px" }}>
-      <Title level={2} style={{ color: "#1a237e", marginBottom: 24 }}>
-        Receipt History
-      </Title>
+    <AdminLayout>
+      <div style={{ padding: "24px" }}>
+        <Title level={2} style={{ color: "#1a237e", marginBottom: 24 }}>
+          Receipt History
+        </Title>
 
-      <Card
-        style={{
-          borderRadius: 16,
-          border: "none",
-          boxShadow: "0 8px 32px rgba(0,0,0,0.08)",
-        }}
-        bodyStyle={{ padding: 0 }}
-      >
-        <Table
-          className="w-full"
-          columns={columns}
-          dataSource={history}
-          rowKey="_id"
-          loading={loading}
-          pagination={{
-            pageSize: 10,
-            style: { padding: "16px 24px" },
+        <Card
+          style={{
+            borderRadius: 16,
+            border: "none",
+            boxShadow: "0 8px 32px rgba(0,0,0,0.08)",
           }}
-          style={{ borderRadius: 16 }}
-        />
-      </Card>
+          bodyStyle={{ padding: 0 }}
+        >
+          <Table
+            className="w-full"
+            columns={columns}
+            dataSource={history}
+            rowKey="_id"
+            loading={loading}
+            pagination={{
+              pageSize: 10,
+              style: { padding: "16px 24px" },
+            }}
+            style={{ borderRadius: 16 }}
+          />
+        </Card>
 
       {/* Hidden Receipt Template for PDF Generation */}
       {currentReceiptData && (
@@ -346,5 +348,6 @@ export default function ReceiptHistory() {
         </div>
       )}
     </div>
+    </AdminLayout>
   );
 }
