@@ -56,12 +56,12 @@ export default function ReceiptTemplate() {
         vat: 0,
       },
     ] as InvoiceItem[],
+    bankDetails: "Payment received successfully against the invoice mentioned above.\nThank you for your payment and continued association with CBPD UK.",
+    amountDue: 0.0,
     paymentMethod: "Bank Transfer",
     otherPaymentMethod: "",
-    transactionRef: "",
+    transactionRef: "TRX-993821",
     datePaymentReceived: dayjs().format("DD MMMM YYYY"),
-    email: "info@cbpd.co.uk",
-    website: "www.cbpd.co.uk",
   });
 
   const handleValuesChange = (changedValues: any, allValues: any) => {
@@ -109,10 +109,15 @@ export default function ReceiptTemplate() {
     }));
   };
 
-  const totalGBP = receiptData.items.reduce(
-    (sum, item) => sum + item.unitPrice,
+  const subtotal = receiptData.items.reduce(
+    (sum, item) => sum + item.quantity * item.unitPrice,
     0
   );
+  const totalVat = receiptData.items.reduce(
+    (sum, item) => sum + item.quantity * item.unitPrice * (item.vat / 100),
+    0
+  );
+  const totalGBP = subtotal + totalVat;
 
   const downloadPDF = async () => {
     const element = receiptRef.current;
@@ -142,11 +147,9 @@ export default function ReceiptTemplate() {
         },
         body: JSON.stringify({
           ...receiptData,
-          subtotal: totalGBP,
-          totalVat: 0,
-          totalGBP: totalGBP,
-          amountDue: 0,
-          bankDetails: "",
+          subtotal,
+          totalVat,
+          totalGBP,
           status: "Receipt Generated",
         }),
       });
@@ -162,15 +165,6 @@ export default function ReceiptTemplate() {
       setIsSaving(false);
     }
   };
-
-  const renderCheckbox = (label: string, isChecked: boolean) => (
-    <div style={{ display: "flex", alignItems: "center", marginBottom: "4px" }}>
-      <div style={{ width: "12px", height: "12px", border: "1px solid #000", display: "flex", justifyContent: "center", alignItems: "center", marginRight: "6px", fontSize: "10px" }}>
-        {isChecked ? "✔" : ""}
-      </div>
-      <span>{label}</span>
-    </div>
-  );
 
   return (
     <AdminLayout>
@@ -214,8 +208,8 @@ export default function ReceiptTemplate() {
                   otherPaymentMethod: receiptData.otherPaymentMethod,
                   transactionRef: receiptData.transactionRef,
                   datePaymentReceived: dayjs(receiptData.datePaymentReceived, "DD MMMM YYYY"),
-                  email: receiptData.email,
-                  website: receiptData.website,
+                  bankDetails: receiptData.bankDetails,
+                  amountDue: receiptData.amountDue,
                 }}
                 onValuesChange={handleValuesChange}
               >
@@ -276,19 +270,53 @@ export default function ReceiptTemplate() {
                         }
                       />
                     </Form.Item>
-                    <Form.Item label="Amount (GBP)" style={{ marginBottom: 0 }}>
-                      <Input
-                        type="number"
-                        value={item.unitPrice}
-                        onChange={(e) =>
-                          handleItemChange(
-                            item.key,
-                            "unitPrice",
-                            Number(e.target.value)
-                          )
-                        }
-                      />
-                    </Form.Item>
+                    <Row gutter={8}>
+                      <Col span={8}>
+                        <Form.Item label="Qty" style={{ marginBottom: 0 }}>
+                          <Input
+                            type="number"
+                            value={item.quantity}
+                            onChange={(e) =>
+                              handleItemChange(
+                                item.key,
+                                "quantity",
+                                Number(e.target.value)
+                              )
+                            }
+                          />
+                        </Form.Item>
+                      </Col>
+                      <Col span={8}>
+                        <Form.Item label="Price" style={{ marginBottom: 0 }}>
+                          <Input
+                            type="number"
+                            value={item.unitPrice}
+                            onChange={(e) =>
+                              handleItemChange(
+                                item.key,
+                                "unitPrice",
+                                Number(e.target.value)
+                              )
+                            }
+                          />
+                        </Form.Item>
+                      </Col>
+                      <Col span={8}>
+                        <Form.Item label="VAT %" style={{ marginBottom: 0 }}>
+                          <Input
+                            type="number"
+                            value={item.vat}
+                            onChange={(e) =>
+                              handleItemChange(
+                                item.key,
+                                "vat",
+                                Number(e.target.value)
+                              )
+                            }
+                          />
+                        </Form.Item>
+                      </Col>
+                    </Row>
                   </Card>
                 ))}
 
@@ -332,11 +360,11 @@ export default function ReceiptTemplate() {
                 </Form.Item>
 
                 <Divider orientation="left">Footer Info</Divider>
-                <Form.Item label="Email" name="email">
-                  <Input style={{ borderRadius: 6 }} />
+                <Form.Item label="Notes" name="bankDetails">
+                  <TextArea rows={4} style={{ borderRadius: 6 }} />
                 </Form.Item>
-                <Form.Item label="Website" name="website">
-                  <Input style={{ borderRadius: 6 }} />
+                <Form.Item label="Amount Due GBP" name="amountDue">
+                  <Input type="number" style={{ borderRadius: 6 }} />
                 </Form.Item>
               </Form>
             </Card>
@@ -347,9 +375,9 @@ export default function ReceiptTemplate() {
             <Card
               title="Live Preview"
               style={{ borderRadius: 8 }}
-              bodyStyle={{ padding: 0, backgroundColor: "#e0e0e0", display: "flex", justifyContent: "center", overflowX: "auto" }}
+              bodyStyle={{ padding: 0, backgroundColor: "#f0f2f5" }}
             >
-              <div style={{ padding: "24px 0" }}>
+              <div style={{ overflowX: "auto", padding: "24px" }}>
                 {/* A4 Size Container */}
                 <div
                   ref={receiptRef}
@@ -419,146 +447,102 @@ export default function ReceiptTemplate() {
                     </Col>
                   </Row>
 
-                  {/* PAYMENT DETAILS SECTION */}
-                  <div style={{ marginTop: "40px" }}>
-                    <div style={{ borderTop: "1px solid #000", marginBottom: "3px" }}></div>
-                    <div style={{ borderTop: "1px solid #000", marginBottom: "30px" }}></div>
-                    
-                    <div style={{ fontSize: "18px", fontWeight: "bold", marginBottom: "20px" }}>
-                      PAYMENT DETAILS
-                    </div>
-
-                    <table style={{ width: "55%", fontSize: "13px", marginBottom: "30px", marginLeft: "40px", borderCollapse: "collapse" }}>
+                  {/* Table Section */}
+                  <div style={{ marginTop: "60px" }}>
+                    <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "13px" }}>
                       <thead>
-                        <tr>
-                          <th style={{ textAlign: "left", paddingBottom: "10px", fontWeight: "bold" }}>Description</th>
-                          <th style={{ textAlign: "left", paddingBottom: "10px", fontWeight: "bold", paddingLeft: "20px" }}>Amount (GBP)</th>
+                        <tr style={{ borderTop: "2px solid #000", borderBottom: "1px solid #000" }}>
+                          <th style={{ textAlign: "left", padding: "10px 0" }}>Description</th>
+                          <th style={{ textAlign: "center", padding: "10px 0", width: "15%" }}>Quantity</th>
+                          <th style={{ textAlign: "center", padding: "10px 0", width: "15%" }}>Unit Price</th>
+                          <th style={{ textAlign: "center", padding: "10px 0", width: "15%" }}>VAT</th>
+                          <th style={{ textAlign: "right", padding: "10px 0", width: "15%" }}>Amount GBP</th>
                         </tr>
                       </thead>
                       <tbody>
                         {receiptData.items.map((item) => (
                           <tr key={item.key}>
-                            <td style={{ borderBottom: "1px solid #000", padding: "8px 0" }}>{item.description}</td>
-                            <td style={{ borderBottom: "1px solid #000", padding: "8px 0", paddingLeft: "20px" }}>£ {item.unitPrice.toFixed(2)}</td>
+                            <td style={{ padding: "10px 0", borderBottom: "1px solid #eee" }}>{item.description}</td>
+                            <td style={{ textAlign: "center", padding: "10px 0", borderBottom: "1px solid #eee" }}>{item.quantity.toFixed(2)}</td>
+                            <td style={{ textAlign: "center", padding: "10px 0", borderBottom: "1px solid #eee" }}>{item.unitPrice}</td>
+                            <td style={{ textAlign: "center", padding: "10px 0", borderBottom: "1px solid #eee" }}>{item.vat.toString().padStart(2, '0')}%</td>
+                            <td style={{ textAlign: "right", padding: "10px 0", borderBottom: "1px solid #eee" }}>{(item.quantity * item.unitPrice).toFixed(0)}</td>
                           </tr>
                         ))}
                       </tbody>
                     </table>
+                  </div>
 
-                    <div style={{ borderTop: "1px solid #ccc", margin: "20px 0" }}></div>
-
-                    <div style={{ fontSize: "14px", fontWeight: "bold", marginBottom: "20px" }}>
-                      Total Amount Received GBP:
+                  {/* Totals Section */}
+                  <div style={{ width: "40%", marginLeft: "auto", marginTop: "20px", fontSize: "13px" }}>
+                    <Row style={{ marginBottom: "10px" }}>
+                      <Col span={16} style={{ textAlign: "right", paddingRight: "30px" }}>Subtotal</Col>
+                      <Col span={8} style={{ textAlign: "right" }}>{subtotal.toFixed(0)}</Col>
+                    </Row>
+                    <Row style={{ marginBottom: "15px" }}>
+                      <Col span={16} style={{ textAlign: "right", paddingRight: "30px" }}>TOTAL VAT 00%</Col>
+                      <Col span={8} style={{ textAlign: "right" }}>{totalVat.toFixed(3).substring(0, 3)}</Col>
+                    </Row>
+                    <div style={{ borderTop: "2px solid #000", borderBottom: "2px solid #000", padding: "10px 0", marginBottom: "30px" }}>
+                      <Row style={{ fontWeight: "bold" }}>
+                        <Col span={16} style={{ textAlign: "right", paddingRight: "30px" }}>TOTAL GBP</Col>
+                        <Col span={8} style={{ textAlign: "right" }}>{totalGBP.toFixed(0)}</Col>
+                      </Row>
                     </div>
-                    
-                    <div style={{ display: "flex", alignItems: "flex-end", marginBottom: "30px" }}>
-                      <span style={{ fontSize: "24px", fontWeight: "bold", marginRight: "10px" }}>£</span>
-                      <div style={{ borderBottom: "2px solid #000", width: "250px", fontSize: "18px", fontWeight: "bold", paddingBottom: "5px" }}>
-                        {totalGBP.toFixed(2)}
-                      </div>
+                    <div style={{ borderBottom: "2px solid #000", paddingBottom: "10px" }}>
+                      <Row style={{ fontWeight: "bold" }}>
+                        <Col span={16} style={{ textAlign: "right", paddingRight: "30px" }}>AMOUNT DUE GBP</Col>
+                        <Col span={8} style={{ textAlign: "right" }}>{Number(receiptData.amountDue).toFixed(2)}</Col>
+                      </Row>
                     </div>
+                  </div>
 
-                    <div style={{ borderTop: "1px solid #ccc", margin: "20px 0" }}></div>
+                  {/* Payment Details Section (Clean, Professional) */}
+                  <div style={{ marginTop: "10px", fontSize: "13px", maxWidth: "60%" }}>
+                    <div style={{ fontWeight: "bold", marginBottom: "12px", fontSize: "14px", borderBottom: "1px solid #eee", paddingBottom: "5px" }}>Payment Details</div>
+                    <table style={{ width: "100%", fontSize: "13px", textAlign: "left", borderCollapse: "collapse" }}>
+                      <tbody>
+                        <tr>
+                          <td style={{ paddingBottom: "8px", width: "180px", color: "#555" }}>Payment Method:</td>
+                          <td style={{ paddingBottom: "8px", fontWeight: "500" }}>{receiptData.paymentMethod === "Other" ? receiptData.otherPaymentMethod : receiptData.paymentMethod}</td>
+                        </tr>
+                        <tr>
+                          <td style={{ paddingBottom: "8px", color: "#555" }}>Transaction Reference No:</td>
+                          <td style={{ paddingBottom: "8px", fontWeight: "500" }}>{receiptData.transactionRef}</td>
+                        </tr>
+                        <tr>
+                          <td style={{ paddingBottom: "8px", color: "#555" }}>Date Payment Received:</td>
+                          <td style={{ paddingBottom: "8px", fontWeight: "500" }}>{receiptData.datePaymentReceived}</td>
+                        </tr>
+                        <tr>
+                          <td style={{ paddingBottom: "8px", color: "#555", paddingTop: "5px" }}>Status:</td>
+                          <td style={{ paddingBottom: "8px", color: "#28a745", fontWeight: "bold", paddingTop: "5px", fontSize: "14px" }}>PAID IN FULL ✅</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
 
-                    <div style={{ fontSize: "14px", fontWeight: "bold", marginBottom: "15px" }}>
-                      Payment Method
-                    </div>
-
-                    <div style={{ fontSize: "13px", marginBottom: "30px" }}>
-                      {renderCheckbox("Bank Transfer", receiptData.paymentMethod === "Bank Transfer")}
-                      {renderCheckbox("Wise Transfer", receiptData.paymentMethod === "Wise Transfer")}
-                      {renderCheckbox("Card Payment", receiptData.paymentMethod === "Card Payment")}
-                      {renderCheckbox("Cash", receiptData.paymentMethod === "Cash")}
-                      <div style={{ display: "flex", alignItems: "center", marginBottom: "4px" }}>
-                        <div style={{ width: "12px", height: "12px", border: "1px solid #000", display: "flex", justifyContent: "center", alignItems: "center", marginRight: "6px", fontSize: "10px" }}>
-                          {receiptData.paymentMethod === "Other" ? "✔" : ""}
+                  {/* Footer Section (Notes & Seal) */}
+                  <div style={{ position: "absolute", bottom: "40mm", left: "20mm", right: "20mm" }}>
+                    <Row justify="space-between" align="bottom">
+                      <Col span={12}>
+                        <div style={{ whiteSpace: "pre-line", fontSize: "12px", lineHeight: "1.5", color: "#555" }}>
+                          {receiptData.bankDetails}
                         </div>
-                        <span>Other: </span>
-                        <div style={{ borderBottom: "1px solid #000", width: "150px", marginLeft: "5px", display: "inline-block", height: "15px", paddingLeft: "5px" }}>
-                          {receiptData.paymentMethod === "Other" ? receiptData.otherPaymentMethod : ""}
-                        </div>
-                      </div>
-                    </div>
+                      </Col>
+                      <Col span={12} style={{ textAlign: "right" }}>
+                        <img
+                          src="/seal.png"
+                          alt="CBPD Seal"
+                          style={{ width: "180px", opacity: 0.9 }}
+                        />
+                      </Col>
+                    </Row>
+                  </div>
 
-                    <div style={{ borderTop: "1px solid #ccc", margin: "20px 0" }}></div>
-
-                    <div style={{ fontSize: "14px", fontWeight: "bold", marginBottom: "15px" }}>
-                      Transaction / Payment Reference No.
-                    </div>
-                    <div style={{ borderBottom: "1px solid #000", width: "100%", paddingBottom: "5px", marginBottom: "20px", minHeight: "20px", fontSize: "13px" }}>
-                      {receiptData.transactionRef}
-                    </div>
-
-                    <div style={{ borderTop: "1px solid #ccc", margin: "20px 0" }}></div>
-
-                    <div style={{ fontSize: "14px", fontWeight: "bold", marginBottom: "15px" }}>
-                      Date Payment Received
-                    </div>
-                    <div style={{ borderBottom: "1px solid #000", width: "100%", paddingBottom: "5px", marginBottom: "30px", minHeight: "20px", fontSize: "13px" }}>
-                      {receiptData.datePaymentReceived}
-                    </div>
-
-                    <div style={{ borderTop: "1px solid #000", margin: "2px 0" }}></div>
-                    <div style={{ borderTop: "1px solid #000", margin: "0 0 30px 0" }}></div>
-
-                    <div style={{ fontSize: "18px", fontWeight: "bold", marginBottom: "20px" }}>
-                      PAYMENT STATUS
-                    </div>
-                    
-                    <div style={{ fontSize: "16px", fontWeight: "bold", marginBottom: "30px", display: "flex", alignItems: "center" }}>
-                      PAID IN FULL <span style={{ color: "#7cb342", fontSize: "20px", marginLeft: "8px" }}>✅</span>
-                    </div>
-
-                    <div style={{ borderTop: "1px solid #ccc", margin: "20px 0" }}></div>
-
-                    <div style={{ fontSize: "16px", fontWeight: "bold", marginBottom: "15px" }}>
-                      Notes
-                    </div>
-                    <div style={{ fontSize: "13px", marginBottom: "30px", lineHeight: "1.6" }}>
-                      Payment received successfully against the invoice mentioned above.<br/><br/>
-                      Thank you for your payment and continued association with CBPD UK.
-                    </div>
-
-                    <div style={{ borderTop: "1px solid #ccc", margin: "20px 0" }}></div>
-
-                    <div style={{ fontSize: "14px", fontWeight: "bold", marginBottom: "15px" }}>
-                      Authorized By
-                    </div>
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "30px" }}>
-                      <div>
-                        <div style={{ fontSize: "13px", marginBottom: "20px", lineHeight: "1.6" }}>
-                          <strong>Accounts Department</strong><br/>
-                          Central Board of Professional Development Ltd.
-                        </div>
-                        <div style={{ fontSize: "13px", fontWeight: "bold", marginBottom: "15px", display: "flex", alignItems: "flex-end" }}>
-                          Authorized Signature: 
-                          <div style={{ borderBottom: "1px solid #000", width: "200px", marginLeft: "10px", display: "inline-block", height: "15px" }}></div>
-                        </div>
-                        <div style={{ fontSize: "13px", fontWeight: "bold" }}>
-                          Official Seal / Stamp
-                        </div>
-                      </div>
-                      <div>
-                        <img src="/seal.png" alt="CBPD Seal" style={{ width: "120px", opacity: 0.9 }} />
-                      </div>
-                    </div>
-
-                    <div style={{ borderTop: "1px solid #ccc", margin: "20px 0" }}></div>
-
-                    <div style={{ fontSize: "14px", fontWeight: "bold", marginBottom: "15px" }}>
-                      Footer
-                    </div>
-                    <div style={{ fontSize: "13px", lineHeight: "1.6", marginBottom: "20px" }}>
-                      <strong>Central Board of Professional Development Ltd.</strong><br/>
-                      United Kingdom<br/><br/>
-                      <div style={{ display: "flex", alignItems: "flex-end", marginBottom: "5px" }}>
-                        Email: <div style={{ borderBottom: "1px solid #000", width: "200px", marginLeft: "5px", display: "inline-block", height: "15px", paddingLeft: "5px" }}>{receiptData.email}</div>
-                      </div>
-                      <div style={{ display: "flex", alignItems: "flex-end" }}>
-                        Website: <div style={{ borderBottom: "1px solid #000", width: "200px", marginLeft: "5px", display: "inline-block", height: "15px", paddingLeft: "5px" }}>{receiptData.website}</div>
-                      </div>
-                    </div>
-
+                  {/* Company Reg Info */}
+                  <div style={{ position: "absolute", bottom: "15mm", left: "20mm", fontSize: "10px", color: "#666" }}>
+                    Company Registration No: 16442180, Registered office: 37th Floor 1 Canada Square London E14 5DY United Kingdom
                   </div>
                 </div>
               </div>
