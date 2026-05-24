@@ -363,8 +363,6 @@ export default function ReceiptTemplate() {
                 <Form.Item label="Notes" name="bankDetails">
                   <TextArea rows={4} style={{ borderRadius: 6 }} />
                 </Form.Item>
-                <Form.Item label="Amount Due GBP" name="amountDue">
-                  <Input type="number" style={{ borderRadius: 6 }} />
                 </Form.Item>
               </Form>
             </Card>
@@ -515,14 +513,8 @@ export default function ReceiptTemplate() {
                         </Row>
                         <div style={{ borderTop: "2px solid #000", borderBottom: "2px solid #000", padding: "10px 0", marginBottom: "30px" }}>
                           <Row style={{ fontWeight: "bold" }}>
-                            <Col span={16} style={{ textAlign: "right", paddingRight: "30px" }}>TOTAL GBP</Col>
+                            <Col span={16} style={{ textAlign: "right", paddingRight: "30px" }}>Total Amount Received GBP</Col>
                             <Col span={8} style={{ textAlign: "right" }}>{totalGBP.toFixed(0)}</Col>
-                          </Row>
-                        </div>
-                        <div style={{ borderBottom: "2px solid #000", paddingBottom: "10px" }}>
-                          <Row style={{ fontWeight: "bold" }}>
-                            <Col span={16} style={{ textAlign: "right", paddingRight: "30px" }}>AMOUNT DUE GBP</Col>
-                            <Col span={8} style={{ textAlign: "right" }}>{Number(receiptData.amountDue).toFixed(2)}</Col>
                           </Row>
                         </div>
                       </div>
