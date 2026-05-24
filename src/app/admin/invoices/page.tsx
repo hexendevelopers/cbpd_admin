@@ -309,128 +309,137 @@ export default function InvoiceGenerator() {
                   width: "210mm",
                   minHeight: "297mm",
                   backgroundColor: "white",
-                  padding: "20mm 15mm",
+                  padding: "20mm",
                   margin: "0 auto",
                   boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
                   position: "relative",
                   fontFamily: "Arial, sans-serif",
                 }}
               >
-                {/* Header */}
-                <Row justify="space-between" align="top" style={{ marginBottom: "10mm" }}>
-                  <Col span={10}>
+                {/* Top Section */}
+                <Row>
+                  {/* Left Column (Logo + INVOICE + Bill To) */}
+                  <Col span={12}>
                     <img
                       src="/cbpd-logo-transparent.png"
                       alt="CBPD Logo"
-                      style={{ maxWidth: "180px", marginBottom: "20px" }}
+                      style={{ height: "100px", marginBottom: "40px" }}
                     />
-                    <div style={{ fontSize: "28px", fontWeight: "bold", letterSpacing: "2px", marginBottom: "15px" }}>
+                    <div style={{ fontSize: "36px", fontWeight: "bold", letterSpacing: "1px", marginBottom: "20px" }}>
                       INVOICE
                     </div>
-                    <div style={{ whiteSpace: "pre-line", fontSize: "12px", lineHeight: "1.5" }}>
+                    <div style={{ whiteSpace: "pre-line", fontSize: "14px", lineHeight: "1.5" }}>
                       {invoiceData.billTo}
                     </div>
                   </Col>
-                  <Col span={10} style={{ fontSize: "12px", lineHeight: "1.6" }}>
-                    <Row>
-                      <Col span={12} style={{ fontWeight: "bold" }}>Invoice Date</Col>
-                      <Col span={12}>
-                        Central Board of<br/>
-                        Professional Development<br/>
-                        37th Floor 1 Canada Square<br/>
-                        London, E14 5DY<br/>
-                        <br/>
-                        accounts@cbpd.co.uk<br/>
-                        <br/>
+
+                  {/* Right Column (Company Address & Invoice Details) */}
+                  <Col span={12}>
+                    <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "20px" }}>
+                      <div style={{ width: "250px", fontSize: "13px", lineHeight: "1.5" }}>
+                        Central Board of<br />
+                        Professional Development<br />
+                        37th Floor 1 Canada Square<br />
+                        London, E14 5DY<br /><br />
+                        accounts@cbpd.co.uk<br /><br />
                         +44 (0)203 807 4300
-                      </Col>
-                    </Row>
-                    <div style={{ marginTop: "-140px" }}>
-                        <Row style={{ marginBottom: "8px" }}>
-                          <Col span={12} style={{ fontWeight: "bold" }}>Invoice Date</Col>
-                          <Col span={12}>{invoiceData.invoiceDate}</Col>
-                        </Row>
-                        <Row style={{ marginBottom: "8px" }}>
-                          <Col span={12} style={{ fontWeight: "bold" }}>Account Number</Col>
-                          <Col span={12}>{invoiceData.accountNumber}</Col>
-                        </Row>
-                        <Row style={{ marginBottom: "8px" }}>
-                          <Col span={12} style={{ fontWeight: "bold" }}>Invoice Number</Col>
-                          <Col span={12}>{invoiceData.invoiceNumber}</Col>
-                        </Row>
-                        <Row>
-                          <Col span={12} style={{ fontWeight: "bold" }}>Reference</Col>
-                          <Col span={12} style={{ whiteSpace: "pre-line" }}>{invoiceData.reference}</Col>
-                        </Row>
+                      </div>
+                    </div>
+                    <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                      <table style={{ width: "350px", fontSize: "13px", textAlign: "left" }}>
+                        <tbody>
+                          <tr>
+                            <td style={{ fontWeight: "bold", paddingBottom: "10px", width: "120px" }}>Invoice Date</td>
+                            <td style={{ paddingBottom: "10px" }}>{invoiceData.invoiceDate}</td>
+                          </tr>
+                          <tr>
+                            <td style={{ fontWeight: "bold", paddingBottom: "10px" }}>Account Number</td>
+                            <td style={{ paddingBottom: "10px" }}>{invoiceData.accountNumber}</td>
+                          </tr>
+                          <tr>
+                            <td style={{ fontWeight: "bold", paddingBottom: "10px" }}>Invoice Number</td>
+                            <td style={{ paddingBottom: "10px" }}>{invoiceData.invoiceNumber}</td>
+                          </tr>
+                          <tr>
+                            <td style={{ fontWeight: "bold", verticalAlign: "top" }}>Reference</td>
+                            <td style={{ whiteSpace: "pre-line", verticalAlign: "top" }}>{invoiceData.reference}</td>
+                          </tr>
+                        </tbody>
+                      </table>
                     </div>
                   </Col>
                 </Row>
 
-                {/* Table */}
-                <div style={{ marginTop: "40px" }}>
-                  {/* Table Header */}
-                  <Row style={{ borderBottom: "1px solid #000", paddingBottom: "8px", fontWeight: "bold", fontSize: "12px" }}>
-                    <Col span={12}>Description</Col>
-                    <Col span={3} style={{ textAlign: "center" }}>Quantity</Col>
-                    <Col span={3} style={{ textAlign: "right" }}>Unit Price</Col>
-                    <Col span={3} style={{ textAlign: "right" }}>VAT</Col>
-                    <Col span={3} style={{ textAlign: "right" }}>Amount GBP</Col>
-                  </Row>
-                  
-                  {/* Table Body */}
-                  {invoiceData.items.map((item) => (
-                    <Row key={item.key} style={{ padding: "12px 0", borderBottom: "1px solid #eee", fontSize: "12px" }}>
-                      <Col span={12}>{item.description}</Col>
-                      <Col span={3} style={{ textAlign: "center" }}>{item.quantity.toFixed(2)}</Col>
-                      <Col span={3} style={{ textAlign: "right" }}>{item.unitPrice}</Col>
-                      <Col span={3} style={{ textAlign: "right" }}>{item.vat.toString().padStart(2, '0')}%</Col>
-                      <Col span={3} style={{ textAlign: "right" }}>{(item.quantity * item.unitPrice).toFixed(0)}</Col>
-                    </Row>
-                  ))}
+                {/* Table Section */}
+                <div style={{ marginTop: "60px" }}>
+                  <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "13px" }}>
+                    <thead>
+                      <tr style={{ borderTop: "2px solid #000", borderBottom: "1px solid #000" }}>
+                        <th style={{ textAlign: "left", padding: "10px 0" }}>Description</th>
+                        <th style={{ textAlign: "center", padding: "10px 0", width: "15%" }}>Quantity</th>
+                        <th style={{ textAlign: "center", padding: "10px 0", width: "15%" }}>Unit Price</th>
+                        <th style={{ textAlign: "center", padding: "10px 0", width: "15%" }}>VAT</th>
+                        <th style={{ textAlign: "right", padding: "10px 0", width: "15%" }}>Amount GBP</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {invoiceData.items.map((item) => (
+                        <tr key={item.key}>
+                          <td style={{ padding: "10px 0", borderBottom: "1px solid #eee" }}>{item.description}</td>
+                          <td style={{ textAlign: "center", padding: "10px 0", borderBottom: "1px solid #eee" }}>{item.quantity.toFixed(2)}</td>
+                          <td style={{ textAlign: "center", padding: "10px 0", borderBottom: "1px solid #eee" }}>{item.unitPrice}</td>
+                          <td style={{ textAlign: "center", padding: "10px 0", borderBottom: "1px solid #eee" }}>{item.vat.toString().padStart(2, '0')}%</td>
+                          <td style={{ textAlign: "right", padding: "10px 0", borderBottom: "1px solid #eee" }}>{(item.quantity * item.unitPrice).toFixed(0)}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
 
-                {/* Totals */}
-                <div style={{ width: "40%", marginLeft: "auto", marginTop: "20px", fontSize: "12px" }}>
-                  <Row style={{ marginBottom: "8px" }}>
-                    <Col span={12} style={{ textAlign: "right", paddingRight: "20px" }}>Subtotal</Col>
-                    <Col span={12} style={{ textAlign: "right" }}>{subtotal.toFixed(0)}</Col>
+                {/* Totals Section */}
+                <div style={{ width: "40%", marginLeft: "auto", marginTop: "20px", fontSize: "13px" }}>
+                  <Row style={{ marginBottom: "10px" }}>
+                    <Col span={16} style={{ textAlign: "right", paddingRight: "30px" }}>Subtotal</Col>
+                    <Col span={8} style={{ textAlign: "right" }}>{subtotal.toFixed(0)}</Col>
                   </Row>
-                  <Row style={{ marginBottom: "8px" }}>
-                    <Col span={12} style={{ textAlign: "right", paddingRight: "20px" }}>TOTAL VAT 00%</Col>
-                    <Col span={12} style={{ textAlign: "right" }}>{totalVat.toFixed(3).substring(0, 3)}</Col>
+                  <Row style={{ marginBottom: "15px" }}>
+                    <Col span={16} style={{ textAlign: "right", paddingRight: "30px" }}>TOTAL VAT 00%</Col>
+                    <Col span={8} style={{ textAlign: "right" }}>{totalVat.toFixed(3).substring(0, 3)}</Col>
                   </Row>
-                  <div style={{ borderTop: "1px solid #000", borderBottom: "1px solid #000", padding: "8px 0", marginBottom: "30px" }}>
+                  <div style={{ borderTop: "2px solid #000", borderBottom: "2px solid #000", padding: "10px 0", marginBottom: "30px" }}>
                     <Row style={{ fontWeight: "bold" }}>
-                      <Col span={12} style={{ textAlign: "right", paddingRight: "20px" }}>TOTAL GBP</Col>
-                      <Col span={12} style={{ textAlign: "right" }}>{totalGBP.toFixed(0)}</Col>
+                      <Col span={16} style={{ textAlign: "right", paddingRight: "30px" }}>TOTAL GBP</Col>
+                      <Col span={8} style={{ textAlign: "right" }}>{totalGBP.toFixed(0)}</Col>
                     </Row>
                   </div>
-                  <Row style={{ fontWeight: "bold" }}>
-                    <Col span={12} style={{ textAlign: "right", paddingRight: "20px" }}>AMOUNT DUE GBP</Col>
-                    <Col span={12} style={{ textAlign: "right" }}>{amountDue.toFixed(2)}</Col>
-                  </Row>
+                  <div style={{ borderBottom: "2px solid #000", paddingBottom: "10px" }}>
+                    <Row style={{ fontWeight: "bold" }}>
+                      <Col span={16} style={{ textAlign: "right", paddingRight: "30px" }}>AMOUNT DUE GBP</Col>
+                      <Col span={8} style={{ textAlign: "right" }}>{amountDue.toFixed(2)}</Col>
+                    </Row>
+                  </div>
                 </div>
 
-                {/* Footer Section */}
-                <div style={{ position: "absolute", bottom: "40mm", left: "15mm", right: "15mm" }}>
+                {/* Footer Section (Bank details & Seal) */}
+                <div style={{ position: "absolute", bottom: "40mm", left: "20mm", right: "20mm" }}>
                   <Row justify="space-between" align="bottom">
                     <Col span={12}>
-                      <div style={{ whiteSpace: "pre-line", fontSize: "11px", lineHeight: "1.4" }}>
+                      <div style={{ whiteSpace: "pre-line", fontSize: "12px", lineHeight: "1.5" }}>
                         {invoiceData.bankDetails}
                       </div>
                     </Col>
                     <Col span={12} style={{ textAlign: "right" }}>
                       <img
-                        src="/cpdlogo.png"
+                        src="/seal.png"
                         alt="CBPD Seal"
-                        style={{ width: "160px", opacity: 0.9 }}
+                        style={{ width: "180px", opacity: 0.9 }}
                       />
                     </Col>
                   </Row>
                 </div>
 
                 {/* Company Reg Info */}
-                <div style={{ position: "absolute", bottom: "15mm", left: "15mm", fontSize: "9px", color: "#666" }}>
+                <div style={{ position: "absolute", bottom: "15mm", left: "20mm", fontSize: "10px", color: "#333" }}>
                   Company Registration No:16442180 , Registered office: 37th Floor 1 Canada Square London E14 5DY United Kingdom
                 </div>
               </div>
