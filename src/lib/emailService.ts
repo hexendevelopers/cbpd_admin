@@ -1,4 +1,5 @@
 import transporter from './nodemailer';
+import path from 'path';
 import { emailTemplates } from './emailTemplates';
 
 interface EmailOptions {
@@ -17,6 +18,13 @@ export class EmailService {
         subject: options.subject,
         html: options.html,
         text: options.text,
+        attachments: [
+          {
+            filename: 'cbpd-logo-transparent.png',
+            path: path.join(process.cwd(), 'public', 'cbpd-logo-transparent.png'),
+            cid: 'cbpdlogo'
+          }
+        ]
       };
 
       const result = await transporter.sendMail(mailOptions);

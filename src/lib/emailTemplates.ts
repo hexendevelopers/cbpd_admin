@@ -80,7 +80,7 @@ export const emailTemplates = {
       <body>
         <div class="container">
           <div class="header">
-            <div class="logo">CBPD</div>
+            <img src="cid:cbpdlogo" alt="CBPD Logo" style="max-height: 80px; margin-bottom: 15px;" />
             <div style="color: #666; font-size: 16px;">Central Board Of Professional Development</div>
           </div>
           
@@ -228,7 +228,7 @@ export const emailTemplates = {
       <body>
         <div class="container">
           <div class="header">
-            <div class="logo">CBPD</div>
+            <img src="cid:cbpdlogo" alt="CBPD Logo" style="max-height: 80px; margin-bottom: 15px;" />
             <div style="color: #666; font-size: 16px;">Central Board Of Professional Development</div>
           </div>
           
@@ -369,7 +369,7 @@ export const emailTemplates = {
       <body>
         <div class="container">
           <div class="header">
-            <div class="logo">CBPD</div>
+            <img src="cid:cbpdlogo" alt="CBPD Logo" style="max-height: 80px; margin-bottom: 15px;" />
             <div style="color: #666; font-size: 16px;">Central Board Of Professional Development</div>
           </div>
           
@@ -462,7 +462,7 @@ export const emailTemplates = {
       <body>
         <div class="container">
           <div class="header">
-            <div class="logo">CBPD</div>
+            <img src="cid:cbpdlogo" alt="CBPD Logo" style="max-height: 80px; margin-bottom: 15px;" />
             <div style="color: #666; font-size: 16px;">Central Board Of Professional Development</div>
           </div>
           
@@ -535,7 +535,7 @@ export const emailTemplates = {
       <body>
         <div class="container">
           <div class="header">
-            <div class="logo">CBPD</div>
+            <img src="cid:cbpdlogo" alt="CBPD Logo" style="max-height: 80px; margin-bottom: 15px;" />
             <div style="color: #666; font-size: 16px;">Central Board Of Professional Development</div>
           </div>
           
@@ -604,7 +604,7 @@ export const emailTemplates = {
       <body>
         <div class="container">
           <div class="header">
-            <div class="logo">CBPD</div>
+            <img src="cid:cbpdlogo" alt="CBPD Logo" style="max-height: 80px; margin-bottom: 15px;" />
             <div style="color: #666; font-size: 16px;">Central Board Of Professional Development</div>
           </div>
           
