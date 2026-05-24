@@ -317,6 +317,10 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
           key: "/admin/certificates/generate",
           label: "Generate Certificate",
         },
+        {
+          key: "/admin/certificate-requests",
+          label: "Certificate Requests",
+        },
       ],
     },
     {
@@ -384,6 +388,9 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
         if (segment === "certificates") {
           title = "Certificates";
         }
+        if (segment === "certificate-requests") {
+          title = "Certificate Requests";
+        }
         if (segment === "student-certificates") {
           title = "Student Certificates";
         }
@@ -416,7 +423,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
     ) {
       keys.push("courses");
     }
-    if (pathname.includes("/admin/certificates")) {
+    if (pathname.includes("/admin/certificates") || pathname.includes("/admin/certificate-requests")) {
       keys.push("certificates");
     }
     if (pathname.includes("/admin/receipts")) {
