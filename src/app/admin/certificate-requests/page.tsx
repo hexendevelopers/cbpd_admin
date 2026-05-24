@@ -11,12 +11,16 @@ import {
   Dropdown,
   Modal,
   Space,
+  Input,
+  Form,
+  Select,
 } from "antd";
-import { DownOutlined, ExclamationCircleOutlined, DeleteOutlined } from "@ant-design/icons";
+import { DownOutlined, ExclamationCircleOutlined, DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import AdminLayout from "@/components/AdminLayout";
 
 const { Title, Text } = Typography;
 const { confirm } = Modal;
+const { TextArea } = Input;
 
 interface CertificateRequest {
   _id: string;
@@ -27,13 +31,44 @@ interface CertificateRequest {
   numberOfLearners: number;
   examCompletedDate: string;
   message: string;
-  status: "Pending" | "Processing" | "Completed" | "Rejected";
+  adminReply?: string;
+  status: string;
   createdAt: string;
 }
+
+const STATUS_OPTIONS = [
+  "Pending",
+  "Under Review",
+  "Under Processing",
+  "Approved",
+  "Printing in Progress",
+  "Ready for Dispatch",
+  "Dispatched",
+  "Collected",
+  "Completed",
+  "Rejected",
+];
+
+const PREDEFINED_REPLIES: Record<string, string> = {
+  "Under Processing": "Your certificates are currently under processing. Final review is ongoing.",
+  "Printing in Progress": "Your certificates are currently being printed.",
+  "Approved": "Your certificate request has been approved.",
+  "Ready for Dispatch": "Certificates are ready for dispatch. Expected dispatch date: [DD/MM/YYYY].",
+  "Dispatched": "Your certificates have been dispatched. Please collect from your channel partner office.",
+  "Completed": "Your certificate request has been successfully completed.",
+  "Collected": "Certificates have been marked as collected.",
+  "Rejected": "Unfortunately, your certificate request has been rejected. Please contact support for more details.",
+  "Under Review": "Your request is currently under review by our team.",
+};
 
 export default function CertificateRequestsPage() {
   const [requests, setRequests] = useState<CertificateRequest[]>([]);
   const [loading, setLoading] = useState(true);
+  
+  // Modal states
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [currentRequest, setCurrentRequest] = useState<CertificateRequest | null>(null);
+  const [form] = Form.useForm();
 
   useEffect(() => {
     fetchRequests();
@@ -62,22 +97,44 @@ export default function CertificateRequestsPage() {
     }
   };
 
-  const updateStatus = async (id: string, newStatus: string) => {
+  const openStatusModal = (record: CertificateRequest) => {
+    setCurrentRequest(record);
+    form.setFieldsValue({
+      status: record.status,
+      adminReply: record.adminReply || "",
+    });
+    setIsModalVisible(true);
+  };
+
+  const handleStatusChange = (newStatus: string) => {
+    if (PREDEFINED_REPLIES[newStatus]) {
+      form.setFieldsValue({ adminReply: PREDEFINED_REPLIES[newStatus] });
+    }
+  };
+
+  const handleModalSubmit = async () => {
     try {
+      const values = await form.validateFields();
+      if (!currentRequest) return;
+      
       setLoading(true);
       const token = localStorage.getItem("adminToken");
-      const response = await fetch(`/api/admin/certificate-requests/${id}`, {
+      const response = await fetch(`/api/admin/certificate-requests/${currentRequest._id}`, {
         method: "PUT",
         headers: { 
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ status: newStatus }),
+        body: JSON.stringify({ 
+          status: values.status,
+          adminReply: values.adminReply
+        }),
       });
       const data = await response.json();
       
       if (data.success) {
-        message.success(`Status updated to ${newStatus}`);
+        message.success(`Status updated successfully`);
+        setIsModalVisible(false);
         fetchRequests();
       } else {
         message.error(data.error || "Failed to update status");
@@ -128,9 +185,15 @@ export default function CertificateRequestsPage() {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case "Pending": return "orange";
-      case "Processing": return "blue";
-      case "Completed": return "green";
+      case "Pending": return "default";
+      case "Under Review": return "orange";
+      case "Under Processing": return "blue";
+      case "Approved": return "cyan";
+      case "Printing in Progress": return "geekblue";
+      case "Ready for Dispatch": return "purple";
+      case "Dispatched": return "magenta";
+      case "Collected": return "green";
+      case "Completed": return "success";
       case "Rejected": return "red";
       default: return "default";
     }
@@ -172,74 +235,43 @@ export default function CertificateRequestsPage() {
       render: (date: string) => new Date(date).toLocaleDateString(),
     },
     {
-      title: "Message",
-      dataIndex: "message",
-      key: "message",
-      render: (text: string) => <Text ellipsis={{ tooltip: text }} style={{ maxWidth: 200 }}>{text}</Text>,
-    },
-    {
       title: "Status",
       dataIndex: "status",
       key: "status",
       render: (status: string) => (
         <Tag color={getStatusColor(status)}>{status.toUpperCase()}</Tag>
       ),
-      filters: [
-        { text: 'Pending', value: 'Pending' },
-        { text: 'Processing', value: 'Processing' },
-        { text: 'Completed', value: 'Completed' },
-        { text: 'Rejected', value: 'Rejected' },
-      ],
+      filters: STATUS_OPTIONS.map(s => ({ text: s, value: s })),
       onFilter: (value: any, record: CertificateRequest) => record.status === value,
+    },
+    {
+      title: "Admin Reply",
+      dataIndex: "adminReply",
+      key: "adminReply",
+      render: (text: string) => text ? <Text ellipsis={{ tooltip: text }} style={{ maxWidth: 200 }}>{text}</Text> : <Text type="secondary">No reply</Text>,
     },
     {
       title: "Actions",
       key: "actions",
-      render: (_: any, record: CertificateRequest) => {
-        const items = [
-          {
-            key: 'Pending',
-            label: 'Mark as Pending',
-            onClick: () => updateStatus(record._id, "Pending"),
-            disabled: record.status === "Pending"
-          },
-          {
-            key: 'Processing',
-            label: 'Mark as Processing',
-            onClick: () => updateStatus(record._id, "Processing"),
-            disabled: record.status === "Processing"
-          },
-          {
-            key: 'Completed',
-            label: 'Mark as Completed',
-            onClick: () => updateStatus(record._id, "Completed"),
-            disabled: record.status === "Completed"
-          },
-          {
-            key: 'Rejected',
-            label: 'Mark as Rejected',
-            onClick: () => updateStatus(record._id, "Rejected"),
-            disabled: record.status === "Rejected"
-          },
-        ];
-
-        return (
-          <Space>
-            <Dropdown menu={{ items }} trigger={['click']}>
-              <Button size="small">
-                Update Status <DownOutlined />
-              </Button>
-            </Dropdown>
-            <Button 
-              type="text" 
-              danger 
-              icon={<DeleteOutlined />} 
-              onClick={() => handleDelete(record._id)} 
-              size="small"
-            />
-          </Space>
-        );
-      },
+      render: (_: any, record: CertificateRequest) => (
+        <Space>
+          <Button 
+            type="primary" 
+            icon={<EditOutlined />} 
+            onClick={() => openStatusModal(record)} 
+            size="small"
+          >
+            Update
+          </Button>
+          <Button 
+            type="text" 
+            danger 
+            icon={<DeleteOutlined />} 
+            onClick={() => handleDelete(record._id)} 
+            size="small"
+          />
+        </Space>
+      ),
     },
   ];
 
@@ -271,6 +303,39 @@ export default function CertificateRequestsPage() {
           scroll={{ x: 1000 }}
         />
       </Card>
+      
+      <Modal
+        title={`Update Status - ${currentRequest?.instituteName} (Batch ${currentRequest?.batchNumber})`}
+        open={isModalVisible}
+        onOk={handleModalSubmit}
+        onCancel={() => setIsModalVisible(false)}
+        okText="Save Update"
+        confirmLoading={loading}
+      >
+        <Form form={form} layout="vertical">
+          <Form.Item 
+            name="status" 
+            label="Certificate Request Status"
+            rules={[{ required: true, message: "Please select a status" }]}
+          >
+            <Select 
+              placeholder="Select Status" 
+              onChange={handleStatusChange}
+              options={STATUS_OPTIONS.map(s => ({ label: s, value: s }))}
+            />
+          </Form.Item>
+          
+          <Form.Item 
+            name="adminReply" 
+            label="Admin Reply (Institution will see this)"
+          >
+            <TextArea 
+              rows={4} 
+              placeholder="Enter your reply message here..." 
+            />
+          </Form.Item>
+        </Form>
+      </Modal>
     </div>
     </AdminLayout>
   );

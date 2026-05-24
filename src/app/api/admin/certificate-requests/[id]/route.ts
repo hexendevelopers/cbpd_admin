@@ -20,7 +20,7 @@ export async function PUT(
     await connectToDB();
 
     const body = await request.json();
-    const { status } = body;
+    const { status, adminReply } = body;
 
     if (!status) {
       return NextResponse.json(
@@ -29,9 +29,14 @@ export async function PUT(
       );
     }
 
+    const updateData: any = { status };
+    if (adminReply !== undefined) {
+      updateData.adminReply = adminReply;
+    }
+
     const updatedRequest = await CertificateRequest.findByIdAndUpdate(
       params.id,
-      { status },
+      updateData,
       { new: true }
     );
 
