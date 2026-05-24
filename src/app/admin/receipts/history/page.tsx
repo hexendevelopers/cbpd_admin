@@ -1,37 +1,30 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import {
-  Card,
-  Row,
-  Col,
-  Table,
-  Typography,
-  message,
-  Button,
-  Tag,
-} from "antd";
-import { FileDoneOutlined } from "@ant-design/icons";
-import dayjs from "dayjs";
+import { Card, Table, Typography, message, Tag, Button, Row, Col } from "antd";
+import { DownloadOutlined } from "@ant-design/icons";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 
 const { Title } = Typography;
 
-export default function InvoiceHistory() {
+export default function ReceiptHistory() {
   const [history, setHistory] = useState<any[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [generatingReceiptId, setGeneratingReceiptId] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
   
-  // Ref for the hidden receipt template
+  const [generatingReceiptId, setGeneratingReceiptId] = useState<string | null>(null);
   const receiptRef = useRef<HTMLDivElement>(null);
   const [currentReceiptData, setCurrentReceiptData] = useState<any>(null);
+
+  useEffect(() => {
+    fetchHistory();
+  }, []);
 
   const fetchHistory = async () => {
     setLoading(true);
     try {
       const token = localStorage.getItem("adminToken");
-      const res = await fetch("/api/admin/invoices", {
+      const res = await fetch("/api/admin/invoices?status=Receipt Generated", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -40,7 +33,7 @@ export default function InvoiceHistory() {
       if (res.ok) {
         setHistory(data.invoices || []);
       } else {
-        message.error(data.message || "Failed to fetch invoice history");
+        message.error(data.message || "Failed to fetch receipt history");
       }
     } catch (error) {
       console.error("Fetch history error:", error);
@@ -50,15 +43,10 @@ export default function InvoiceHistory() {
     }
   };
 
-  useEffect(() => {
-    fetchHistory();
-  }, []);
-
-  const generateReceipt = async (record: any) => {
+  const generateReceiptPDF = async (record: any) => {
     setGeneratingReceiptId(record._id);
     setCurrentReceiptData(record);
     
-    // We need a short timeout to let React render the hidden receipt template with the new data
     setTimeout(async () => {
       const element = receiptRef.current;
       if (!element) {
@@ -80,36 +68,20 @@ export default function InvoiceHistory() {
         pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
         pdf.save(`Receipt_${record.invoiceNumber}.pdf`);
 
-        // Update status in database
-        const token = localStorage.getItem("adminToken");
-        const updateRes = await fetch(`/api/admin/invoices/${record._id}/status`, {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ status: "Receipt Generated" }),
-        });
-
-        if (updateRes.ok) {
-          message.success("Receipt generated successfully!");
-          fetchHistory(); // Refresh table
-        } else {
-          message.warning("Receipt downloaded, but failed to update status.");
-        }
+        message.success("Receipt downloaded successfully!");
       } catch (error) {
         console.error("Error generating receipt PDF:", error);
-        message.error("Failed to generate Receipt PDF");
+        message.error("Failed to download Receipt PDF");
       } finally {
         setGeneratingReceiptId(null);
         setCurrentReceiptData(null);
       }
-    }, 500); // 500ms allows the DOM to properly update the off-screen element
+    }, 500);
   };
 
   const columns = [
     {
-      title: "Invoice Number",
+      title: "Receipt #",
       dataIndex: "invoiceNumber",
       key: "invoiceNumber",
     },
@@ -131,25 +103,10 @@ export default function InvoiceHistory() {
       render: (val: number) => `£${val?.toFixed(2)}`,
     },
     {
-      title: "Amount Due",
-      dataIndex: "amountDue",
-      key: "amountDue",
-      render: (val: number) => `£${val?.toFixed(2) || "0.00"}`,
-    },
-    {
       title: "Status",
       dataIndex: "status",
       key: "status",
-      render: (status: string) => {
-        const color = status === "Receipt Generated" ? "green" : "blue";
-        return <Tag color={color}>{status || "Invoice Generated"}</Tag>;
-      },
-    },
-    {
-      title: "Generated At",
-      dataIndex: "createdAt",
-      key: "createdAt",
-      render: (val: string) => dayjs(val).format("DD MMM YYYY HH:mm"),
+      render: (status: string) => <Tag color="green">{status}</Tag>,
     },
     {
       title: "Action",
@@ -157,11 +114,12 @@ export default function InvoiceHistory() {
       render: (_: any, record: any) => (
         <Button
           type="primary"
-          icon={<FileDoneOutlined />}
+          icon={<DownloadOutlined />}
+          size="small"
           loading={generatingReceiptId === record._id}
-          onClick={() => generateReceipt(record)}
+          onClick={() => generateReceiptPDF(record)}
         >
-          Generate Receipt
+          Download Receipt
         </Button>
       ),
     },
@@ -169,13 +127,9 @@ export default function InvoiceHistory() {
 
   return (
     <div style={{ padding: "24px" }}>
-      <Row justify="space-between" align="middle" style={{ marginBottom: 24 }}>
-        <Col>
-          <Title level={2} style={{ margin: 0, color: "#1a237e" }}>
-            Invoice History
-          </Title>
-        </Col>
-      </Row>
+      <Title level={2} style={{ color: "#1a237e", marginBottom: 24 }}>
+        Receipt History
+      </Title>
 
       <Card style={{ borderRadius: 8 }}>
         <Table
@@ -201,9 +155,7 @@ export default function InvoiceHistory() {
               fontFamily: "Arial, sans-serif",
             }}
           >
-            {/* Top Section */}
             <Row>
-              {/* Left Column (Logo + RECEIPT + Bill To) */}
               <Col span={12}>
                 <img
                   src="/cbpd-logo-transparent.png"
@@ -218,7 +170,6 @@ export default function InvoiceHistory() {
                 </div>
               </Col>
 
-              {/* Right Column (Company Address & Invoice Details) */}
               <Col span={12}>
                 <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "20px" }}>
                   <div style={{ width: "250px", fontSize: "13px", lineHeight: "1.5" }}>
@@ -234,7 +185,7 @@ export default function InvoiceHistory() {
                   <table style={{ width: "350px", fontSize: "13px", textAlign: "left" }}>
                     <tbody>
                       <tr>
-                        <td style={{ fontWeight: "bold", paddingBottom: "10px", width: "120px" }}>Invoice Date</td>
+                        <td style={{ fontWeight: "bold", paddingBottom: "10px", width: "120px" }}>Receipt Date</td>
                         <td style={{ paddingBottom: "10px" }}>{currentReceiptData.invoiceDate}</td>
                       </tr>
                       <tr>
@@ -242,7 +193,7 @@ export default function InvoiceHistory() {
                         <td style={{ paddingBottom: "10px" }}>{currentReceiptData.accountNumber}</td>
                       </tr>
                       <tr>
-                        <td style={{ fontWeight: "bold", paddingBottom: "10px" }}>Invoice Number</td>
+                        <td style={{ fontWeight: "bold", paddingBottom: "10px" }}>Receipt Number</td>
                         <td style={{ paddingBottom: "10px" }}>{currentReceiptData.invoiceNumber}</td>
                       </tr>
                       <tr>
@@ -255,7 +206,6 @@ export default function InvoiceHistory() {
               </Col>
             </Row>
 
-            {/* Table Section */}
             <div style={{ marginTop: "60px" }}>
               <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "13px" }}>
                 <thead>
@@ -281,7 +231,6 @@ export default function InvoiceHistory() {
               </table>
             </div>
 
-            {/* Totals Section */}
             <div style={{ width: "40%", marginLeft: "auto", marginTop: "20px", fontSize: "13px" }}>
               <Row style={{ marginBottom: "10px" }}>
                 <Col span={16} style={{ textAlign: "right", paddingRight: "30px" }}>Subtotal</Col>
@@ -305,7 +254,6 @@ export default function InvoiceHistory() {
               </div>
             </div>
 
-            {/* Footer Section (Bank details & Seal) */}
             <div style={{ position: "absolute", bottom: "40mm", left: "20mm", right: "20mm" }}>
               <Row justify="space-between" align="bottom">
                 <Col span={12}>
@@ -323,7 +271,6 @@ export default function InvoiceHistory() {
               </Row>
             </div>
 
-            {/* Company Reg Info */}
             <div style={{ position: "absolute", bottom: "15mm", left: "20mm", fontSize: "10px", color: "#333" }}>
               Company Registration No:16442180 , Registered office: 37th Floor 1 Canada Square London E14 5DY United Kingdom
             </div>

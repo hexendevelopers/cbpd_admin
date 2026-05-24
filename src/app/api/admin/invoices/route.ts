@@ -16,7 +16,15 @@ export async function GET(request: NextRequest) {
 
     await connectMongoDB();
 
-    const invoices = await Invoice.find({}).sort({ createdAt: -1 });
+    const url = new URL(request.url);
+    const status = url.searchParams.get("status");
+
+    let query: any = {};
+    if (status) {
+      query.status = status;
+    }
+
+    const invoices = await Invoice.find(query).sort({ createdAt: -1 });
 
     return NextResponse.json({ invoices }, { status: 200 });
   } catch (error: any) {

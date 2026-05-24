@@ -177,7 +177,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       label: "Centers",
     },
     {
-      key: "invoices",
+      key: "/admin/invoices",
       icon: (
         <svg
           width="20"
@@ -201,14 +201,19 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
         </svg>
       ),
       label: "Invoices",
+    },
+    {
+      key: "receipts",
+      icon: <FileDoneOutlined style={{ fontSize: 18, color: "#ffffff" }} />,
+      label: "Receipts",
       children: [
         {
-          key: "/admin/invoices/generate",
-          label: "Generate Invoice",
+          key: "/admin/receipts/template",
+          label: "Receipt Template",
         },
         {
-          key: "/admin/invoices/history",
-          label: "Invoice History",
+          key: "/admin/receipts/history",
+          label: "Receipt History",
         },
       ],
     },
@@ -404,8 +409,8 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
     if (pathname.includes("/admin/certificates")) {
       keys.push("certificates");
     }
-    if (pathname.includes("/admin/invoices")) {
-      keys.push("invoices");
+    if (pathname.includes("/admin/receipts")) {
+      keys.push("receipts");
     }
     if (pathname.includes("/admin/student-certificates")) {
       keys.push("student-certificates");
