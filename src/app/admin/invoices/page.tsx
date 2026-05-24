@@ -31,7 +31,7 @@ interface InvoiceItem {
   description: string;
   quantity: number;
   unitPrice: number;
-  tax: number;
+  vat: number;
 }
 
 export default function InvoiceGenerator() {
@@ -51,10 +51,11 @@ export default function InvoiceGenerator() {
         description: "CBPD Provider Membership(UK) ( No Annual Renewal)",
         quantity: 1,
         unitPrice: 250,
-        tax: 0,
+        vat: 0,
       },
     ] as InvoiceItem[],
     bankDetails: "for payment please see below organisation bank details\n(Indian channel partner)\n\n7X GLOBAL\nFEDERAL BANK\nAccount Number:\n14640200005780\nIFSC: FDRL0001462\nBranch: Infopark - Kochi",
+    amountDue: 0.0,
   });
 
   const handleValuesChange = (changedValues: any, allValues: any) => {
@@ -73,7 +74,7 @@ export default function InvoiceGenerator() {
       description: "New Item",
       quantity: 1,
       unitPrice: 0,
-      tax: 0,
+      vat: 0,
     };
     setInvoiceData((prev) => ({
       ...prev,
@@ -124,13 +125,12 @@ export default function InvoiceGenerator() {
     (sum, item) => sum + item.quantity * item.unitPrice,
     0
   );
-  const totalTax = invoiceData.items.reduce(
+  const totalVat = invoiceData.items.reduce(
     (sum, item) =>
-      sum + item.quantity * item.unitPrice * (item.tax / 100),
+      sum + item.quantity * item.unitPrice * (item.vat / 100),
     0
   );
-  const totalGBP = subtotal + totalTax;
-  const amountDue = 0.0; // Assuming paid/due logic can be static for now or added later
+  const totalGBP = subtotal + totalVat;
 
   return (
     <div style={{ padding: "24px" }}>
@@ -167,6 +167,7 @@ export default function InvoiceGenerator() {
                 invoiceNumber: invoiceData.invoiceNumber,
                 reference: invoiceData.reference,
                 bankDetails: invoiceData.bankDetails,
+                amountDue: invoiceData.amountDue,
               }}
               onValuesChange={handleValuesChange}
             >
@@ -259,14 +260,14 @@ export default function InvoiceGenerator() {
                       </Form.Item>
                     </Col>
                     <Col span={8}>
-                      <Form.Item label="TAX %" style={{ marginBottom: 0 }}>
+                      <Form.Item label="VAT %" style={{ marginBottom: 0 }}>
                         <Input
                           type="number"
-                          value={item.tax}
+                          value={item.vat}
                           onChange={(e) =>
                             handleItemChange(
                               item.key,
-                              "tax",
+                              "vat",
                               Number(e.target.value)
                             )
                           }
@@ -289,6 +290,10 @@ export default function InvoiceGenerator() {
 
               <Form.Item label="Bank Details" name="bankDetails">
                 <TextArea rows={6} style={{ borderRadius: 6 }} />
+              </Form.Item>
+
+              <Form.Item label="Amount Due GBP" name="amountDue">
+                <Input type="number" style={{ borderRadius: 6 }} />
               </Form.Item>
             </Form>
           </Card>
@@ -378,7 +383,7 @@ export default function InvoiceGenerator() {
                         <th style={{ textAlign: "left", padding: "10px 0" }}>Description</th>
                         <th style={{ textAlign: "center", padding: "10px 0", width: "15%" }}>Quantity</th>
                         <th style={{ textAlign: "center", padding: "10px 0", width: "15%" }}>Unit Price</th>
-                        <th style={{ textAlign: "center", padding: "10px 0", width: "15%" }}>TAX</th>
+                        <th style={{ textAlign: "center", padding: "10px 0", width: "15%" }}>VAT</th>
                         <th style={{ textAlign: "right", padding: "10px 0", width: "15%" }}>Amount GBP</th>
                       </tr>
                     </thead>
@@ -388,7 +393,7 @@ export default function InvoiceGenerator() {
                           <td style={{ padding: "10px 0", borderBottom: "1px solid #eee" }}>{item.description}</td>
                           <td style={{ textAlign: "center", padding: "10px 0", borderBottom: "1px solid #eee" }}>{item.quantity.toFixed(2)}</td>
                           <td style={{ textAlign: "center", padding: "10px 0", borderBottom: "1px solid #eee" }}>{item.unitPrice}</td>
-                          <td style={{ textAlign: "center", padding: "10px 0", borderBottom: "1px solid #eee" }}>{item.tax.toString().padStart(2, '0')}%</td>
+                          <td style={{ textAlign: "center", padding: "10px 0", borderBottom: "1px solid #eee" }}>{item.vat.toString().padStart(2, '0')}%</td>
                           <td style={{ textAlign: "right", padding: "10px 0", borderBottom: "1px solid #eee" }}>{(item.quantity * item.unitPrice).toFixed(0)}</td>
                         </tr>
                       ))}
@@ -403,8 +408,8 @@ export default function InvoiceGenerator() {
                     <Col span={8} style={{ textAlign: "right" }}>{subtotal.toFixed(0)}</Col>
                   </Row>
                   <Row style={{ marginBottom: "15px" }}>
-                    <Col span={16} style={{ textAlign: "right", paddingRight: "30px" }}>TOTAL TAX 00%</Col>
-                    <Col span={8} style={{ textAlign: "right" }}>{totalTax.toFixed(3).substring(0, 3)}</Col>
+                    <Col span={16} style={{ textAlign: "right", paddingRight: "30px" }}>TOTAL VAT 00%</Col>
+                    <Col span={8} style={{ textAlign: "right" }}>{totalVat.toFixed(3).substring(0, 3)}</Col>
                   </Row>
                   <div style={{ borderTop: "2px solid #000", borderBottom: "2px solid #000", padding: "10px 0", marginBottom: "30px" }}>
                     <Row style={{ fontWeight: "bold" }}>
@@ -415,7 +420,7 @@ export default function InvoiceGenerator() {
                   <div style={{ borderBottom: "2px solid #000", paddingBottom: "10px" }}>
                     <Row style={{ fontWeight: "bold" }}>
                       <Col span={16} style={{ textAlign: "right", paddingRight: "30px" }}>AMOUNT DUE GBP</Col>
-                      <Col span={8} style={{ textAlign: "right" }}>{amountDue.toFixed(2)}</Col>
+                      <Col span={8} style={{ textAlign: "right" }}>{Number(invoiceData.amountDue).toFixed(2)}</Col>
                     </Row>
                   </div>
                 </div>
