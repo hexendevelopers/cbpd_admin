@@ -394,6 +394,9 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
         if (segment === "student-certificates") {
           title = "Learner Certificates";
         }
+        if (segment === "students") {
+          title = "Learners";
+        }
         if (segment === "generate") {
           title = "Generate Certificate";
         }
