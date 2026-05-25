@@ -50,15 +50,16 @@ const STATUS_OPTIONS = [
 ];
 
 const PREDEFINED_REPLIES: Record<string, string> = {
-  "Under Processing": "Your certificates are currently under processing. Final review is ongoing.",
-  "Printing in Progress": "Your certificates are currently being printed.",
-  "Approved": "Your certificate request has been approved.",
-  "Ready for Dispatch": "Certificates are ready for dispatch. Expected dispatch date: [DD/MM/YYYY].",
-  "Dispatched": "Your certificates have been dispatched. Please collect from your channel partner office.",
-  "Completed": "Your certificate request has been successfully completed.",
-  "Collected": "Certificates have been marked as collected.",
-  "Rejected": "Unfortunately, your certificate request has been rejected. Please contact support for more details.",
-  "Under Review": "Your request is currently under review by our team.",
+  "Pending": "Your certificate request has been successfully submitted and is currently pending review.",
+  "Under Review": "Your certificate request is currently under review by our team.",
+  "Under Processing": "Your certificate request is currently being processed. Final review is in progress.",
+  "Approved": "Your certificate request has been approved successfully.",
+  "Printing in Progress": "Your certificate is currently being prepared for printing.",
+  "Ready for Dispatch": "Your certificate is ready for dispatch. Expected dispatch date: [DD/MM/YYYY].",
+  "Dispatched": "Your certificate has been dispatched successfully. Please collect it from your channel partner office.",
+  "Collected": "Your certificate has been marked as collected successfully.",
+  "Completed": "Your certificate request has been completed successfully.",
+  "Rejected": "Unfortunately, your certificate request has been rejected. Please contact support for further details.",
 };
 
 export default function CertificateRequestsPage() {
