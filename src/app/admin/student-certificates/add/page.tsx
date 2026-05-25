@@ -36,7 +36,7 @@ export default function AddStudentCertificate() {
       if (response.ok) {
         notification.success({
           message: "Success",
-          description: "Student certificate added successfully.",
+          description: "Learner certificate added successfully.",
         });
         router.push("/admin/student-certificates");
       } else {

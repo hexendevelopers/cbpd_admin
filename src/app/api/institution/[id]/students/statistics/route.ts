@@ -4,6 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 import connectToDB from "@/configs/mongodb";
 import Student from "@/models/studentModel";
 import Organization from "@/models/institutionModel";
+import CertificateRequest from "@/models/certificateRequestModel";
 import mongoose from "mongoose";
 import { protectOrg, verifyInstitutionToken } from "@/lib/verifyToken";
 
@@ -146,6 +147,47 @@ export async function GET(
       },
     ]);
 
+    // Calculate Dashboard Certificate Request Stats
+    const certificateStats = await CertificateRequest.aggregate([
+      { $match: baseQuery },
+      {
+        $group: {
+          _id: "$status",
+          learners: { $sum: "$numberOfLearners" }
+        }
+      }
+    ]);
+
+    let certificateSubmitted = 0;
+    let underReview = 0;
+    let approved = 0;
+    let rejected = 0;
+
+    certificateStats.forEach(stat => {
+      // Sum all learners that are requested
+      certificateSubmitted += stat.learners;
+      
+      // Under Review
+      if (stat._id === "Under Review" || stat._id === "Pending" || stat._id === "Under Processing") {
+        underReview += stat.learners;
+      }
+      
+      // Approved
+      if (["Approved", "Printing in Progress", "Ready for Dispatch", "Dispatched", "Collected", "Completed"].includes(stat._id)) {
+        approved += stat.learners;
+      }
+
+      // Rejected
+      if (stat._id === "Rejected") {
+        rejected += stat.learners;
+      }
+    });
+
+    const recentCertificateRequests = await CertificateRequest.find(baseQuery)
+      .sort({ createdAt: -1 })
+      .limit(5)
+      .select("programmeName batchNumber numberOfLearners status createdAt");
+
     const statistics = {
       overview: {
         totalStudents,
@@ -155,6 +197,10 @@ export async function GET(
           totalStudents > 0
             ? ((activeStudents / totalStudents) * 100).toFixed(2)
             : "0",
+        certificateSubmitted,
+        underReview,
+        approved,
+        rejected,
       },
       demographics: {
         gender: genderStats,
@@ -176,6 +222,7 @@ export async function GET(
       },
       recent: {
         students: recentStudents,
+        certificateRequests: recentCertificateRequests,
       },
       organization: {
         name: organization.orgName,

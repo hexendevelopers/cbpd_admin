@@ -296,7 +296,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
     {
       key: "student-certificates",
       icon: <SafetyCertificateOutlined style={{ fontSize: 18, color: "#ffffff" }} />,
-      label: "Student Certificates",
+      label: "Learner Certificates",
       children: [
         {
           key: "/admin/student-certificates",
@@ -392,7 +392,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
           title = "Certificate Request";
         }
         if (segment === "student-certificates") {
-          title = "Student Certificates";
+          title = "Learner Certificates";
         }
         if (segment === "generate") {
           title = "Generate Certificate";
