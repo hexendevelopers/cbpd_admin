@@ -109,7 +109,7 @@ export default function BulkImportModal({ visible, onCancel, onSuccess, institut
 
   return (
     <Modal
-      title="Bulk Import Students"
+      title="Bulk Import Learners"
       open={visible}
       onCancel={() => {
         setPreviewData([]);

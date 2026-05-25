@@ -777,9 +777,9 @@ export default function GenerateCertificatePage() {
                       >
                         <Form.Item
                           name="studentName"
-                          label="Student Name"
+                          label="Learner Name"
                           rules={[
-                            { required: true, message: "Student name is required" },
+                            { required: true, message: "Learner name is required" },
                           ]}
                         >
                           <Input placeholder="e.g. SYAMLY V.A" autoComplete="off" />

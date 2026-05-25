@@ -214,7 +214,7 @@ export default function StudentsManagement() {
 
           notification.success({
             message: "Export Successful",
-            description: "Students data exported to CSV successfully",
+            description: "Learners data exported to CSV successfully",
             placement: "topRight",
           });
         } else {
@@ -231,7 +231,7 @@ export default function StudentsManagement() {
 
           notification.success({
             message: "Export Successful",
-            description: "Students data exported to Excel successfully",
+            description: "Learners data exported to Excel successfully",
             placement: "topRight",
           });
         } else {
@@ -242,7 +242,7 @@ export default function StudentsManagement() {
       console.error("Export error:", error);
       notification.error({
         message: "Export Failed",
-        description: "Failed to export students data. Please try again.",
+        description: "Failed to export learners data. Please try again.",
         placement: "topRight",
       });
     }
@@ -301,7 +301,7 @@ export default function StudentsManagement() {
       console.error("Error fetching students:", error);
       notification.error({
         message: "Error",
-        description: "Failed to fetch students",
+        description: "Failed to fetch learners",
         placement: "topRight",
       });
     } finally {
@@ -325,7 +325,7 @@ export default function StudentsManagement() {
     if (selectedStudents.length === 0) {
       notification.warning({
         message: "No Selection",
-        description: "Please select students first",
+        description: "Please select learners first",
         placement: "topRight",
       });
       return;
@@ -496,7 +496,7 @@ export default function StudentsManagement() {
           setIsModalVisible(true);
         }}
       >
-        Edit Student
+        Edit Learner
       </Menu.Item>
       <Menu.Item
         key="toggle"
@@ -517,9 +517,9 @@ export default function StudentsManagement() {
         danger
         onClick={() => {
           Modal.confirm({
-            title: "Delete Student",
+            title: "Delete Learner",
             content:
-              "Are you sure you want to delete this student? This action cannot be undone.",
+              "Are you sure you want to delete this learner? This action cannot be undone.",
             okText: "Delete",
             okType: "danger",
             cancelText: "Cancel",
@@ -534,7 +534,7 @@ export default function StudentsManagement() {
 
   const columns = [
     {
-      title: "Student",
+      title: "Learner",
       key: "student",
       render: (record: Student) => (
         <Space>
@@ -643,7 +643,7 @@ export default function StudentsManagement() {
         >
           <Spin size="large" />
           <Text style={{ marginTop: 16, fontSize: 16, color: "#666" }}>
-            Loading Students...
+            Loading Learners...
           </Text>
         </div>
       </AdminLayout>
@@ -665,10 +665,10 @@ export default function StudentsManagement() {
           >
             <div>
               <Title level={2} style={{ margin: 0, fontWeight: 600 }}>
-                Students Management
+                Learners Management
               </Title>
               <Text type="secondary">
-                Manage and monitor all student records across institutions
+                Manage and monitor all learner records across institutions
               </Text>
             </div>
             <Space>
@@ -705,7 +705,7 @@ export default function StudentsManagement() {
                 onClick={() => setIsBulkImportVisible(true)}
                 style={{ borderRadius: 6 }}
               >
-                Import Students
+                Import Learners
               </Button>
 
               <Button
@@ -718,7 +718,7 @@ export default function StudentsManagement() {
                 }}
                 style={{ borderRadius: 6 }}
               >
-                Add Student
+                Add Learner
               </Button>
             </Space>
           </div>
@@ -741,7 +741,7 @@ export default function StudentsManagement() {
                     <Badge status="processing" text="Live" />
                   </div>
                   <Statistic
-                    title="Total Students"
+                    title="Total Learners"
                     value={statistics.overview.total}
                     valueStyle={{
                       fontWeight: 600,
@@ -776,7 +776,7 @@ export default function StudentsManagement() {
                     <Badge status="success" text="Active" />
                   </div>
                   <Statistic
-                    title="Active Students"
+                    title="Active Learners"
                     value={statistics.overview.active}
                     valueStyle={{
                       fontWeight: 600,
@@ -846,7 +846,7 @@ export default function StudentsManagement() {
           title={
             <Space>
               <FilterOutlined />
-              <span>Filter Students</span>
+              <span>Filter Learners</span>
             </Space>
           }
           style={{ marginBottom: 24, borderRadius: 8 }}
@@ -854,7 +854,7 @@ export default function StudentsManagement() {
           <Row gutter={[16, 16]}>
             <Col xs={24} sm={8} md={6}>
               <div style={{ marginBottom: 8 }}>
-                <Text strong>Search Students</Text>
+                <Text strong>Search Learners</Text>
               </div>
               <Input
                 placeholder="Search by name, admission number..."
@@ -983,7 +983,7 @@ export default function StudentsManagement() {
           >
             <Space>
               <Text strong style={{ color: "#1890ff" }}>
-                {selectedStudents.length} student
+                {selectedStudents.length} learner
                 {selectedStudents.length > 1 ? "s" : ""} selected
               </Text>
               <Button
@@ -1034,7 +1034,7 @@ export default function StudentsManagement() {
           title={
             <Space>
               <TeamOutlined />
-              <span>Students List</span>
+              <span>Learners List</span>
               <Badge
                 count={pagination.total}
                 style={{ backgroundColor: "#1890ff" }}
@@ -1056,7 +1056,7 @@ export default function StudentsManagement() {
               showSizeChanger: true,
               showQuickJumper: true,
               showTotal: (total, range) =>
-                `${range[0]}-${range[1]} of ${total} students`,
+                `${range[0]}-${range[1]} of ${total} learners`,
               onChange: (page, pageSize) => {
                 setFilters({ ...filters, page, limit: pageSize || 10 });
               },
@@ -1071,7 +1071,7 @@ export default function StudentsManagement() {
             title={
               <Space>
                 <BarChartOutlined style={{ color: "#1890ff" }} />
-                <span>Student Analytics</span>
+                <span>Learner Analytics</span>
               </Space>
             }
             style={{ borderRadius: 8 }}
@@ -1293,7 +1293,7 @@ export default function StudentsManagement() {
                 key="institutions"
               >
                 <Card
-                  title="Students by Institution"
+                  title="Learners by Institution"
                   size="small"
                   style={{ borderRadius: 8 }}
                 >
@@ -1330,12 +1330,12 @@ export default function StudentsManagement() {
         )}
       </div>
 
-      {/* Student Details Drawer */}
+      {/* Learner Details Drawer */}
       <Drawer
         title={
           <Space>
             <UserOutlined style={{ color: "#1890ff" }} />
-            <span>Student Details</span>
+            <span>Learner Details</span>
           </Space>
         }
         placement="right"
@@ -1378,7 +1378,7 @@ export default function StudentsManagement() {
               </Tag>
             </div>
 
-            {/* Student Details */}
+            {/* Learner Details */}
             <Card
               title="Personal Information"
               style={{ marginBottom: 16, borderRadius: 8 }}
@@ -1612,7 +1612,7 @@ export default function StudentsManagement() {
                 }}
                 style={{ borderRadius: 6 }}
               >
-                Edit Student
+                Edit Learner
               </Button>
               <Button
                 onClick={() =>
@@ -1630,12 +1630,12 @@ export default function StudentsManagement() {
         )}
       </Drawer>
 
-      {/* Add/Edit Student Modal */}
+      {/* Add/Edit Learner Modal */}
       <Modal
         title={
           <Space>
             {isEditMode ? <EditOutlined /> : <PlusOutlined />}
-            <span>{isEditMode ? "Edit Student" : "Add New Student"}</span>
+            <span>{isEditMode ? "Edit Learner" : "Add New Student"}</span>
           </Space>
         }
         open={isModalVisible}
@@ -1954,7 +1954,7 @@ export default function StudentsManagement() {
                 size="large"
                 style={{ borderRadius: 6, minWidth: 120 }}
               >
-                {isEditMode ? "Update Student" : "Add Student"}
+                {isEditMode ? "Update Student" : "Add Learner"}
               </Button>
               <Button
                 size="large"

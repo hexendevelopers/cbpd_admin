@@ -152,7 +152,7 @@ export default function AdminDashboard() {
       ),
     },
     {
-      title: "Students",
+      title: "Learners",
       dataIndex: "studentCount",
       key: "studentCount",
       render: (count: number) => (
@@ -297,7 +297,7 @@ export default function AdminDashboard() {
                   </Tag>
                 </div>
                 <Statistic
-                  title="Total Students"
+                  title="Total Learners"
                   value={stats.statistics.students.total}
                   valueStyle={{ fontWeight: 600, fontSize: 28, color: "#1a202c" }}
                 />
@@ -425,7 +425,7 @@ export default function AdminDashboard() {
               title={
                 <Space>
                   <TeamOutlined style={{ color: "#22c55e" }} />
-                  <span style={{ color: "#1a202c" }}>Student Status</span>
+                  <span style={{ color: "#1a202c" }}>Learner Status</span>
                 </Space>
               }
               style={{ borderRadius: 8, border: "1px solid #e2e8f0" }}
@@ -529,7 +529,7 @@ export default function AdminDashboard() {
                   tab={
                     <span>
                       <TeamOutlined />
-                      Students
+                      Learners
                     </span>
                   } 
                   key="students"
@@ -606,7 +606,7 @@ export default function AdminDashboard() {
                 onClick={() => router.push("/admin/students")}
               >
                 <TeamOutlined style={{ fontSize: 32, color: "#22c55e", marginBottom: 12 }} />
-                <Title level={5} style={{ marginBottom: 8, color: "#1a202c" }}>Manage Students</Title>
+                <Title level={5} style={{ marginBottom: 8, color: "#1a202c" }}>Manage Learners</Title>
                 <Text style={{ color: "#4a5568" }}>
                   {stats.statistics.students.total} total students
                 </Text>

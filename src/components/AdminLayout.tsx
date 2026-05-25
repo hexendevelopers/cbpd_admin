@@ -156,7 +156,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
           />
         </svg>
       ),
-      label: "Students",
+      label: "Learners",
     },
     {
       key: "/admin/centers",

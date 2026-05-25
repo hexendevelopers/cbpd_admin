@@ -843,7 +843,7 @@ export default function InstitutionsManagement() {
                       }}
                     />
                     <Statistic
-                      title="Total Students"
+                      title="Total Learners"
                       value={selectedInstitution.statistics?.totalStudents || 0}
                       valueStyle={{ fontSize: 20, fontWeight: 700 }}
                     />
@@ -862,7 +862,7 @@ export default function InstitutionsManagement() {
                       }}
                     />
                     <Statistic
-                      title="Active Students"
+                      title="Active Learners"
                       value={
                         selectedInstitution.statistics?.activeStudents || 0
                       }

@@ -85,7 +85,7 @@ export default function AddStudentCertificate() {
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
               <Form.Item
                 name="name"
-                label="Student Name"
+                label="Learner Name"
                 rules={[{ required: true, message: "Please enter the student's name" }]}
               >
                 <Input size="large" placeholder="e.g. sandeep pradeep" />

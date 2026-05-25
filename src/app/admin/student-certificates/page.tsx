@@ -191,7 +191,7 @@ export default function StudentCertificatesList() {
 
   const columns = [
     {
-      title: "Student Name",
+      title: "Learner Name",
       dataIndex: "name",
       key: "name",
       sorter: true,
@@ -260,7 +260,7 @@ export default function StudentCertificatesList() {
         >
           <div>
             <Title level={2} style={{ margin: 0, fontWeight: 600 }}>
-              Student Certificates
+              Learner Certificates
             </Title>
             <Text type="secondary">Manage student certificate verifications</Text>
           </div>
@@ -316,7 +316,7 @@ export default function StudentCertificatesList() {
       >
         {selectedCertificate && (
           <Descriptions column={1} bordered size="middle">
-            <Descriptions.Item label="Student Name">
+            <Descriptions.Item label="Learner Name">
               <Text strong>{selectedCertificate.name}</Text>
             </Descriptions.Item>
             <Descriptions.Item label="Registration Number">
@@ -345,7 +345,7 @@ export default function StudentCertificatesList() {
         <Form form={form} layout="vertical" onFinish={submitEdit}>
           <Form.Item
             name="name"
-            label="Student Name"
+            label="Learner Name"
             rules={[{ required: true, message: "Please enter the student's name" }]}
           >
             <Input placeholder="e.g. sandeep pradeep" />
