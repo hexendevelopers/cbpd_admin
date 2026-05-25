@@ -33,6 +33,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       batchNumber,
       numberOfLearners,
       examCompletedDate,
+      batchStartDate,
       message,
     } = body;
 
@@ -43,7 +44,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       !programmeName ||
       !batchNumber ||
       !numberOfLearners ||
-      !examCompletedDate
+      !examCompletedDate ||
+      !batchStartDate
     ) {
       return NextResponse.json(
         { success: false, error: "Missing required fields" },
@@ -58,6 +60,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       batchNumber,
       numberOfLearners: Number(numberOfLearners),
       examCompletedDate: new Date(examCompletedDate),
+      batchStartDate: new Date(batchStartDate),
       message,
     });
 

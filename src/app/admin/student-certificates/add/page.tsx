@@ -71,7 +71,7 @@ export default function AddStudentCertificate() {
             <Title level={2} style={{ margin: 0, fontWeight: 600 }}>
               Add Certificate
             </Title>
-            <Text type="secondary">Enter the details for the new student certificate</Text>
+            <Text type="secondary">Enter the details for the new learner certificate</Text>
           </div>
         </div>
 

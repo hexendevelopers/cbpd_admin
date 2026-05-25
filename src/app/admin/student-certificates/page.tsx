@@ -262,7 +262,7 @@ export default function StudentCertificatesList() {
             <Title level={2} style={{ margin: 0, fontWeight: 600 }}>
               Learner Certificates
             </Title>
-            <Text type="secondary">Manage student certificate verifications</Text>
+              <Text type="secondary" style={{ fontSize: '14px', color: '#64748b' }}>Manage learner certificate verifications</Text>
           </div>
           <Space>
             <Button icon={<ReloadOutlined />} onClick={fetchCertificates}>

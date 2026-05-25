@@ -26,6 +26,9 @@ const certificateRequestSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    batchStartDate: {
+      type: Date,
+    },
     numberOfLearners: {
       type: Number,
       required: true,

@@ -1635,7 +1635,7 @@ export default function StudentsManagement() {
         title={
           <Space>
             {isEditMode ? <EditOutlined /> : <PlusOutlined />}
-            <span>{isEditMode ? "Edit Learner" : "Add New Student"}</span>
+            <span>{isEditMode ? "Edit Learner" : "Add New Learner"}</span>
           </Space>
         }
         open={isModalVisible}

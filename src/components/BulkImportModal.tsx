@@ -142,7 +142,7 @@ export default function BulkImportModal({ visible, onCancel, onSuccess, institut
 
       <div style={{ marginBottom: 20 }}>
         <h4>2. Download Template</h4>
-        <p style={{ color: '#666', fontSize: '13px' }}>Download the required excel template, fill in the student details, and save it.</p>
+        <p style={{ color: '#666', fontSize: '13px' }}>Download the required excel template, fill in the learner details, and save it.</p>
         <Button icon={<DownloadOutlined />} onClick={downloadTemplate}>
           Download Excel Template
         </Button>
