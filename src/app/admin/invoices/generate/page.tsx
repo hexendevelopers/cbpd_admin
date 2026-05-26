@@ -354,24 +354,40 @@ export default function InvoiceGenerator() {
                 {/* Top Section */}
                 <Row>
                   {/* Left Column (Logo + INVOICE + Bill To) */}
-                  <Col span={12}>
+                  <Col span={10}>
                     <img
                       src="/cbpd-logo-transparent.png"
                       alt="CBPD Logo"
-                      style={{ height: "100px", marginBottom: "40px" }}
+                      style={{ height: "100px", marginBottom: "30px" }}
                     />
-                    <div style={{ fontSize: "36px", fontWeight: "bold", letterSpacing: "1px", marginBottom: "20px" }}>
+                    <div style={{ fontSize: "32px", fontWeight: "bold", letterSpacing: "1px", marginBottom: "15px", color: "#000" }}>
                       INVOICE
                     </div>
-                    <div style={{ whiteSpace: "pre-line", fontSize: "14px", lineHeight: "1.5" }}>
+                    <div style={{ whiteSpace: "pre-line", fontSize: "13px", lineHeight: "1.5", color: "#000" }}>
                       {invoiceData.billTo}
                     </div>
                   </Col>
 
-                  {/* Right Column (Company Address & Invoice Details) */}
-                  <Col span={12}>
-                    <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "20px" }}>
-                      <div style={{ width: "250px", fontSize: "13px", lineHeight: "1.5" }}>
+                  {/* Right Column (Invoice Details & Company Address) */}
+                  <Col span={14}>
+                    <div style={{ display: "flex", justifyContent: "flex-end", gap: "30px", marginTop: "10px" }}>
+                      {/* Invoice Details */}
+                      <div style={{ fontSize: "13px", lineHeight: "1.4", textAlign: "left", minWidth: "150px" }}>
+                        <div style={{ fontWeight: "bold", marginBottom: "4px" }}>Invoice Date</div>
+                        <div style={{ marginBottom: "12px" }}>{invoiceData.invoiceDate}</div>
+                        
+                        <div style={{ fontWeight: "bold", marginBottom: "4px" }}>Account Number</div>
+                        <div style={{ marginBottom: "12px" }}>{invoiceData.accountNumber}</div>
+                        
+                        <div style={{ fontWeight: "bold", marginBottom: "4px" }}>Invoice Number</div>
+                        <div style={{ marginBottom: "12px" }}>{invoiceData.invoiceNumber}</div>
+                        
+                        <div style={{ fontWeight: "bold", marginBottom: "4px" }}>Reference</div>
+                        <div style={{ whiteSpace: "pre-line" }}>{invoiceData.reference}</div>
+                      </div>
+                      
+                      {/* Company Address */}
+                      <div style={{ fontSize: "13px", lineHeight: "1.4", textAlign: "left", minWidth: "180px" }}>
                         Central Board of<br />
                         Professional Development<br />
                         37th Floor 1 Canada Square<br />
@@ -379,28 +395,6 @@ export default function InvoiceGenerator() {
                         accounts@cbpd.co.uk<br /><br />
                         +44 (0)203 807 4300
                       </div>
-                    </div>
-                    <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                      <table style={{ width: "350px", fontSize: "13px", textAlign: "left" }}>
-                        <tbody>
-                          <tr>
-                            <td style={{ fontWeight: "bold", paddingBottom: "10px", width: "120px" }}>Invoice Date</td>
-                            <td style={{ paddingBottom: "10px" }}>{invoiceData.invoiceDate}</td>
-                          </tr>
-                          <tr>
-                            <td style={{ fontWeight: "bold", paddingBottom: "10px" }}>Account Number</td>
-                            <td style={{ paddingBottom: "10px" }}>{invoiceData.accountNumber}</td>
-                          </tr>
-                          <tr>
-                            <td style={{ fontWeight: "bold", paddingBottom: "10px" }}>Invoice Number</td>
-                            <td style={{ paddingBottom: "10px" }}>{invoiceData.invoiceNumber}</td>
-                          </tr>
-                          <tr>
-                            <td style={{ fontWeight: "bold", verticalAlign: "top" }}>Reference</td>
-                            <td style={{ whiteSpace: "pre-line", verticalAlign: "top" }}>{invoiceData.reference}</td>
-                          </tr>
-                        </tbody>
-                      </table>
                     </div>
                   </Col>
                 </Row>
@@ -432,7 +426,7 @@ export default function InvoiceGenerator() {
                 </div>
 
                 {/* Totals Section */}
-                <div style={{ width: "40%", marginLeft: "auto", marginTop: "20px", fontSize: "13px" }}>
+                <div style={{ width: "45%", marginLeft: "auto", marginTop: "20px", fontSize: "13px", color: "#000" }}>
                   <Row style={{ marginBottom: "10px" }}>
                     <Col span={16} style={{ textAlign: "right", paddingRight: "30px" }}>Subtotal</Col>
                     <Col span={8} style={{ textAlign: "right" }}>{subtotal.toFixed(0)}</Col>
@@ -441,13 +435,13 @@ export default function InvoiceGenerator() {
                     <Col span={16} style={{ textAlign: "right", paddingRight: "30px" }}>TOTAL VAT 00%</Col>
                     <Col span={8} style={{ textAlign: "right" }}>{totalVat.toFixed(3).substring(0, 3)}</Col>
                   </Row>
-                  <div style={{ borderTop: "2px solid #000", borderBottom: "2px solid #000", padding: "10px 0", marginBottom: "30px" }}>
+                  <div style={{ borderTop: "1px solid #000", paddingTop: "10px", paddingBottom: "30px" }}>
                     <Row style={{ fontWeight: "bold" }}>
                       <Col span={16} style={{ textAlign: "right", paddingRight: "30px" }}>TOTAL GBP</Col>
                       <Col span={8} style={{ textAlign: "right" }}>{totalGBP.toFixed(0)}</Col>
                     </Row>
                   </div>
-                  <div style={{ borderBottom: "2px solid #000", paddingBottom: "10px" }}>
+                  <div style={{ borderTop: "1px solid #000", paddingTop: "10px" }}>
                     <Row style={{ fontWeight: "bold" }}>
                       <Col span={16} style={{ textAlign: "right", paddingRight: "30px" }}>AMOUNT DUE GBP</Col>
                       <Col span={8} style={{ textAlign: "right" }}>{Number(invoiceData.amountDue).toFixed(2)}</Col>
