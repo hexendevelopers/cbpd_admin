@@ -501,7 +501,7 @@ export default function ReceiptTemplate() {
                           <Col span={8} style={{ textAlign: "right" }}>{subtotal.toFixed(0)}</Col>
                         </Row>
                         <Row style={{ marginBottom: "15px" }}>
-                          <Col span={16} style={{ textAlign: "right", paddingRight: "30px" }}>TOTAL VAT 00%</Col>
+                          <Col span={16} style={{ textAlign: "right", paddingRight: "30px" }}>TOTAL VAT %</Col>
                           <Col span={8} style={{ textAlign: "right" }}>{totalVat.toFixed(3).substring(0, 3)}</Col>
                         </Row>
                         <div style={{ borderTop: "2px solid #000", borderBottom: "2px solid #000", padding: "10px 0", marginBottom: "30px" }}>
