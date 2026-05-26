@@ -393,24 +393,40 @@ export default function ReceiptTemplate() {
                   {/* Top Section */}
                   <Row>
                     {/* Left Column (Logo + RECEIPT + Bill To) */}
-                    <Col span={12}>
+                    <Col span={10}>
                       <img
                         src="/cbpd-logo-transparent.png"
                         alt="CBPD Logo"
-                        style={{ height: "100px", marginBottom: "40px" }}
+                        style={{ height: "100px", marginBottom: "30px" }}
                       />
-                      <div style={{ fontSize: "36px", fontWeight: "bold", letterSpacing: "1px", marginBottom: "20px" }}>
+                      <div style={{ fontSize: "32px", fontWeight: "bold", letterSpacing: "1px", marginBottom: "15px", color: "#000" }}>
                         RECEIPT
                       </div>
-                      <div style={{ whiteSpace: "pre-line", fontSize: "14px", lineHeight: "1.5" }}>
+                      <div style={{ whiteSpace: "pre-line", fontSize: "13px", lineHeight: "1.5", color: "#000" }}>
                         {receiptData.billTo}
                       </div>
                     </Col>
 
-                    {/* Right Column (Company Address & Invoice Details) */}
-                    <Col span={12}>
-                      <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "20px" }}>
-                        <div style={{ width: "250px", fontSize: "13px", lineHeight: "1.5" }}>
+                    {/* Right Column (Invoice Details & Company Address) */}
+                    <Col span={14}>
+                      <div style={{ display: "flex", justifyContent: "flex-end", gap: "30px", marginTop: "10px" }}>
+                        {/* Receipt Details */}
+                        <div style={{ fontSize: "13px", lineHeight: "1.4", textAlign: "left", minWidth: "150px" }}>
+                          <div style={{ fontWeight: "bold", marginBottom: "4px" }}>Receipt Date</div>
+                          <div style={{ marginBottom: "12px" }}>{receiptData.invoiceDate}</div>
+                          
+                          <div style={{ fontWeight: "bold", marginBottom: "4px" }}>Account Number</div>
+                          <div style={{ marginBottom: "12px" }}>{receiptData.accountNumber}</div>
+                          
+                          <div style={{ fontWeight: "bold", marginBottom: "4px" }}>Receipt Number</div>
+                          <div style={{ marginBottom: "12px" }}>{receiptData.invoiceNumber}</div>
+                          
+                          <div style={{ fontWeight: "bold", marginBottom: "4px" }}>Reference</div>
+                          <div style={{ whiteSpace: "pre-line" }}>{receiptData.reference}</div>
+                        </div>
+                        
+                        {/* Company Address */}
+                        <div style={{ fontSize: "13px", lineHeight: "1.4", textAlign: "left", minWidth: "180px" }}>
                           Central Board of<br />
                           Professional Development<br />
                           37th Floor 1 Canada Square<br />
@@ -418,28 +434,6 @@ export default function ReceiptTemplate() {
                           accounts@cbpd.co.uk<br /><br />
                           +44 (0)203 807 4300
                         </div>
-                      </div>
-                      <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                        <table style={{ width: "350px", fontSize: "13px", textAlign: "left" }}>
-                          <tbody>
-                            <tr>
-                              <td style={{ fontWeight: "bold", paddingBottom: "10px", width: "120px" }}>Receipt Date</td>
-                              <td style={{ paddingBottom: "10px" }}>{receiptData.invoiceDate}</td>
-                            </tr>
-                            <tr>
-                              <td style={{ fontWeight: "bold", paddingBottom: "10px" }}>Account Number</td>
-                              <td style={{ paddingBottom: "10px" }}>{receiptData.accountNumber}</td>
-                            </tr>
-                            <tr>
-                              <td style={{ fontWeight: "bold", paddingBottom: "10px" }}>Receipt Number</td>
-                              <td style={{ paddingBottom: "10px" }}>{receiptData.invoiceNumber}</td>
-                            </tr>
-                            <tr>
-                              <td style={{ fontWeight: "bold", verticalAlign: "top" }}>Reference</td>
-                              <td style={{ whiteSpace: "pre-line", verticalAlign: "top" }}>{receiptData.reference}</td>
-                            </tr>
-                          </tbody>
-                        </table>
                       </div>
                     </Col>
                   </Row>
