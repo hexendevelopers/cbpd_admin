@@ -25,9 +25,9 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       data: requests,
     });
   } catch (error) {
-    console.error("Error fetching certificate requests:", error);
+    console.error("Error fetching certificate request:", error);
     return NextResponse.json(
-      { success: false, error: "Failed to fetch certificate requests" },
+      { success: false, error: "Failed to fetch certificate request" },
       { status: 500 }
     );
   }
