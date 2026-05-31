@@ -293,11 +293,11 @@ export default function HallTicketHistory() {
 
               <div style={{ position: "relative", zIndex: 1 }}>
                 {/* Header */}
-                <div style={{ textAlign: "center", marginBottom: "20px", display: "flex", flexDirection: "column", alignItems: "center" }}>
+                <div style={{ textAlign: "center", marginBottom: "10px", display: "flex", flexDirection: "column", alignItems: "center" }}>
                   <img
                     src="/cbpd-logo-transparent.png"
                     alt="CBPD Logo"
-                    style={{ height: "100px", marginBottom: "10px", display: "block" }}
+                    style={{ height: "80px", marginBottom: "5px", display: "block" }}
                   />
                   <div style={{ fontSize: "18px", fontWeight: "bold", color: "#000080", marginBottom: "5px" }}>
                     CENTRAL BOARD OF PROFESSIONAL DEVELOPMENT
@@ -311,56 +311,56 @@ export default function HallTicketHistory() {
                 </div>
 
                 {/* Details Table */}
-                <table style={{ width: "100%", borderCollapse: "collapse", marginBottom: "20px", fontSize: "14px", fontWeight: "bold" }}>
+                <table style={{ width: "100%", borderCollapse: "collapse", marginBottom: "10px", fontSize: "14px", fontWeight: "bold" }}>
                   <tbody>
                     <tr>
-                      <td style={{ border: "1px solid #000", padding: "10px", width: "35%" }}>NAME OF CANDIDATE</td>
-                      <td style={{ border: "1px solid #000", padding: "10px", textTransform: "uppercase" }}>{currentTicketData.candidateName}</td>
+                      <td style={{ border: "1px solid #000", padding: "6px", width: "35%" }}>NAME OF CANDIDATE</td>
+                      <td style={{ border: "1px solid #000", padding: "6px", textTransform: "uppercase" }}>{currentTicketData.candidateName}</td>
                     </tr>
                     <tr>
-                      <td style={{ border: "1px solid #000", padding: "10px" }}>DATE OF BIRTH</td>
-                      <td style={{ border: "1px solid #000", padding: "10px" }}>{currentTicketData.dateOfBirth}</td>
+                      <td style={{ border: "1px solid #000", padding: "6px" }}>DATE OF BIRTH</td>
+                      <td style={{ border: "1px solid #000", padding: "6px" }}>{currentTicketData.dateOfBirth}</td>
                     </tr>
                     <tr>
-                      <td style={{ border: "1px solid #000", padding: "10px" }}>COURSE</td>
-                      <td style={{ border: "1px solid #000", padding: "10px", textTransform: "uppercase" }}>{currentTicketData.course}</td>
+                      <td style={{ border: "1px solid #000", padding: "6px" }}>COURSE</td>
+                      <td style={{ border: "1px solid #000", padding: "6px", textTransform: "uppercase" }}>{currentTicketData.course}</td>
                     </tr>
                     <tr>
-                      <td style={{ border: "1px solid #000", padding: "10px" }}>COURSE DURATION</td>
-                      <td style={{ border: "1px solid #000", padding: "10px", textTransform: "uppercase" }}>{currentTicketData.courseDuration}</td>
+                      <td style={{ border: "1px solid #000", padding: "6px" }}>COURSE DURATION</td>
+                      <td style={{ border: "1px solid #000", padding: "6px", textTransform: "uppercase" }}>{currentTicketData.courseDuration}</td>
                     </tr>
                     <tr>
-                      <td style={{ border: "1px solid #000", padding: "10px" }}>EXAMINATION CENTRE</td>
-                      <td style={{ border: "1px solid #000", padding: "10px", textTransform: "uppercase" }}>{currentTicketData.examinationCentre}</td>
+                      <td style={{ border: "1px solid #000", padding: "6px" }}>EXAMINATION CENTRE</td>
+                      <td style={{ border: "1px solid #000", padding: "6px", textTransform: "uppercase" }}>{currentTicketData.examinationCentre}</td>
                     </tr>
                     <tr>
-                      <td style={{ border: "1px solid #000", padding: "10px" }}>EXAMINATION DATE</td>
-                      <td style={{ border: "1px solid #000", padding: "10px" }}>{currentTicketData.examinationDate}</td>
+                      <td style={{ border: "1px solid #000", padding: "6px" }}>EXAMINATION DATE</td>
+                      <td style={{ border: "1px solid #000", padding: "6px" }}>{currentTicketData.examinationDate}</td>
                     </tr>
                     <tr>
-                      <td style={{ border: "1px solid #000", padding: "10px" }}>EXAMINATION TIME</td>
-                      <td style={{ border: "1px solid #000", padding: "10px" }}>{currentTicketData.examinationTime}</td>
+                      <td style={{ border: "1px solid #000", padding: "6px" }}>EXAMINATION TIME</td>
+                      <td style={{ border: "1px solid #000", padding: "6px" }}>{currentTicketData.examinationTime}</td>
                     </tr>
                     <tr>
-                      <td style={{ border: "1px solid #000", padding: "10px" }}>EXAMINATION TEST CODE</td>
-                      <td style={{ border: "1px solid #000", padding: "10px" }}>{currentTicketData.examinationTestCode}</td>
+                      <td style={{ border: "1px solid #000", padding: "6px" }}>EXAMINATION TEST CODE</td>
+                      <td style={{ border: "1px solid #000", padding: "6px" }}>{currentTicketData.examinationTestCode}</td>
                     </tr>
                   </tbody>
                 </table>
 
                 {/* Roll Number and Photo */}
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "40px" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "20px" }}>
                   <table style={{ borderCollapse: "collapse", width: "60%", fontSize: "14px", fontWeight: "bold" }}>
                     <tbody>
                       <tr>
-                        <td style={{ border: "2px solid #000", padding: "10px", width: "40%", textAlign: "center" }}>ROLL NUMBER</td>
-                        <td style={{ border: "2px solid #000", padding: "10px", textAlign: "center" }}>{currentTicketData.rollNumber}</td>
+                        <td style={{ border: "2px solid #000", padding: "8px", width: "40%", textAlign: "center" }}>ROLL NUMBER</td>
+                        <td style={{ border: "2px solid #000", padding: "8px", textAlign: "center" }}>{currentTicketData.rollNumber}</td>
                       </tr>
                     </tbody>
                   </table>
                   
                   {currentTicketData.photoData && (
-                    <div style={{ width: "150px", height: "180px", border: "1px solid #ccc", overflow: "hidden" }}>
+                    <div style={{ width: "120px", height: "140px", border: "1px solid #ccc", overflow: "hidden" }}>
                       <img 
                         src={currentTicketData.photoData} 
                         alt="Candidate" 
@@ -371,31 +371,31 @@ export default function HallTicketHistory() {
                 </div>
 
                 {/* Signatures */}
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "40px", fontSize: "14px", fontWeight: "bold", textAlign: "center" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "20px", fontSize: "14px", fontWeight: "bold", textAlign: "center" }}>
                   <div>
-                    <div style={{ height: "60px" }}></div>
+                    <div style={{ height: "40px" }}></div>
                     <div>Signature<br/>Examination Supervisor</div>
                   </div>
                   <div>
-                    <div style={{ height: "60px" }}></div>
+                    <div style={{ height: "40px" }}></div>
                     <div>Seal<br/>(Examination Centre)</div>
                   </div>
                   <div>
-                    <div style={{ height: "60px" }}></div>
+                    <div style={{ height: "40px" }}></div>
                     <div>Signature Of Candidate</div>
                   </div>
                 </div>
 
                 {/* Instructions */}
                 <div style={{ fontSize: "14px" }}>
-                  <div style={{ textAlign: "center", color: "#000080", fontWeight: "bold", fontSize: "16px", marginBottom: "15px" }}>
+                  <div style={{ textAlign: "center", color: "#000080", fontWeight: "bold", fontSize: "16px", marginBottom: "5px" }}>
                     INSTRUCTIONS TO THE CANDIDATE
                   </div>
-                  <ol style={{ fontWeight: "bold", paddingLeft: "20px", margin: 0, lineHeight: "1.5" }}>
-                    <li style={{ marginBottom: "10px" }}>Register Number, Subject code.are to entered in the column provided correctly Do not write your Register Number or name anywhere else in the answer book.</li>
-                    <li style={{ marginBottom: "10px" }}>Use of any incriminating written printed/xerox material, calculator, cell phone or any other electronic devices are prohibated.</li>
-                    <li style={{ marginBottom: "10px" }}>Malpractice of any nature is punishable</li>
-                    <li style={{ marginBottom: "10px" }}>You have to write the Question Numbers and Answers within the border line provided</li>
+                  <ol style={{ fontWeight: "bold", paddingLeft: "20px", margin: 0, lineHeight: "1.4" }}>
+                    <li style={{ marginBottom: "5px" }}>Register Number, Subject code.are to entered in the column provided correctly Do not write your Register Number or name anywhere else in the answer book.</li>
+                    <li style={{ marginBottom: "5px" }}>Use of any incriminating written printed/xerox material, calculator, cell phone or any other electronic devices are prohibated.</li>
+                    <li style={{ marginBottom: "5px" }}>Malpractice of any nature is punishable</li>
+                    <li style={{ marginBottom: "5px" }}>You have to write the Question Numbers and Answers within the border line provided</li>
                   </ol>
                 </div>
               </div>
