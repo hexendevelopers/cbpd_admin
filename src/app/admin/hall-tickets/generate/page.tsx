@@ -309,7 +309,8 @@ export default function GenerateHallTicket() {
                 ref={ticketRef}
                 style={{
                   width: "210mm",
-                  minHeight: "297mm",
+                  height: "297mm",
+                  boxSizing: "border-box",
                   backgroundColor: "white",
                   padding: "20mm",
                   boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
