@@ -432,7 +432,7 @@ export default function InvoiceGenerator() {
                     <Col span={8} style={{ textAlign: "right" }}>{subtotal.toFixed(0)}</Col>
                   </Row>
                   <Row style={{ marginBottom: "15px" }}>
-                    <Col span={16} style={{ textAlign: "right", paddingRight: "30px" }}>TOTAL VAT %</Col>
+                    <Col span={16} style={{ textAlign: "right", paddingRight: "30px" }}>TOTAL VAT {invoiceData.items.length > 0 ? invoiceData.items[0].vat.toString().padStart(2, '0') : '00'}%</Col>
                     <Col span={8} style={{ textAlign: "right" }}>{totalVat.toFixed(3).substring(0, 3)}</Col>
                   </Row>
                   <div style={{ borderTop: "1px solid #000", paddingTop: "10px", paddingBottom: "30px" }}>
