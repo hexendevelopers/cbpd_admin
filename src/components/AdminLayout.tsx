@@ -243,6 +243,21 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       ],
     },
     {
+      key: "question-papers",
+      icon: <BookOutlined style={{ fontSize: 18, color: "#ffffff" }} />,
+      label: "Question Papers",
+      children: [
+        {
+          key: "/admin/question-papers/generate",
+          label: "Generate Question Paper",
+        },
+        {
+          key: "/admin/question-papers/history",
+          label: "Question Paper History",
+        },
+      ],
+    },
+    {
       key: "/admin/memberships",
       icon: (
         <svg

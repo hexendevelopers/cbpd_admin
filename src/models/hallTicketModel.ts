@@ -26,7 +26,7 @@ const hallTicketSchema = new Schema<IHallTicket>(
     examinationTime: { type: String, required: true },
     examinationTestCode: { type: String, required: true },
     rollNumber: { type: String, required: true },
-    photoData: { type: String, required: true },
+    photoData: { type: String, default: "" },
     status: { type: String, default: "Hall Ticket Generated" },
   },
   { timestamps: true }

@@ -311,7 +311,7 @@ export default function HallTicketHistory() {
                   <img
                     src="/cbpd-logo-transparent.png"
                     alt="CBPD Logo"
-                    style={{ height: "70px", marginBottom: "5px", display: "block" }}
+                    style={{ height: "95px", marginBottom: "5px", display: "block" }}
                   />
                   <div style={{ fontSize: "16px", fontWeight: "bold", color: "#000080", marginBottom: "5px" }}>
                     CENTRAL BOARD OF PROFESSIONAL DEVELOPMENT
