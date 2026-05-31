@@ -314,7 +314,7 @@ export default function GenerateHallTicket() {
                   backgroundColor: "white",
                   padding: "20mm",
                   boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-                  fontFamily: "Times New Roman, serif",
+                  fontFamily: "Arial, sans-serif",
                   position: "relative",
                   transform: "scale(0.8)",
                   transformOrigin: "top center",
@@ -324,7 +324,21 @@ export default function GenerateHallTicket() {
                 <div
                   style={{
                     position: "absolute",
-                    top: "45%",
+                    top: "35%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    opacity: 0.1,
+                    zIndex: 0,
+                    width: "70%",
+                    textAlign: "center"
+                  }}
+                >
+                  <img src="/cbpd-logo-transparent.png" alt="watermark logo" style={{ width: "100%", height: "auto" }} />
+                </div>
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "70%",
                     left: "50%",
                     transform: "translate(-50%, -50%)",
                     opacity: 0.05,
@@ -334,13 +348,13 @@ export default function GenerateHallTicket() {
                   }}
                 >
                   <div style={{ fontSize: "150px", fontWeight: "bold", color: "#d4af37" }}>CBPD</div>
-                  <div style={{ fontSize: "40px", fontWeight: "bold", color: "#d4af37" }}>CENTRAL BOARD OF</div>
-                  <div style={{ fontSize: "40px", fontWeight: "bold", color: "#d4af37" }}>PROFESSIONAL DEVELOPMENT</div>
+                  <div style={{ fontSize: "30px", fontWeight: "bold", color: "#d4af37" }}>CENTRAL BOARD OF</div>
+                  <div style={{ fontSize: "30px", fontWeight: "bold", color: "#d4af37" }}>PROFESSIONAL DEVELOPMENT</div>
                 </div>
 
                 <div style={{ position: "relative", zIndex: 1 }}>
                   {/* Header */}
-                  <div style={{ textAlign: "center", marginBottom: "10px", display: "flex", flexDirection: "column", alignItems: "center" }}>
+                  <div style={{ textAlign: "center", marginBottom: "10px", display: "flex", flexDirection: "column", alignItems: "center", fontFamily: "Times New Roman, serif" }}>
                     <img
                       src="/cbpd-logo-transparent.png"
                       alt="CBPD Logo"
@@ -397,7 +411,7 @@ export default function GenerateHallTicket() {
 
                   {/* Roll Number and Photo */}
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "20px" }}>
-                    <table style={{ borderCollapse: "collapse", width: "60%", fontSize: "14px", fontWeight: "bold" }}>
+                    <table style={{ borderCollapse: "collapse", width: "55%", fontSize: "14px", fontWeight: "bold" }}>
                       <tbody>
                         <tr>
                           <td style={{ border: "2px solid #000", padding: "8px", width: "40%", textAlign: "center" }}>ROLL NUMBER</td>
@@ -406,7 +420,7 @@ export default function GenerateHallTicket() {
                       </tbody>
                     </table>
                     
-                    <div style={{ width: "120px", height: "140px", border: "1px solid #ccc", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center", background: "#f5f5f5", color: "#999" }}>
+                    <div style={{ width: "120px", height: "150px", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center", color: "#999" }}>
                       {ticketData.photoData ? (
                         <img 
                           src={ticketData.photoData} 
@@ -420,16 +434,16 @@ export default function GenerateHallTicket() {
                   </div>
 
                   {/* Signatures */}
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "20px", fontSize: "14px", fontWeight: "bold", textAlign: "center" }}>
-                    <div>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "20px", fontSize: "12px", fontWeight: "bold" }}>
+                    <div style={{ flex: 1, textAlign: "left" }}>
                       <div style={{ height: "40px" }}></div>
                       <div>Signature<br/>Examination Supervisor</div>
                     </div>
-                    <div>
+                    <div style={{ flex: 1, textAlign: "center" }}>
                       <div style={{ height: "40px" }}></div>
                       <div>Seal<br/>(Examination Centre)</div>
                     </div>
-                    <div>
+                    <div style={{ flex: 1, textAlign: "right" }}>
                       <div style={{ height: "40px" }}></div>
                       <div>Signature Of Candidate</div>
                     </div>
