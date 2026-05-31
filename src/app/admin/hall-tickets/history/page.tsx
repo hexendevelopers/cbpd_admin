@@ -292,11 +292,11 @@ export default function HallTicketHistory() {
 
               <div style={{ position: "relative", zIndex: 1 }}>
                 {/* Header */}
-                <div style={{ textAlign: "center", marginBottom: "20px" }}>
+                <div style={{ textAlign: "center", marginBottom: "20px", display: "flex", flexDirection: "column", alignItems: "center" }}>
                   <img
                     src="/cbpd-logo-transparent.png"
                     alt="CBPD Logo"
-                    style={{ height: "100px", marginBottom: "10px" }}
+                    style={{ height: "100px", marginBottom: "10px", display: "block" }}
                   />
                   <div style={{ fontSize: "18px", fontWeight: "bold", color: "#000080", marginBottom: "5px" }}>
                     CENTRAL BOARD OF PROFESSIONAL DEVELOPMENT

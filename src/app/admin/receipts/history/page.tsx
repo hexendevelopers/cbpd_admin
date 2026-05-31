@@ -376,7 +376,7 @@ export default function ReceiptHistory() {
                   <img
                     src="/seal.png"
                     alt="CBPD Seal"
-                    style={{ width: "180px", opacity: 0.9 }}
+                    style={{ width: "180px", opacity: 0.9, filter: "invert(17%) sepia(92%) saturate(2369%) hue-rotate(224deg) brightness(90%) contrast(105%)" }}
                   />
                 </Col>
               </Row>
