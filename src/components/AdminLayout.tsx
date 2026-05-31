@@ -228,6 +228,21 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       ],
     },
     {
+      key: "hall-tickets",
+      icon: <IdcardOutlined style={{ fontSize: 18, color: "#ffffff" }} />,
+      label: "Hall Tickets",
+      children: [
+        {
+          key: "/admin/hall-tickets/generate",
+          label: "Generate Hall Ticket",
+        },
+        {
+          key: "/admin/hall-tickets/history",
+          label: "Hall Ticket History",
+        },
+      ],
+    },
+    {
       key: "/admin/memberships",
       icon: (
         <svg
@@ -431,6 +446,9 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
     }
     if (pathname.includes("/admin/receipts")) {
       keys.push("receipts");
+    }
+    if (pathname.includes("/admin/hall-tickets")) {
+      keys.push("hall-tickets");
     }
     if (pathname.includes("/admin/invoices")) {
       keys.push("invoices");
