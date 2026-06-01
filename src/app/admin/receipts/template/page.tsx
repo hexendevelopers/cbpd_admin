@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   Card,
   Row,
@@ -40,6 +40,26 @@ export default function ReceiptTemplate() {
   const [form] = Form.useForm();
   const receiptRef = useRef<HTMLDivElement>(null);
   const [isSaving, setIsSaving] = useState(false);
+  const [blueSeal, setBlueSeal] = useState<string>("/seal.png");
+
+  useEffect(() => {
+    // Create colored seal for PDF generation
+    const img = new Image();
+    img.src = "/seal.png";
+    img.onload = () => {
+      const canvas = document.createElement("canvas");
+      canvas.width = img.width;
+      canvas.height = img.height;
+      const ctx = canvas.getContext("2d");
+      if (ctx) {
+        ctx.drawImage(img, 0, 0);
+        ctx.globalCompositeOperation = "source-in";
+        ctx.fillStyle = "#001489";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        setBlueSeal(canvas.toDataURL("image/png"));
+      }
+    };
+  }, []);
 
   const [receiptData, setReceiptData] = useState({
     billTo: "ABC Training Academy Pvt Ltd\n312 V/14, Kadakkadan Building\nUp Hill, Malappuram\nKerala 676505",
@@ -524,9 +544,9 @@ export default function ReceiptTemplate() {
                       </Col>
                       <Col span={12} style={{ textAlign: "right" }}>
                         <img
-                          src="/seal.png"
+                          src={blueSeal}
                           alt="CBPD Seal"
-                          style={{ width: "180px", opacity: 0.9, filter: "invert(11%) sepia(86%) saturate(6144%) hue-rotate(236deg) brightness(62%) contrast(113%)" }}
+                          style={{ width: "180px", opacity: 0.9 }}
                         />
                       </Col>
                     </Row>

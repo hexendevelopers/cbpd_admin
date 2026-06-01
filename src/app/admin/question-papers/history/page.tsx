@@ -199,15 +199,17 @@ export default function QuestionPaperHistoryPage() {
             <div
               ref={paperRef}
               style={{
-                width: "210mm",
-                minHeight: "297mm",
-                boxSizing: "border-box",
-                backgroundColor: "white",
-                padding: "15mm",
-                boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-                fontFamily: "Arial, sans-serif",
+                width: "100%",
+                maxWidth: "800px",
+                margin: "0 auto",
+                border: "1px solid #f0f0f0",
+                padding: "40px",
+                backgroundColor: "#fff",
+                minHeight: "1000px",
                 position: "relative",
-                color: "#000",
+                fontFamily: "Arial, sans-serif",
+                lineHeight: "1.5",
+                color: "#000"
               }}
             >
               {/* Background Watermark */}
@@ -217,9 +219,9 @@ export default function QuestionPaperHistoryPage() {
                   top: "40%",
                   left: "50%",
                   transform: "translate(-50%, -50%)",
-                  opacity: 0.15,
+                  opacity: 0.1,
                   zIndex: 0,
-                  width: "60%",
+                  width: "100mm",
                   textAlign: "center"
                 }}
               >
@@ -228,65 +230,72 @@ export default function QuestionPaperHistoryPage() {
 
               <div style={{ position: "relative", zIndex: 1 }}>
                 {/* Headers */}
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "15px", fontFamily: "Arial, sans-serif" }}>
-                  {/* Left Column */}
-                  <div style={{ fontWeight: "bold", fontSize: "12px", lineHeight: "1.2", flex: 1 }}>
-                    <div>CBPD</div>
-                    <div>{currentPaper.courseCode || "CODE"}</div>
+                <div style={{ textAlign: "center", marginBottom: "20px" }}>
+                  <img src="/cbpd-logo-transparent.png" alt="Logo" style={{ height: "80px", width: "auto", marginBottom: "15px", display: "inline-block" }} />
+                  <div style={{ fontSize: "18px", fontWeight: "bold", textTransform: "uppercase", whiteSpace: "nowrap" }}>
+                    CENTRAL BOARD OF PROFESSIONAL DEVELOPMENT
                   </div>
-                  
-                  {/* Center Column */}
-                  <div style={{ textAlign: "center", flex: 3, fontFamily: "Times New Roman, serif" }}>
-                    <img
-                      src="/cbpd-logo-transparent.png"
-                      alt="CBPD Logo"
-                      style={{ height: "60px", marginBottom: "2px", display: "block", margin: "0 auto" }}
-                    />
-                    <div style={{ fontSize: "12px", fontWeight: "bold", marginBottom: "4px" }}>CBPD</div>
-                    <div style={{ fontSize: "17px", fontWeight: "bold", color: "#1e3a8a", marginBottom: "4px" }}>
-                      CENTRAL BOARD OF PROFESSIONAL DEVELOPMENT
-                    </div>
-                    <div style={{ fontSize: "15px", fontWeight: "bold", marginBottom: "6px" }}>
-                      {currentPaper.examinationTerm || "FINAL EXAMINATION"}
-                    </div>
-                    <div style={{ fontSize: "14px", fontWeight: "bold" }}>
-                      Course : {currentPaper.courseName || "Course Name"}
-                    </div>
+                  <div style={{ fontSize: "16px", fontWeight: "bold", marginTop: "8px" }}>
+                    {currentPaper.examinationTerm || "FINAL EXAMINATION 2026"}
                   </div>
+                  <div style={{ fontSize: "14px", fontWeight: "bold", marginTop: "8px" }}>
+                    Course: {currentPaper.courseName || "International Diploma in AI Integrated Digital Marketing Management"}
+                  </div>
+                </div>
 
-                  {/* Right Column */}
-                  <div style={{ fontWeight: "bold", fontSize: "12px", lineHeight: "1.2", textAlign: "right", flex: 1 }}>
-                    <div>Time: {currentPaper.time || "2 Hrs"}</div>
-                    <div>Marks: {currentPaper.marks || "100"}</div>
-                  </div>
+                {/* Time and Marks Row */}
+                <div style={{ display: "flex", justifyContent: "space-between", fontSize: "14px", marginBottom: "20px", fontWeight: "bold" }}>
+                  <div>Time: {currentPaper.time || "2 Hours"}</div>
+                  <div>Marks: {currentPaper.marks || "100"}</div>
                 </div>
 
                 {/* Modules & Questions */}
                 {currentPaper.modules?.map((module, mIndex) => {
                   const roman = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"][mIndex] || (mIndex + 1);
                   return (
-                    <div key={mIndex} style={{ marginBottom: "20px", fontSize: "12px", fontFamily: "Arial, sans-serif" }}>
-                      {module?.title && (
-                        <div style={{ fontSize: "13px", fontWeight: "bold", marginBottom: "10px", textTransform: "uppercase" }}>
-                          MODULE {roman} : {module.title}
-                        </div>
-                      )}
+                    <div key={mIndex} style={{ marginBottom: "20px" }}>
+                      <div style={{ 
+                        textAlign: "center", 
+                        fontWeight: "bold", 
+                        fontSize: "16px",
+                        marginBottom: "10px"
+                      }}>
+                        Module {roman}: {module.title}
+                      </div>
                       
                       {module.questions?.map((q, qIndex) => {
                         const num = globalQuestionNumber++;
                         return (
-                          <div key={qIndex} style={{ marginBottom: "12px", paddingLeft: "5px" }}>
-                            <div style={{ display: "flex", marginBottom: "4px" }}>
-                              <div style={{ width: "20px", flexShrink: 0 }}>{num}.</div>
+                          <div key={qIndex} style={{ marginBottom: "15px", fontSize: "14px", fontWeight: "normal" }}>
+                            {/* Question Text */}
+                            <div style={{ display: "flex", marginBottom: "8px" }}>
+                              <div style={{ width: "20px", flexShrink: 0, fontWeight: "bold" }}>{num}.</div>
                               <div style={{ flex: 1 }}>{q?.text || "Question Text"}</div>
                             </div>
                             
-                            {/* Options Inline */}
-                            <div style={{ paddingLeft: "20px", lineHeight: "1.5" }}>
-                              <span style={{ marginRight: "15px" }}>a) {q?.options?.a || "Option A"}</span>
-                              <span style={{ marginRight: "15px" }}>b) {q?.options?.b || "Option B"}</span>
-                              <span style={{ marginRight: "15px" }}>c) {q?.options?.c || "Option C"}</span>
-                              <span>d) {q?.options?.d || "Option D"}</span>
+                            {/* Options with Two-Column Grid */}
+                            <div style={{ 
+                              display: "grid", 
+                              gridTemplateColumns: "1fr 1fr", 
+                              gap: "8px 20px", 
+                              paddingLeft: "24px" 
+                            }}>
+                              <div style={{ display: "flex" }}>
+                                <div style={{ width: "20px", flexShrink: 0 }}>a)</div>
+                                <div>{q?.options?.a || "Option A"}</div>
+                              </div>
+                              <div style={{ display: "flex" }}>
+                                <div style={{ width: "20px", flexShrink: 0 }}>b)</div>
+                                <div>{q?.options?.b || "Option B"}</div>
+                              </div>
+                              <div style={{ display: "flex" }}>
+                                <div style={{ width: "20px", flexShrink: 0 }}>c)</div>
+                                <div>{q?.options?.c || "Option C"}</div>
+                              </div>
+                              <div style={{ display: "flex" }}>
+                                <div style={{ width: "20px", flexShrink: 0 }}>d)</div>
+                                <div>{q?.options?.d || "Option D"}</div>
+                              </div>
                             </div>
                           </div>
                         );
