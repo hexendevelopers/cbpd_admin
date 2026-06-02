@@ -79,6 +79,9 @@ export default function GenerateHallTicket() {
     }
 
     try {
+      // Small delay to ensure all images and DOM updates are fully rendered
+      await new Promise(resolve => setTimeout(resolve, 1500));
+
       // 1. Generate PDF
       const canvas = await html2canvas(element, {
         scale: 2,

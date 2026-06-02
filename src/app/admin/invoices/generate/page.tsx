@@ -42,25 +42,6 @@ export default function InvoiceGenerator() {
   const [form] = Form.useForm();
   const invoiceRef = useRef<HTMLDivElement>(null);
   const [isSaving, setIsSaving] = useState(false);
-  const [blueSeal, setBlueSeal] = useState<string>("/seal.png");
-
-  useEffect(() => {
-    const img = new Image();
-    img.src = "/seal.png";
-    img.onload = () => {
-      const canvas = document.createElement("canvas");
-      canvas.width = img.width;
-      canvas.height = img.height;
-      const ctx = canvas.getContext("2d");
-      if (ctx) {
-        ctx.drawImage(img, 0, 0);
-        ctx.globalCompositeOperation = "source-in";
-        ctx.fillStyle = "#001489";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        setBlueSeal(canvas.toDataURL("image/png"));
-      }
-    };
-  }, []);
 
   // Default initial values
   const [invoiceData, setInvoiceData] = useState({
@@ -478,7 +459,7 @@ export default function InvoiceGenerator() {
                     </Col>
                     <Col span={12} style={{ textAlign: "right" }}>
                       <img
-                        src={blueSeal}
+                        src="/seal-new.png"
                         alt="CBPD Seal"
                         style={{ width: "180px", opacity: 0.9 }}
                       />

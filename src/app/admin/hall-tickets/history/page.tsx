@@ -97,7 +97,7 @@ export default function HallTicketHistory() {
         setGeneratingId(null);
         setCurrentTicketData(null);
       }
-    }, 500);
+    }, 1500);
   };
 
   const handleDelete = (id: string) => {

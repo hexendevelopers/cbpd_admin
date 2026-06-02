@@ -199,17 +199,18 @@ export default function QuestionPaperHistoryPage() {
             <div
               ref={paperRef}
               style={{
-                width: "100%",
-                maxWidth: "800px",
-                margin: "0 auto",
-                border: "1px solid #f0f0f0",
-                padding: "40px",
-                backgroundColor: "#fff",
-                minHeight: "1000px",
+                width: "210mm",
+                minHeight: "297mm",
+                boxSizing: "border-box",
+                backgroundColor: "white",
+                padding: "15mm",
+                boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+                fontFamily: '"Cambria", Georgia, serif',
+                lineHeight: "1.3",
                 position: "relative",
-                fontFamily: "Arial, sans-serif",
-                lineHeight: "1.5",
-                color: "#000"
+                transform: "scale(0.85)",
+                transformOrigin: "top center",
+                color: "#000",
               }}
             >
               {/* Background Watermark */}
@@ -221,7 +222,7 @@ export default function QuestionPaperHistoryPage() {
                   transform: "translate(-50%, -50%)",
                   opacity: 0.1,
                   zIndex: 0,
-                  width: "100mm",
+                  width: "140mm",
                   textAlign: "center"
                 }}
               >
@@ -230,21 +231,21 @@ export default function QuestionPaperHistoryPage() {
 
               <div style={{ position: "relative", zIndex: 1 }}>
                 {/* Headers */}
-                <div style={{ textAlign: "center", marginBottom: "20px" }}>
-                  <img src="/cbpd-logo-transparent.png" alt="Logo" style={{ height: "80px", width: "auto", marginBottom: "15px", display: "inline-block" }} />
-                  <div style={{ fontSize: "18px", fontWeight: "bold", textTransform: "uppercase", whiteSpace: "nowrap" }}>
-                    CENTRAL BOARD OF PROFESSIONAL DEVELOPMENT
+                <div style={{ textAlign: "center", marginBottom: "15px" }}>
+                  <img src="/cbpd-logo-transparent.png" alt="Logo" style={{ height: "90px", width: "90px", objectFit: "contain", marginBottom: "8px", display: "inline-block" }} />
+                  <div style={{ fontSize: "16pt", fontWeight: "bold", textTransform: "uppercase" }}>
+                    CENTRAL BOARD OF PROFESSIONAL DEVELOPMENT UK
                   </div>
-                  <div style={{ fontSize: "16px", fontWeight: "bold", marginTop: "8px" }}>
+                  <div style={{ fontSize: "14pt", fontWeight: "bold", marginTop: "4px" }}>
                     {currentPaper.examinationTerm || "FINAL EXAMINATION 2026"}
                   </div>
-                  <div style={{ fontSize: "14px", fontWeight: "bold", marginTop: "8px" }}>
+                  <div style={{ fontSize: "12pt", fontWeight: "normal", marginTop: "4px" }}>
                     Course: {currentPaper.courseName || "International Diploma in AI Integrated Digital Marketing Management"}
                   </div>
                 </div>
 
                 {/* Time and Marks Row */}
-                <div style={{ display: "flex", justifyContent: "space-between", fontSize: "14px", marginBottom: "20px", fontWeight: "bold" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", fontSize: "11pt", marginBottom: "15px", fontWeight: "normal" }}>
                   <div>Time: {currentPaper.time || "2 Hours"}</div>
                   <div>Marks: {currentPaper.marks || "100"}</div>
                 </div>
@@ -257,8 +258,8 @@ export default function QuestionPaperHistoryPage() {
                       <div style={{ 
                         textAlign: "center", 
                         fontWeight: "bold", 
-                        fontSize: "16px",
-                        marginBottom: "10px"
+                        fontSize: "12pt",
+                        marginBottom: "6px"
                       }}>
                         Module {roman}: {module.title}
                       </div>
@@ -266,10 +267,10 @@ export default function QuestionPaperHistoryPage() {
                       {module.questions?.map((q, qIndex) => {
                         const num = globalQuestionNumber++;
                         return (
-                          <div key={qIndex} style={{ marginBottom: "15px", fontSize: "14px", fontWeight: "normal" }}>
+                          <div key={qIndex} style={{ marginBottom: "10px", fontSize: "11pt", fontWeight: "normal" }}>
                             {/* Question Text */}
-                            <div style={{ display: "flex", marginBottom: "8px" }}>
-                              <div style={{ width: "20px", flexShrink: 0, fontWeight: "bold" }}>{num}.</div>
+                            <div style={{ display: "flex", marginBottom: "4px" }}>
+                              <div style={{ width: "24px", flexShrink: 0, fontWeight: "normal" }}>{num}.</div>
                               <div style={{ flex: 1 }}>{q?.text || "Question Text"}</div>
                             </div>
                             
@@ -277,7 +278,7 @@ export default function QuestionPaperHistoryPage() {
                             <div style={{ 
                               display: "grid", 
                               gridTemplateColumns: "1fr 1fr", 
-                              gap: "8px 20px", 
+                              gap: "4px 20px", 
                               paddingLeft: "24px" 
                             }}>
                               <div style={{ display: "flex" }}>

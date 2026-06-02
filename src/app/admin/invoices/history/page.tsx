@@ -36,27 +36,9 @@ export default function InvoiceHistory() {
   const [generatingReceiptId, setGeneratingReceiptId] = useState<string | null>(null);
   const receiptRef = useRef<HTMLDivElement>(null);
   const [currentReceiptData, setCurrentReceiptData] = useState<any>(null);
-  const [blueSeal, setBlueSeal] = useState<string>("/seal.png");
 
   useEffect(() => {
     fetchHistory();
-    
-    // Create colored seal for PDF generation
-    const img = new Image();
-    img.src = "/seal.png";
-    img.onload = () => {
-      const canvas = document.createElement("canvas");
-      canvas.width = img.width;
-      canvas.height = img.height;
-      const ctx = canvas.getContext("2d");
-      if (ctx) {
-        ctx.drawImage(img, 0, 0);
-        ctx.globalCompositeOperation = "source-in";
-        ctx.fillStyle = "#001489";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        setBlueSeal(canvas.toDataURL("image/png"));
-      }
-    };
   }, []);
 
   const fetchHistory = async () => {
@@ -432,7 +414,7 @@ export default function InvoiceHistory() {
                   </Col>
                   <Col span={12} style={{ textAlign: "right" }}>
                     <img
-                      src={blueSeal}
+                      src="/seal-new.png"
                       alt="CBPD Seal"
                       style={{ width: "180px", opacity: 0.9 }}
                     />

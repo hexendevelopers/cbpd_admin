@@ -23,6 +23,7 @@
     "dayjs": "^1.11.13",
     "file-saver": "^2.0.5",
     "html2canvas": "^1.4.1",
+    "jimp": "^0.22.10",
     "jsonwebtoken": "^9.0.2",
     "jspdf": "^4.2.1",
     "mongodb": "^2.2.12",
