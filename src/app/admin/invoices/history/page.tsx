@@ -414,7 +414,7 @@ export default function InvoiceHistory() {
                   </Col>
                   <Col span={12} style={{ textAlign: "right" }}>
                     <img
-                      src="/seal-new.png"
+                      src="/red-seal.png"
                       alt="CBPD Seal"
                       style={{ width: "180px", opacity: 0.9 }}
                     />

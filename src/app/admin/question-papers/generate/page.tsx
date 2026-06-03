@@ -308,10 +308,10 @@ export default function GenerateQuestionPaperPage() {
                 minHeight: "297mm",
                 boxSizing: "border-box",
                 backgroundColor: "white",
-                padding: "15mm",
+                padding: "10mm 5mm",
                 boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-                fontFamily: '"Cambria", Georgia, serif',
-                lineHeight: "1.3",
+                fontFamily: '"Times New Roman", Times, serif',
+                lineHeight: "1.2",
                 position: "relative",
                 transform: "scale(0.85)",
                 transformOrigin: "top center",
@@ -335,73 +335,68 @@ export default function GenerateQuestionPaperPage() {
               </div>
 
               <div style={{ position: "relative", zIndex: 1 }}>
-                {/* Headers */}
-                <div style={{ textAlign: "center", marginBottom: "15px" }}>
-                  <img src="/cbpd-logo-transparent.png" alt="Logo" style={{ height: "90px", width: "90px", objectFit: "contain", marginBottom: "8px", display: "inline-block" }} />
-                  <div style={{ fontSize: "16pt", fontWeight: "bold", textTransform: "uppercase" }}>
-                    CENTRAL BOARD OF PROFESSIONAL DEVELOPMENT UK
-                  </div>
-                  <div style={{ fontSize: "14pt", fontWeight: "bold", marginTop: "4px" }}>
-                    {paperData.examinationTerm || "FINAL EXAMINATION 2026"}
-                  </div>
-                  <div style={{ fontSize: "12pt", fontWeight: "normal", marginTop: "4px" }}>
-                    Course: {paperData.courseName || "International Diploma in AI Integrated Digital Marketing Management"}
-                  </div>
+                {/* Logo */}
+                <div style={{ textAlign: "center", marginBottom: "6px", display: "flex", justifyContent: "center" }}>
+                  <img src="/cbpd-logo-transparent.png" alt="Logo" style={{ height: "80px", width: "auto", objectFit: "contain" }} />
                 </div>
 
-                {/* Time and Marks Row */}
-                <div style={{ display: "flex", justifyContent: "space-between", fontSize: "11pt", marginBottom: "15px", fontWeight: "normal" }}>
-                  <div>Time: {paperData.time || "2 Hours"}</div>
-                  <div>Marks: {paperData.marks || "100"}</div>
+                {/* 3-Column Header */}
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "15px", fontSize: "10pt", fontWeight: "bold" }}>
+                  <div style={{ flex: 1, textAlign: "left", paddingLeft: "5px", fontSize: "7pt", fontWeight: "normal" }}>
+                    <div style={{ fontWeight: "bold" }}>CBPD</div>
+                    <div style={{ fontWeight: "bold" }}>IDAIDM</div>
+                  </div>
+                  
+                  <div style={{ flex: 4, textAlign: "center" }}>
+                    <div style={{ fontSize: "13pt", fontWeight: "bold", textTransform: "uppercase", marginBottom: "4px", color: "#1a237e", whiteSpace: "nowrap" }}>
+                      CENTRAL BOARD OF PROFESSIONAL DEVELOPMENT UK
+                    </div>
+                    <div style={{ fontSize: "11pt", fontWeight: "bold", marginBottom: "4px" }}>
+                      {paperData.examinationTerm || "FINAL EXAMINATION 2026"}
+                    </div>
+                    <div style={{ fontSize: "10pt", fontWeight: "bold" }}>
+                      Course : {paperData.courseName || "International Diploma in AI Integrated Digital Marketing Management"}
+                    </div>
+                  </div>
+
+                  <div style={{ flex: 1, textAlign: "right", paddingRight: "5px", fontSize: "7pt", fontWeight: "normal", whiteSpace: "nowrap" }}>
+                    <div style={{ fontWeight: "bold" }}>Time: {paperData.time || "2 Hrs"}</div>
+                    <div style={{ fontWeight: "bold" }}>Marks: {paperData.marks || "100"}</div>
+                  </div>
                 </div>
 
                 {/* Modules & Questions */}
                 {paperData.modules?.map((module, mIndex) => {
                   const roman = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"][mIndex] || (mIndex + 1);
                   return (
-                    <div key={mIndex} style={{ marginBottom: "20px" }}>
+                    <div key={mIndex} style={{ marginBottom: "10px" }}>
                       <div style={{ 
-                        textAlign: "center", 
+                        textAlign: "left", 
                         fontWeight: "bold", 
-                        fontSize: "12pt",
-                        marginBottom: "6px"
+                        fontSize: "11pt",
+                        marginBottom: "6px",
+                        paddingLeft: "10px",
+                        marginTop: mIndex > 0 ? "12px" : "0"
                       }}>
-                        Module {roman}: {module.title}
+                        MODULE {roman} : {module.title?.toUpperCase()}
                       </div>
                       
                       {module.questions?.map((q, qIndex) => {
                         const num = globalQuestionNumber++;
                         return (
-                          <div key={qIndex} style={{ marginBottom: "10px", fontSize: "11pt", fontWeight: "normal" }}>
+                          <div key={qIndex} style={{ marginBottom: "8px", fontSize: "10pt", fontWeight: "normal", paddingLeft: "10px" }}>
                             {/* Question Text */}
-                            <div style={{ display: "flex", marginBottom: "4px" }}>
-                              <div style={{ width: "24px", flexShrink: 0, fontWeight: "normal" }}>{num}.</div>
+                            <div style={{ display: "flex", marginBottom: "2px", fontFamily: "Arial, sans-serif", fontWeight: "normal" }}>
+                              <div style={{ width: "20px", flexShrink: 0, fontWeight: "bold" }}>{num}.</div>
                               <div style={{ flex: 1 }}>{q?.text || "Question Text"}</div>
                             </div>
                             
-                            {/* Options with Two-Column Grid */}
-                            <div style={{ 
-                              display: "grid", 
-                              gridTemplateColumns: "1fr 1fr", 
-                              gap: "4px 20px", 
-                              paddingLeft: "24px" 
-                            }}>
-                              <div style={{ display: "flex" }}>
-                                <div style={{ width: "20px", flexShrink: 0 }}>a)</div>
-                                <div>{q?.options?.a || "Option A"}</div>
-                              </div>
-                              <div style={{ display: "flex" }}>
-                                <div style={{ width: "20px", flexShrink: 0 }}>b)</div>
-                                <div>{q?.options?.b || "Option B"}</div>
-                              </div>
-                              <div style={{ display: "flex" }}>
-                                <div style={{ width: "20px", flexShrink: 0 }}>c)</div>
-                                <div>{q?.options?.c || "Option C"}</div>
-                              </div>
-                              <div style={{ display: "flex" }}>
-                                <div style={{ width: "20px", flexShrink: 0 }}>d)</div>
-                                <div>{q?.options?.d || "Option D"}</div>
-                              </div>
+                            {/* Options inline */}
+                            <div style={{ paddingLeft: "20px", fontFamily: "Arial, sans-serif", fontWeight: "normal" }}>
+                              a) {q.options?.a} &nbsp;&nbsp;&nbsp; 
+                              b) {q.options?.b} &nbsp;&nbsp;&nbsp; 
+                              c) {q.options?.c} &nbsp;&nbsp;&nbsp; 
+                              d) {q.options?.d}
                             </div>
                           </div>
                         );
