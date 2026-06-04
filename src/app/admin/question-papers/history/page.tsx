@@ -239,7 +239,7 @@ export default function QuestionPaperHistoryPage() {
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "15px", fontSize: "10pt", fontWeight: "bold" }}>
                   <div style={{ flex: 1, textAlign: "left", paddingLeft: "5px", fontSize: "7pt", fontWeight: "normal" }}>
                     <div style={{ fontWeight: "bold" }}>CBPD</div>
-                    <div style={{ fontWeight: "bold" }}>IDAIDM</div>
+                    <div style={{ fontWeight: "bold" }}>{currentPaper.courseCode || "IDAIDM"}</div>
                   </div>
                   
                   <div style={{ flex: 4, textAlign: "center" }}>

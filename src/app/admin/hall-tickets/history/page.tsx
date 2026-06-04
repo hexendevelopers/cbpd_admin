@@ -267,9 +267,10 @@ export default function HallTicketHistory() {
                 height: "297mm",
                 boxSizing: "border-box",
                 backgroundColor: "white",
-                padding: "10mm",
+                padding: "8mm 10mm",
                 boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
                 fontFamily: "Arial, sans-serif",
+                lineHeight: "1.2",
                 position: "relative",
               }}
             >
@@ -311,7 +312,7 @@ export default function HallTicketHistory() {
                   <img
                     src="/cbpd-logo-transparent.png"
                     alt="CBPD Logo"
-                    style={{ height: "95px", marginBottom: "5px", display: "block" }}
+                    style={{ height: "80px", marginBottom: "5px", display: "block" }}
                   />
                   <div style={{ fontSize: "16px", fontWeight: "bold", color: "#000080", marginBottom: "5px" }}>
                     CENTRAL BOARD OF PROFESSIONAL DEVELOPMENT
@@ -363,7 +364,7 @@ export default function HallTicketHistory() {
                 </table>
 
                 {/* Roll Number and Photo */}
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "15px" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "10px" }}>
                   <table style={{ borderCollapse: "collapse", width: "55%", fontSize: "12px", fontWeight: "bold" }}>
                     <tbody>
                       <tr>
@@ -385,7 +386,7 @@ export default function HallTicketHistory() {
                 </div>
 
                 {/* Signatures */}
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "15px", fontSize: "11px", fontWeight: "bold" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "10px", fontSize: "11px", fontWeight: "bold" }}>
                   <div style={{ flex: 1, textAlign: "left" }}>
                     <div style={{ height: "30px" }}></div>
                     <div>Signature<br/>Examination Supervisor</div>
@@ -401,15 +402,15 @@ export default function HallTicketHistory() {
                 </div>
 
                 {/* Instructions */}
-                <div style={{ fontSize: "11px" }}>
-                  <div style={{ textAlign: "center", color: "#000080", fontWeight: "bold", fontSize: "12px", marginBottom: "5px" }}>
+                <div style={{ fontSize: "10px" }}>
+                  <div style={{ textAlign: "center", color: "#000080", fontWeight: "bold", fontSize: "11px", marginBottom: "3px" }}>
                     INSTRUCTIONS TO THE CANDIDATE
                   </div>
                   <ol style={{ fontWeight: "bold", paddingLeft: "15px", margin: 0, lineHeight: "1.3" }}>
-                    <li style={{ marginBottom: "4px" }}>Register Number, Subject code.are to entered in the column provided correctly Do not write your Register Number or name anywhere else in the answer book.</li>
-                    <li style={{ marginBottom: "4px" }}>Use of any incriminating written printed/xerox material, calculator, cell phone or any other electronic devices are prohibated.</li>
-                    <li style={{ marginBottom: "4px" }}>Malpractice of any nature is punishable</li>
-                    <li style={{ marginBottom: "4px" }}>You have to write the Question Numbers and Answers within the border line provided</li>
+                    <li style={{ marginBottom: "2px" }}>Register Number, Subject code.are to entered in the column provided correctly Do not write your Register Number or name anywhere else in the answer book.</li>
+                    <li style={{ marginBottom: "2px" }}>Use of any incriminating written printed/xerox material, calculator, cell phone or any other electronic devices are prohibated.</li>
+                    <li style={{ marginBottom: "2px" }}>Malpractice of any nature is punishable</li>
+                    <li style={{ marginBottom: "0px" }}>You have to write the Question Numbers and Answers within the border line provided</li>
                   </ol>
                 </div>
               </div>
