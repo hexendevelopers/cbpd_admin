@@ -121,7 +121,7 @@ const CertificateCanvas = forwardRef<HTMLDivElement, CertificateCanvasProps>(
     return (
       <div ref={ref} className="certificate-canvas">
         <img
-          src="/newcert.jpeg"
+          src="/newstcert.jpeg"
           alt=""
           className="certificate-bg"
           width={CANVAS_W}
@@ -144,9 +144,9 @@ const CertificateCanvas = forwardRef<HTMLDivElement, CertificateCanvasProps>(
           {courseLevel}
         </div>
         <div className="" style={{marginTop : "100px"}}>
-          <div className="provider-name" style={{marginTop : "112px", marginLeft : "40px"}}>{providerName}</div>
-          <div className="certificate-number" style={{marginTop : "112px", marginLeft : "40px"}}>{certificateNumber}</div>
-          <div className="registration-number" style={{marginTop : "112px", marginLeft : "40px"}}>{registrationNumber}</div>
+          <div className="provider-name" style={{marginTop : "159px", marginLeft : "40px"}}>{providerName}</div>
+          <div className="certificate-number" style={{marginTop : "158px", marginLeft : "40px"}}>{certificateNumber}</div>
+          <div className="registration-number" style={{marginTop : "157px", marginLeft : "40px"}}>{registrationNumber}</div>
         </div>
         <div className="date-issued" style={{marginBottom : "121px", marginLeft : "90px"}}>{dateIssuedText}</div>
       </div>
