@@ -76,7 +76,7 @@ export default function GenerateQuestionPaperPage() {
       // Generate PDF
       if (paperRef.current) {
         const canvas = await html2canvas(paperRef.current, {
-          scale: 2,
+          scale: 4,
           useCORS: true,
           logging: false,
         });

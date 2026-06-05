@@ -77,7 +77,7 @@ export default function HallTicketHistory() {
 
       try {
         const canvas = await html2canvas(element, {
-          scale: 2,
+          scale: 4,
           useCORS: true,
         });
 

@@ -83,7 +83,7 @@ export default function QuestionPaperHistoryPage() {
   const downloadPDF = async () => {
     if (paperRef.current && currentPaper) {
       const canvas = await html2canvas(paperRef.current, {
-        scale: 2,
+        scale: 4,
         useCORS: true,
         logging: false,
       });

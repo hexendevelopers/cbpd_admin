@@ -84,7 +84,7 @@ export default function GenerateHallTicket() {
 
       // 1. Generate PDF
       const canvas = await html2canvas(element, {
-        scale: 2,
+        scale: 4,
         useCORS: true,
       });
 
