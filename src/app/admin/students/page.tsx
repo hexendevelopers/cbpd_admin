@@ -491,6 +491,7 @@ export default function StudentsManagement() {
             ...record,
             dateOfBirth: record.dateOfBirth ? dayjs(record.dateOfBirth) : null,
             joiningDate: record.joiningDate ? dayjs(record.joiningDate) : null,
+            completionDate: record.completionDate ? dayjs(record.completionDate) : null,
             institutionId: record.institutionId._id,
           });
           setIsModalVisible(true);
