@@ -368,7 +368,7 @@ export default function GenerateHallTicket() {
                       CENTRAL BOARD OF PROFESSIONAL DEVELOPMENT
                     </div>
                     <div style={{ fontSize: "14px", fontWeight: "bold", marginBottom: "5px" }}>
-                      FINAL EXAMINATION - 2025
+                      FINAL EXAMINATION - 2026
                     </div>
                     <div style={{ fontSize: "14px", fontWeight: "bold", color: "#000080" }}>
                       HALLTICKET
