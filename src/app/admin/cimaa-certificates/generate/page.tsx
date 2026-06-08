@@ -84,13 +84,13 @@ const CimaaCanvas = forwardRef<HTMLDivElement, CimaaCanvasProps>(
           {programName}
         </div>
         
-        <div style={{ position: "absolute", top: "1022px", left: "600px", fontSize: "20px", color: "#000", fontFamily: "'Times New Roman', Times, serif", fontWeight: "bold" }}>
+        <div style={{ position: "absolute", top: "972px", left: "610px", fontSize: "20px", color: "#000", fontFamily: "'Times New Roman', Times, serif", fontWeight: "bold" }}>
           {providerName}
         </div>
-        <div style={{ position: "absolute", top: "1072px", left: "600px", fontSize: "20px", color: "#000", fontFamily: "'Times New Roman', Times, serif", fontWeight: "bold" }}>
+        <div style={{ position: "absolute", top: "1022px", left: "610px", fontSize: "20px", color: "#000", fontFamily: "'Times New Roman', Times, serif", fontWeight: "bold" }}>
           {certificateNumber}
         </div>
-        <div style={{ position: "absolute", top: "1122px", left: "600px", fontSize: "20px", color: "#000", fontFamily: "'Times New Roman', Times, serif", fontWeight: "bold" }}>
+        <div style={{ position: "absolute", top: "1072px", left: "610px", fontSize: "20px", color: "#000", fontFamily: "'Times New Roman', Times, serif", fontWeight: "bold" }}>
           {registrationNumber}
         </div>
         
