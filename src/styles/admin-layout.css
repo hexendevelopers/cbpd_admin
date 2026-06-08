@@ -80,3 +80,22 @@
 .ant-menu-dark .ant-menu-submenu-open .ant-menu-submenu-title {
   background: rgba(255, 255, 255, 0.1) !important;
 }
+
+/* Custom Scrollbar for Sidebar Menu */
+.ant-menu-dark::-webkit-scrollbar {
+  width: 6px;
+  background-color: transparent;
+}
+
+.ant-menu-dark::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.ant-menu-dark::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+}
+
+.ant-menu-dark::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}

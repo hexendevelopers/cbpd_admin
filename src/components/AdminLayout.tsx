@@ -354,6 +354,21 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       ],
     },
     {
+      key: "cimaa-certificates",
+      icon: <FileDoneOutlined style={{ fontSize: 18, color: "#ffffff" }} />,
+      label: "CIMAA Certificate",
+      children: [
+        {
+          key: "/admin/cimaa-certificates/generate",
+          label: "Generate Certificate",
+        },
+        {
+          key: "/admin/cimaa-certificates/history",
+          label: "Certificate History",
+        },
+      ],
+    },
+    {
       key: "enquiries",
       icon: <AppstoreOutlined style={{ fontSize: 18, color: "#ffffff" }} />,
       label: "Enquiries",
@@ -548,6 +563,8 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
               border: "none",
               background: "transparent",
               flex: 1,
+              overflowY: "auto",
+              overflowX: "hidden",
             }}
           />
 
