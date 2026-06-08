@@ -84,17 +84,17 @@ const CimaaCanvas = forwardRef<HTMLDivElement, CimaaCanvasProps>(
           {programName}
         </div>
         
-        <div style={{ position: "absolute", top: "1035px", left: "580px", fontSize: "20px", color: "#000", fontFamily: "'Times New Roman', Times, serif", fontWeight: "bold" }}>
+        <div style={{ position: "absolute", top: "1022px", left: "600px", fontSize: "20px", color: "#000", fontFamily: "'Times New Roman', Times, serif", fontWeight: "bold" }}>
           {providerName}
         </div>
-        <div style={{ position: "absolute", top: "1085px", left: "580px", fontSize: "20px", color: "#000", fontFamily: "'Times New Roman', Times, serif", fontWeight: "bold" }}>
+        <div style={{ position: "absolute", top: "1072px", left: "600px", fontSize: "20px", color: "#000", fontFamily: "'Times New Roman', Times, serif", fontWeight: "bold" }}>
           {certificateNumber}
         </div>
-        <div style={{ position: "absolute", top: "1135px", left: "580px", fontSize: "20px", color: "#000", fontFamily: "'Times New Roman', Times, serif", fontWeight: "bold" }}>
+        <div style={{ position: "absolute", top: "1122px", left: "600px", fontSize: "20px", color: "#000", fontFamily: "'Times New Roman', Times, serif", fontWeight: "bold" }}>
           {registrationNumber}
         </div>
         
-        <div style={{ position: "absolute", top: "1455px", left: "620px", fontSize: "20px", color: "#000", fontFamily: "'Times New Roman', Times, serif", fontWeight: "bold" }}>
+        <div style={{ position: "absolute", top: "1425px", left: "650px", fontSize: "20px", color: "#000", fontFamily: "'Times New Roman', Times, serif", fontWeight: "bold" }}>
           {dateIssuedText}
         </div>
       </div>
