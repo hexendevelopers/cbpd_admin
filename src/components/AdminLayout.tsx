@@ -105,7 +105,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       ),
       label: "Dashboard",
     },
-    { type: "divider" },
+    { type: "divider" as const },
     {
       key: "courses",
       icon: (
@@ -172,7 +172,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
         },
       ],
     },
-    { type: "divider" },
+    { type: "divider" as const },
     {
       key: "/admin/students",
       icon: (
@@ -297,7 +297,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       ),
       label: "Administrators",
     },
-    { type: "divider" },
+    { type: "divider" as const },
     {
       key: "student-certificates",
       icon: <SafetyCertificateOutlined style={{ fontSize: 18, color: "#ffffff" }} />,
@@ -343,7 +343,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
         },
       ],
     },
-    { type: "divider" },
+    { type: "divider" as const },
     {
       key: "invoices",
       icon: (
