@@ -105,29 +105,74 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       ),
       label: "Dashboard",
     },
+    { type: "divider" },
     {
-      key: "/admin/institutions",
+      key: "courses",
       icon: (
         <svg
           width="20"
           height="20"
-          viewBox="0 0 25 25"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
           transform="rotate(0 0 0)"
         >
           <path
-            d="M9.75 6C9.75 4.75736 10.7574 3.75 12 3.75H19C20.2426 3.75 21.25 4.75736 21.25 6V20.5C21.25 20.9142 20.9142 21.25 20.5 21.25H9.75V6ZM14 9.0835C13.5858 9.0835 13.25 9.41928 13.25 9.8335C13.25 10.2477 13.5858 10.5835 14 10.5835H17C17.4142 10.5835 17.75 10.2477 17.75 9.8335C17.75 9.41928 17.4142 9.0835 17 9.0835H14ZM14 14.4168C13.5858 14.4168 13.25 14.7526 13.25 15.1668C13.25 15.581 13.5858 15.9168 14 15.9168H17C17.4142 15.9168 17.75 15.581 17.75 15.1668C17.75 14.7526 17.4142 14.4168 17 14.4168H14Z"
+            d="M6.33301 6L4.25 6C3.00736 6 2 7.00736 2 8.25V17.75C2 18.9926 3.00736 20 4.25 20H6.58333C6.78518 20 6.98082 19.9734 7.16694 19.9236C6.64867 19.3477 6.33335 18.5856 6.33333 17.75L6.33301 6Z"
             fill="#ffffff"
           />
           <path
-            d="M8.75 8.25H6C4.75736 8.25 3.75 9.25736 3.75 10.5V20.5C3.75 20.9142 4.08579 21.25 4.5 21.25H8.75V17.5H7.50586C7.09165 17.5 6.75586 17.1642 6.75586 16.75C6.75586 16.3358 7.09165 16 7.50586 16H8.75V13.5H7.50586C7.09165 13.5 6.75586 13.1642 6.75586 12.75C6.75586 12.3358 7.09165 12 7.50586 12H8.75V8.25Z"
+            d="M8.08324 19.4272C8.48119 19.7834 9.00673 20 9.58301 20H11.1663C12.409 20 13.4163 18.9926 13.4163 17.75V15.1865L11.6447 8.57457C11.2569 7.12745 11.9096 5.64668 13.1442 4.92645C12.763 4.22565 12.0202 3.75 11.1663 3.75H9.58301C8.34037 3.75 7.33301 4.75736 7.33301 6L7.33333 17.75C7.33334 18.4164 7.62294 19.0151 8.08324 19.4272Z"
+            fill="#ffffff"
+          />
+          <path
+            d="M12.6106 8.31575C12.289 7.11545 13.0013 5.88169 14.2016 5.56007L16.4554 4.95616C17.6557 4.63454 18.8895 5.34598 19.2111 6.54628L21.9287 16.6885C22.2503 17.8888 21.538 19.1226 20.3377 19.4442L18.0839 20.0481C16.8836 20.3697 15.6499 19.6574 15.3282 18.4571L12.6106 8.31575Z"
             fill="#ffffff"
           />
         </svg>
       ),
-      label: "Institutions",
+      label: "Courses",
+      children: [
+        {
+          key: "/admin/courses",
+          label: "All Courses",
+        },
+        {
+          key: "/admin/course-categories",
+          label: "Categories",
+        },
+      ],
     },
+    {
+      key: "question-papers",
+      icon: <BookOutlined style={{ fontSize: 18, color: "#ffffff" }} />,
+      label: "Question Papers",
+      children: [
+        {
+          key: "/admin/question-papers/generate",
+          label: "Generate Question Paper",
+        },
+        {
+          key: "/admin/question-papers/history",
+          label: "Question Paper History",
+        },
+      ],
+    },
+    {
+      key: "hall-tickets",
+      icon: <IdcardOutlined style={{ fontSize: 18, color: "#ffffff" }} />,
+      label: "Hall Tickets",
+      children: [
+        {
+          key: "/admin/hall-tickets/generate",
+          label: "Generate Hall Ticket",
+        },
+        {
+          key: "/admin/hall-tickets/history",
+          label: "Hall Ticket History",
+        },
+      ],
+    },
+    { type: "divider" },
     {
       key: "/admin/students",
       icon: (
@@ -159,6 +204,59 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       label: "Learners",
     },
     {
+      key: "/admin/memberships",
+      icon: (
+        <svg
+          width="20"
+          height="20"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          transform="rotate(0 0 0)"
+        >
+          <path
+            d="M13.4423 4.0528C13.4423 3.02209 14.2778 2.18652 15.3085 2.18652C16.3393 2.18652 17.1748 3.02208 17.1748 4.0528C17.1748 5.08352 16.3393 5.91908 15.3085 5.91908C14.2778 5.91908 13.4423 5.08352 13.4423 4.0528Z"
+            fill="#ffffff"
+          />
+          <path
+            d="M11.856 8.51792C11.856 7.2817 12.8581 6.27955 14.0943 6.27955H16.5226C17.7589 6.27955 18.761 7.2817 18.761 8.51792V9.44815C18.761 9.86237 18.4252 10.1982 18.011 10.1982H12.606C12.1917 10.1982 11.856 9.86237 11.856 9.44815V8.51792Z"
+            fill="#ffffff"
+          />
+          <path
+            d="M19.4265 11.0839C20.0838 10.5508 21.0446 10.6311 21.6042 11.2659C22.1113 11.841 22.1316 12.6974 21.6523 13.2959L17.7857 18.1245C17.4103 18.5934 16.8422 18.8663 16.2415 18.8663H10.0683C9.88238 18.8663 9.70304 18.9354 9.56514 19.0601L9.24091 19.3533C9.22557 19.3227 9.20925 19.2925 9.19195 19.2625L6.19328 14.0687C6.11945 13.9408 6.03193 13.8258 5.93363 13.7244L7.38752 12.5621C7.94102 12.1196 8.64045 11.8146 9.41265 11.8112C10.2258 11.8075 11.511 11.8794 12.6743 12.3037H15.6309C16.1953 12.3037 16.6724 12.6779 16.8276 13.1917C16.8623 13.3063 16.8809 13.4278 16.8809 13.5537C16.8809 14.2441 16.3212 14.8037 15.6309 14.8037H13.8345C13.5583 14.8037 13.3345 15.0276 13.3345 15.3037C13.3345 15.5799 13.5583 15.8037 13.8345 15.8037H15.6309C16.8735 15.8037 17.8809 14.7964 17.8809 13.5537C17.8809 13.187 17.7931 12.8408 17.6375 12.5349L19.4265 11.0839Z"
+            fill="#ffffff"
+          />
+          <path
+            d="M8.32592 19.7625C8.52709 20.1109 8.41691 20.5537 8.0817 20.7686L6.12367 21.899C5.76495 22.1062 5.30626 21.9832 5.09915 21.6245L2.10048 16.4307C2.00103 16.2584 1.97408 16.0537 2.02556 15.8616C2.07704 15.6694 2.20274 15.5056 2.375 15.4062L4.30273 14.2941C4.65191 14.0925 5.0958 14.2036 5.31019 14.5405C5.31605 14.5497 5.32174 14.5591 5.32725 14.5687L8.32592 19.7625Z"
+            fill="#ffffff"
+          />
+        </svg>
+      ),
+      label: "Memberships",
+    },
+    {
+      key: "/admin/institutions",
+      icon: (
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 25 25"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          transform="rotate(0 0 0)"
+        >
+          <path
+            d="M9.75 6C9.75 4.75736 10.7574 3.75 12 3.75H19C20.2426 3.75 21.25 4.75736 21.25 6V20.5C21.25 20.9142 20.9142 21.25 20.5 21.25H9.75V6ZM14 9.0835C13.5858 9.0835 13.25 9.41928 13.25 9.8335C13.25 10.2477 13.5858 10.5835 14 10.5835H17C17.4142 10.5835 17.75 10.2477 17.75 9.8335C17.75 9.41928 17.4142 9.0835 17 9.0835H14ZM14 14.4168C13.5858 14.4168 13.25 14.7526 13.25 15.1668C13.25 15.581 13.5858 15.9168 14 15.9168H17C17.4142 15.9168 17.75 15.581 17.75 15.1668C17.75 14.7526 17.4142 14.4168 17 14.4168H14Z"
+            fill="#ffffff"
+          />
+          <path
+            d="M8.75 8.25H6C4.75736 8.25 3.75 9.25736 3.75 10.5V20.5C3.75 20.9142 4.08579 21.25 4.5 21.25H8.75V17.5H7.50586C7.09165 17.5 6.75586 17.1642 6.75586 16.75C6.75586 16.3358 7.09165 16 7.50586 16H8.75V13.5H7.50586C7.09165 13.5 6.75586 13.1642 6.75586 12.75C6.75586 12.3358 7.09165 12 7.50586 12H8.75V8.25Z"
+            fill="#ffffff"
+          />
+        </svg>
+      ),
+      label: "Institutions",
+    },
+    {
       key: "/admin/centers",
       icon: (
         <svg
@@ -176,6 +274,76 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       ),
       label: "Centers",
     },
+    {
+      key: "/admin/admins",
+      icon: (
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 25"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          transform="rotate(0 0 0)"
+        >
+          <path
+            d="M12 3.5C12.2326 3.5 12.452 3.60791 12.594 3.79212L16.7497 9.18332L20.7777 5.91743C21.0147 5.72527 21.3445 5.69584 21.6118 5.843C21.879 5.99017 22.0305 6.2846 21.9949 6.58763L21.0346 14.75H2.96544L2.00516 6.58763C1.96951 6.2846 2.12099 5.99017 2.38828 5.843C2.65556 5.69584 2.98537 5.72527 3.22237 5.91743L7.2503 9.18332L11.406 3.79212C11.548 3.60791 11.7674 3.5 12 3.5Z"
+            fill="#ffffff"
+          />
+          <path
+            d="M3.14191 16.25L3.34931 18.0129C3.48261 19.146 4.44295 20 5.58389 20H18.4161C19.5571 20 20.5174 19.146 20.6507 18.0129L20.8581 16.25H3.14191Z"
+            fill="#ffffff"
+          />
+        </svg>
+      ),
+      label: "Administrators",
+    },
+    { type: "divider" },
+    {
+      key: "student-certificates",
+      icon: <SafetyCertificateOutlined style={{ fontSize: 18, color: "#ffffff" }} />,
+      label: "Learner Certificates",
+      children: [
+        {
+          key: "/admin/student-certificates",
+          label: "Certificate List",
+        },
+        {
+          key: "/admin/student-certificates/add",
+          label: "Add Certificate",
+        },
+      ],
+    },
+    {
+      key: "certificates",
+      icon: <FileDoneOutlined style={{ fontSize: 18, color: "#ffffff" }} />,
+      label: "Certificates",
+      children: [
+        {
+          key: "/admin/certificates/generate",
+          label: "Generate Certificate",
+        },
+        {
+          key: "/admin/certificate-requests",
+          label: "Certificate Request",
+        },
+      ],
+    },
+    {
+      key: "cimaa-certificates",
+      icon: <FileDoneOutlined style={{ fontSize: 18, color: "#ffffff" }} />,
+      label: "CIMAA Certificate",
+      children: [
+        {
+          key: "/admin/cimaa-certificates/generate",
+          label: "Generate Certificate",
+        },
+        {
+          key: "/admin/cimaa-certificates/history",
+          label: "Certificate History",
+        },
+      ],
+    },
+    { type: "divider" },
     {
       key: "invoices",
       icon: (
@@ -228,147 +396,6 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       ],
     },
     {
-      key: "hall-tickets",
-      icon: <IdcardOutlined style={{ fontSize: 18, color: "#ffffff" }} />,
-      label: "Hall Tickets",
-      children: [
-        {
-          key: "/admin/hall-tickets/generate",
-          label: "Generate Hall Ticket",
-        },
-        {
-          key: "/admin/hall-tickets/history",
-          label: "Hall Ticket History",
-        },
-      ],
-    },
-    {
-      key: "question-papers",
-      icon: <BookOutlined style={{ fontSize: 18, color: "#ffffff" }} />,
-      label: "Question Papers",
-      children: [
-        {
-          key: "/admin/question-papers/generate",
-          label: "Generate Question Paper",
-        },
-        {
-          key: "/admin/question-papers/history",
-          label: "Question Paper History",
-        },
-      ],
-    },
-    {
-      key: "/admin/memberships",
-      icon: (
-        <svg
-          width="20"
-          height="20"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          transform="rotate(0 0 0)"
-        >
-          <path
-            d="M13.4423 4.0528C13.4423 3.02209 14.2778 2.18652 15.3085 2.18652C16.3393 2.18652 17.1748 3.02208 17.1748 4.0528C17.1748 5.08352 16.3393 5.91908 15.3085 5.91908C14.2778 5.91908 13.4423 5.08352 13.4423 4.0528Z"
-            fill="#ffffff"
-          />
-          <path
-            d="M11.856 8.51792C11.856 7.2817 12.8581 6.27955 14.0943 6.27955H16.5226C17.7589 6.27955 18.761 7.2817 18.761 8.51792V9.44815C18.761 9.86237 18.4252 10.1982 18.011 10.1982H12.606C12.1917 10.1982 11.856 9.86237 11.856 9.44815V8.51792Z"
-            fill="#ffffff"
-          />
-          <path
-            d="M19.4265 11.0839C20.0838 10.5508 21.0446 10.6311 21.6042 11.2659C22.1113 11.841 22.1316 12.6974 21.6523 13.2959L17.7857 18.1245C17.4103 18.5934 16.8422 18.8663 16.2415 18.8663H10.0683C9.88238 18.8663 9.70304 18.9354 9.56514 19.0601L9.24091 19.3533C9.22557 19.3227 9.20925 19.2925 9.19195 19.2625L6.19328 14.0687C6.11945 13.9408 6.03193 13.8258 5.93363 13.7244L7.38752 12.5621C7.94102 12.1196 8.64045 11.8146 9.41265 11.8112C10.2258 11.8075 11.511 11.8794 12.6743 12.3037H15.6309C16.1953 12.3037 16.6724 12.6779 16.8276 13.1917C16.8623 13.3063 16.8809 13.4278 16.8809 13.5537C16.8809 14.2441 16.3212 14.8037 15.6309 14.8037H13.8345C13.5583 14.8037 13.3345 15.0276 13.3345 15.3037C13.3345 15.5799 13.5583 15.8037 13.8345 15.8037H15.6309C16.8735 15.8037 17.8809 14.7964 17.8809 13.5537C17.8809 13.187 17.7931 12.8408 17.6375 12.5349L19.4265 11.0839Z"
-            fill="#ffffff"
-          />
-          <path
-            d="M8.32592 19.7625C8.52709 20.1109 8.41691 20.5537 8.0817 20.7686L6.12367 21.899C5.76495 22.1062 5.30626 21.9832 5.09915 21.6245L2.10048 16.4307C2.00103 16.2584 1.97408 16.0537 2.02556 15.8616C2.07704 15.6694 2.20274 15.5056 2.375 15.4062L4.30273 14.2941C4.65191 14.0925 5.0958 14.2036 5.31019 14.5405C5.31605 14.5497 5.32174 14.5591 5.32725 14.5687L8.32592 19.7625Z"
-            fill="#ffffff"
-          />
-        </svg>
-      ),
-      label: "Memberships",
-    },
-    {
-      key: "courses",
-      icon: (
-        <svg
-          width="20"
-          height="20"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          transform="rotate(0 0 0)"
-        >
-          <path
-            d="M6.33301 6L4.25 6C3.00736 6 2 7.00736 2 8.25V17.75C2 18.9926 3.00736 20 4.25 20H6.58333C6.78518 20 6.98082 19.9734 7.16694 19.9236C6.64867 19.3477 6.33335 18.5856 6.33333 17.75L6.33301 6Z"
-            fill="#ffffff"
-          />
-          <path
-            d="M8.08324 19.4272C8.48119 19.7834 9.00673 20 9.58301 20H11.1663C12.409 20 13.4163 18.9926 13.4163 17.75V15.1865L11.6447 8.57457C11.2569 7.12745 11.9096 5.64668 13.1442 4.92645C12.763 4.22565 12.0202 3.75 11.1663 3.75H9.58301C8.34037 3.75 7.33301 4.75736 7.33301 6L7.33333 17.75C7.33334 18.4164 7.62294 19.0151 8.08324 19.4272Z"
-            fill="#ffffff"
-          />
-          <path
-            d="M12.6106 8.31575C12.289 7.11545 13.0013 5.88169 14.2016 5.56007L16.4554 4.95616C17.6557 4.63454 18.8895 5.34598 19.2111 6.54628L21.9287 16.6885C22.2503 17.8888 21.538 19.1226 20.3377 19.4442L18.0839 20.0481C16.8836 20.3697 15.6499 19.6574 15.3282 18.4571L12.6106 8.31575Z"
-            fill="#ffffff"
-          />
-        </svg>
-      ),
-      label: "Courses",
-      children: [
-        {
-          key: "/admin/courses",
-          label: "All Courses",
-        },
-        {
-          key: "/admin/course-categories",
-          label: "Categories",
-        },
-      ],
-    },
-    {
-      key: "student-certificates",
-      icon: <SafetyCertificateOutlined style={{ fontSize: 18, color: "#ffffff" }} />,
-      label: "Learner Certificates",
-      children: [
-        {
-          key: "/admin/student-certificates",
-          label: "Certificate List",
-        },
-        {
-          key: "/admin/student-certificates/add",
-          label: "Add Certificate",
-        },
-      ],
-    },
-    {
-      key: "certificates",
-      icon: <FileDoneOutlined style={{ fontSize: 18, color: "#ffffff" }} />,
-      label: "Certificates",
-      children: [
-        {
-          key: "/admin/certificates/generate",
-          label: "Generate Certificate",
-        },
-        {
-          key: "/admin/certificate-requests",
-          label: "Certificate Request",
-        },
-      ],
-    },
-    {
-      key: "cimaa-certificates",
-      icon: <FileDoneOutlined style={{ fontSize: 18, color: "#ffffff" }} />,
-      label: "CIMAA Certificate",
-      children: [
-        {
-          key: "/admin/cimaa-certificates/generate",
-          label: "Generate Certificate",
-        },
-        {
-          key: "/admin/cimaa-certificates/history",
-          label: "Certificate History",
-        },
-      ],
-    },
-    {
       key: "enquiries",
       icon: <AppstoreOutlined style={{ fontSize: 18, color: "#ffffff" }} />,
       label: "Enquiries",
@@ -382,31 +409,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
           label: "Partnership Forms",
         },
       ],
-    },
-    {
-      key: "/admin/admins",
-      icon: (
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 24 25"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          transform="rotate(0 0 0)"
-        >
-          <path
-            d="M12 3.5C12.2326 3.5 12.452 3.60791 12.594 3.79212L16.7497 9.18332L20.7777 5.91743C21.0147 5.72527 21.3445 5.69584 21.6118 5.843C21.879 5.99017 22.0305 6.2846 21.9949 6.58763L21.0346 14.75H2.96544L2.00516 6.58763C1.96951 6.2846 2.12099 5.99017 2.38828 5.843C2.65556 5.69584 2.98537 5.72527 3.22237 5.91743L7.2503 9.18332L11.406 3.79212C11.548 3.60791 11.7674 3.5 12 3.5Z"
-            fill="#ffffff"
-          />
-          <path
-            d="M3.14191 16.25L3.34931 18.0129C3.48261 19.146 4.44295 20 5.58389 20H18.4161C19.5571 20 20.5174 19.146 20.6507 18.0129L20.8581 16.25H3.14191Z"
-            fill="#ffffff"
-          />
-        </svg>
-      ),
-      label: "Administrators",
-    },
-  ];
+    }  ];
 
   const getBreadcrumbItems = () => {
     const pathSegments = pathname.split("/").filter(Boolean);
