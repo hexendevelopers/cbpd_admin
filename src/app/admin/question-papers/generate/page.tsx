@@ -57,7 +57,7 @@ export default function GenerateQuestionPaperPage() {
     modules: [{ title: "MARKETING BASICS", questions: [{ text: "", options: { a: "", b: "", c: "", d: "" } }] }]
   });
   const [loading, setLoading] = useState(false);
-  const paperRef = useRef<HTMLDivElement>(null);
+  const pageRefs = useRef<(HTMLDivElement | null)[]>([]);
   const router = useRouter();
 
   const handleValuesChange = (changedValues: any, allValues: any) => {
@@ -66,30 +66,60 @@ export default function GenerateQuestionPaperPage() {
 
   const handleSaveAndDownload = async () => {
     try {
-      await form.validateFields();
       setLoading(true);
+      await form.validateFields();
+      
+      const pdf = new jsPDF({
+        orientation: "portrait",
+        unit: "mm",
+        format: "a4"
+      });
+      
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = pdf.internal.pageSize.getHeight();
+      
+      // Fix for html2canvas text overlapping bug: remove parent scales before capture
+      const wrappers = document.querySelectorAll('.pdf-page-wrapper') as NodeListOf<HTMLElement>;
+      const originalStyles: { transform: string, marginBottom: string }[] = [];
+      
+      wrappers.forEach((w, index) => {
+        originalStyles[index] = { transform: w.style.transform, marginBottom: w.style.marginBottom };
+        w.style.transform = 'none';
+        w.style.marginBottom = '20px';
+      });
 
-      // Save to database
-      await axios.post("/api/admin/question-papers", paperData);
-      message.success("Question Paper saved successfully!");
+      // Wait a tick for DOM to update styles
+      await new Promise(resolve => setTimeout(resolve, 50));
 
-      // Generate PDF
-      if (paperRef.current) {
-        const canvas = await html2canvas(paperRef.current, {
-          scale: 4,
-          useCORS: true,
-          logging: false,
-        });
-        
-        const imgData = canvas.toDataURL("image/png");
-        const pdf = new jsPDF("p", "mm", "a4");
-        
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = pdf.internal.pageSize.getHeight();
-        
-        pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+      let pagesAdded = 0;
+      for (let i = 0; i < pageRefs.current.length; i++) {
+        const pageNode = pageRefs.current[i];
+        if (pageNode) {
+          const canvas = await html2canvas(pageNode, {
+            scale: 3,
+            useCORS: true,
+            logging: false,
+          });
+          
+          const imgData = canvas.toDataURL("image/png");
+          
+          if (pagesAdded > 0) {
+            pdf.addPage();
+          }
+          pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+          pagesAdded++;
+        }
+      }
+      
+      if (pagesAdded > 0) {
         pdf.save(`${paperData.courseCode}_Question_Paper.pdf`);
       }
+
+      // Restore visual scaling
+      wrappers.forEach((w, index) => {
+        w.style.transform = originalStyles[index].transform;
+        w.style.marginBottom = originalStyles[index].marginBottom;
+      });
     } catch (error) {
       console.error("Error saving/generating:", error);
       message.error("Please fill all required fields correctly.");
@@ -140,8 +170,56 @@ export default function GenerateQuestionPaperPage() {
     add({ text: "", options: { a: "", b: "", c: "", d: "" } });
   };
 
-  // Helper to calculate continuous question number
-  let globalQuestionNumber = 1;
+  // Pagination Logic
+  const QUESTIONS_FIRST_PAGE = 20;
+  const QUESTIONS_NEXT_PAGES = 24;
+
+  type RenderItem = 
+    | { type: 'module', title: string, moduleIndex: number, roman: string }
+    | { type: 'question', data: QuestionData, globalIndex: number };
+
+  const allItems: RenderItem[] = [];
+  let globalQ = 1;
+  paperData.modules?.forEach((module, mIndex) => {
+    const roman = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"][mIndex] || (mIndex + 1).toString();
+    allItems.push({ type: 'module', title: module.title, moduleIndex: mIndex, roman });
+    module.questions?.forEach(q => {
+      allItems.push({ type: 'question', data: q, globalIndex: globalQ++ });
+    });
+  });
+
+  const pages: RenderItem[][] = [];
+  let currentPage: RenderItem[] = [];
+  let qCount = 0;
+
+  for (let i = 0; i < allItems.length; i++) {
+    const item = allItems[i];
+    const limit = pages.length === 0 ? QUESTIONS_FIRST_PAGE : QUESTIONS_NEXT_PAGES;
+
+    if (item.type === 'question') {
+      if (qCount >= limit) {
+        pages.push(currentPage);
+        currentPage = [];
+        qCount = 0;
+      }
+      currentPage.push(item);
+      qCount++;
+    } else {
+      // If adding a module header when page is almost full, push to next page
+      if (qCount >= limit) {
+        pages.push(currentPage);
+        currentPage = [];
+        qCount = 0;
+      }
+      currentPage.push(item);
+    }
+  }
+  if (currentPage.length > 0) {
+    pages.push(currentPage);
+  }
+
+  // Ensure pageRefs array size matches pages
+  pageRefs.current = pageRefs.current.slice(0, pages.length);
 
   return (
     <AdminLayout>
@@ -299,113 +377,140 @@ export default function GenerateQuestionPaperPage() {
             title="A4 Live Preview" 
             bordered={false} 
             style={{ borderRadius: 12, boxShadow: "0 2px 8px rgba(0,0,0,0.05)" }}
-            bodyStyle={{ display: "flex", justifyContent: "center", backgroundColor: "#f0f2f5", padding: "20px" }}
+            bodyStyle={{ display: "flex", flexDirection: "column", alignItems: "center", backgroundColor: "#f0f2f5", padding: "20px", overflowY: "auto", maxHeight: "1200px", gap: "20px" }}
           >
-            <div
-              ref={paperRef}
-              style={{
-                width: "210mm",
-                minHeight: "297mm",
-                boxSizing: "border-box",
-                backgroundColor: "white",
-                padding: "10mm 5mm",
-                boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-                fontFamily: '"Times New Roman", Times, serif',
-                lineHeight: "1.2",
-                position: "relative",
-                transform: "scale(0.85)",
-                transformOrigin: "top center",
-                color: "#000",
-              }}
-            >
-              {/* Background Watermark */}
-              <div
+            {pages.map((pageItems, pageIndex) => (
+              <div 
+                key={pageIndex}
+                className="pdf-page-wrapper"
                 style={{
-                  position: "absolute",
-                  top: "40%",
-                  left: "50%",
-                  transform: "translate(-50%, -50%)",
-                  opacity: 0.1,
-                  zIndex: 0,
-                  width: "140mm",
-                  textAlign: "center"
+                  transform: "scale(0.85)",
+                  transformOrigin: "top center",
+                  marginBottom: "-40mm", // Offset visual scaling gap
+                  width: "210mm" // ensure the wrapper bounds the content
                 }}
               >
-                <img src="/cbpd-logo-transparent.png" alt="watermark logo" style={{ width: "100%", height: "auto" }} />
-              </div>
-
-              <div style={{ position: "relative", zIndex: 1 }}>
-                {/* Logo */}
-                <div style={{ textAlign: "center", marginBottom: "6px", display: "flex", justifyContent: "center" }}>
-                  <img src="/cbpd-logo-transparent.png" alt="Logo" style={{ height: "80px", width: "auto", objectFit: "contain" }} />
-                </div>
-
-                {/* 3-Column Header */}
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "15px", fontSize: "10pt", fontWeight: "bold" }}>
-                  <div style={{ flex: 1, textAlign: "left", paddingLeft: "5px", fontSize: "7pt", fontWeight: "normal" }}>
-                    <div style={{ fontWeight: "bold" }}>CBPD</div>
-                    <div style={{ fontWeight: "bold" }}>{paperData.courseCode || "IDAIDM"}</div>
+                <div
+                  ref={(el) => {
+                    if (el) pageRefs.current[pageIndex] = el;
+                  }}
+                  style={{
+                    width: "210mm",
+                    height: "297mm",
+                    boxSizing: "border-box",
+                    backgroundColor: "white",
+                    padding: pageIndex === 0 ? "12.1mm 16.1mm 17.3mm 15.1mm" : "12.9mm 17.0mm 17.0mm 15.1mm",
+                    boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+                    fontFamily: 'Helvetica, Arial, sans-serif',
+                    letterSpacing: "0.4px", // Fix font squishing
+                    wordSpacing: "1px",
+                    lineHeight: "1.3",
+                    position: "relative",
+                    color: "#000000",
+                    overflow: "hidden"
+                  }}
+                >
+                  {/* Background Watermark (All pages) */}
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: "50%",
+                      left: "50%",
+                      transform: "translate(-50%, -50%)",
+                      opacity: 0.08,
+                      zIndex: 0,
+                      width: "148.2mm",
+                      height: "139mm",
+                      textAlign: "center"
+                    }}
+                  >
+                    <img src="/cbpd-logo-transparent.png" alt="watermark logo" style={{ width: "100%", height: "100%", objectFit: "contain", mixBlendMode: "multiply" }} />
                   </div>
-                  
-                  <div style={{ flex: 4, textAlign: "center" }}>
-                    <div style={{ fontSize: "13pt", fontWeight: "bold", textTransform: "uppercase", marginBottom: "4px", color: "#1a237e", whiteSpace: "nowrap" }}>
-                      CENTRAL BOARD OF PROFESSIONAL DEVELOPMENT UK
-                    </div>
-                    <div style={{ fontSize: "11pt", fontWeight: "bold", marginBottom: "4px" }}>
-                      {paperData.examinationTerm || "FINAL EXAMINATION 2026"}
-                    </div>
-                    <div style={{ fontSize: "10pt", fontWeight: "bold" }}>
-                      Course : {paperData.courseName || "International Diploma in AI Integrated Digital Marketing Management"}
-                    </div>
-                  </div>
 
-                  <div style={{ flex: 1, textAlign: "right", paddingRight: "5px", fontSize: "7pt", fontWeight: "normal", whiteSpace: "nowrap" }}>
-                    <div style={{ fontWeight: "bold" }}>Time: {paperData.time || "2 Hrs"}</div>
-                    <div style={{ fontWeight: "bold" }}>Marks: {paperData.marks || "100"}</div>
-                  </div>
-                </div>
+                <div style={{ position: "relative", zIndex: 1 }}>
+                  {pageIndex === 0 && (
+                    <>
+                      {/* Logo */}
+                      <div style={{ textAlign: "center", marginBottom: "3.6mm", display: "flex", justifyContent: "center" }}>
+                        <img src="/cbpd-logo-transparent.png" alt="Logo" style={{ height: "30mm", width: "31.7mm", objectFit: "contain", mixBlendMode: "multiply" }} />
+                      </div>
 
-                {/* Modules & Questions */}
-                {paperData.modules?.map((module, mIndex) => {
-                  const roman = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"][mIndex] || (mIndex + 1);
-                  return (
-                    <div key={mIndex} style={{ marginBottom: "10px" }}>
-                      <div style={{ 
-                        textAlign: "left", 
-                        fontWeight: "bold", 
-                        fontSize: "11pt",
-                        marginBottom: "6px",
-                        paddingLeft: "10px",
-                        marginTop: mIndex > 0 ? "12px" : "0"
-                      }}>
-                        MODULE {roman} : {module.title?.toUpperCase()}
+                      {/* Header Replicated from Exact PDF Specs */}
+                      <div style={{ position: "relative", marginBottom: "6px", fontFamily: "Helvetica, Arial, sans-serif" }}>
+                        {/* Center Title */}
+                        <div style={{ textAlign: "center" }}>
+                          <div style={{ fontSize: "12pt", fontWeight: "bold", color: "#1A1A6E" }}>
+                            CENTRAL BOARD OF PROFESSIONAL DEVELOPMENT
+                          </div>
+                          <div style={{ fontSize: "12pt", fontWeight: "bold", marginTop: "1px", color: "#000000" }}>
+                            {paperData.examinationTerm || "FINAL EXAMINATION 2026"}
+                          </div>
+                        </div>
+
+                        {/* Left Side Info */}
+                        <div style={{ position: "absolute", left: 0, top: 0, textAlign: "left", fontSize: "10pt", fontWeight: "bold", lineHeight: "1.3", color: "#000000" }}>
+                          <div>CBPD</div>
+                          <div>{paperData.courseCode || "AIDMM"}</div>
+                        </div>
+
+                        {/* Right Side Info */}
+                        <div style={{ position: "absolute", right: 0, top: 0, textAlign: "right", fontSize: "10pt", fontWeight: "bold", lineHeight: "1.3", color: "#000000" }}>
+                          <div>Time: {paperData.time || "2 Hrs"}</div>
+                          <div>Marks: {paperData.marks || "100"}</div>
+                        </div>
+
+                        {/* Course Name centered below everything */}
+                        <div style={{ textAlign: "center", fontSize: "10pt", fontStyle: "italic", marginTop: "2px", color: "#1A1A6E" }}>
+                          Course : {paperData.courseName || "International Diploma in AI Integrated Digital Marketing Management"}
+                        </div>
                       </div>
                       
-                      {module.questions?.map((q, qIndex) => {
-                        const num = globalQuestionNumber++;
-                        return (
-                          <div key={qIndex} style={{ marginBottom: "8px", fontSize: "10pt", fontWeight: "normal", paddingLeft: "10px" }}>
-                            {/* Question Text */}
-                            <div style={{ display: "flex", marginBottom: "2px", fontFamily: "Arial, sans-serif", fontWeight: "normal" }}>
-                              <div style={{ width: "20px", flexShrink: 0, fontWeight: "bold" }}>{num}.</div>
-                              <div style={{ flex: 1 }}>{q?.text || "Question Text"}</div>
-                            </div>
-                            
-                            {/* Options inline */}
-                            <div style={{ paddingLeft: "20px", fontFamily: "Arial, sans-serif", fontWeight: "normal" }}>
-                              a) {q.options?.a} &nbsp;&nbsp;&nbsp; 
-                              b) {q.options?.b} &nbsp;&nbsp;&nbsp; 
-                              c) {q.options?.c} &nbsp;&nbsp;&nbsp; 
-                              d) {q.options?.d}
-                            </div>
+                      {/* Separator Line */}
+                      <div style={{ borderBottom: "1pt solid #1A1A6E", marginBottom: "6px" }} />
+                    </>
+                  )}
+
+                  {/* Modules & Questions for this Page */}
+                  {pageItems.map((item, idx) => {
+                    if (item.type === 'module') {
+                      return (
+                        <div key={`m-${item.moduleIndex}-${idx}`} style={{ 
+                          textAlign: "center", 
+                          fontWeight: "bold", 
+                          fontSize: "11pt",
+                          color: "#1A1A6E",
+                          marginBottom: "4px",
+                          marginTop: idx > 0 ? "8px" : "0",
+                          textTransform: "uppercase",
+                          fontFamily: "Helvetica, Arial, sans-serif"
+                        }}>
+                          MODULE {item.roman} : {item.title}
+                        </div>
+                      );
+                    } else {
+                      return (
+                        <div key={`q-${item.globalIndex}`} style={{ marginBottom: "4px", fontSize: "9.5pt", fontFamily: "Helvetica, Arial, sans-serif", color: "#000000" }}>
+                          {/* Question Text */}
+                          <div style={{ display: "flex", marginBottom: "1px", fontWeight: "bold" }}>
+                            <div style={{ width: "16px", flexShrink: 0 }}>{item.globalIndex}.</div>
+                            <div style={{ flex: 1 }}>{item.data?.text || "Question Text"}</div>
                           </div>
-                        );
-                      })}
-                    </div>
-                  );
-                })}
+                          
+                          {/* Options inline */}
+                          <div style={{ paddingLeft: "10pt", fontWeight: "normal" }}>
+                            <span style={{marginRight: "12px"}}>a) {item.data?.options?.a}</span>
+                            <span style={{marginRight: "12px"}}>b) {item.data?.options?.b}</span>
+                            <span style={{marginRight: "12px"}}>c) {item.data?.options?.c}</span>
+                            <span>d) {item.data?.options?.d}</span>
+                          </div>
+                        </div>
+                      );
+                    }
+                  })}
+                </div>
               </div>
             </div>
+          ))}
           </Card>
         </Col>
       </Row>

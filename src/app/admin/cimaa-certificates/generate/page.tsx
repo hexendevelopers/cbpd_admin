@@ -43,6 +43,22 @@ type CimaaCanvasProps = {
   dateIssuedText: string;
 };
 
+const getStudentNameFontSize = (text: string) => {
+  const len = text.length;
+  if (len > 50) return "32px";
+  if (len > 35) return "40px";
+  if (len > 25) return "48px";
+  return "56px";
+};
+
+const getProgramNameFontSize = (text: string) => {
+  const len = text.length;
+  if (len > 120) return "20px";
+  if (len > 80) return "24px";
+  if (len > 50) return "28px";
+  return "36px";
+};
+
 const CimaaCanvas = forwardRef<HTMLDivElement, CimaaCanvasProps>(
   function CimaaCanvas(
     {
@@ -77,24 +93,35 @@ const CimaaCanvas = forwardRef<HTMLDivElement, CimaaCanvasProps>(
           draggable={false}
           crossOrigin="anonymous"
         />
-        <div style={{ position: "absolute", top: "600px", left: "0", width: "100%", textAlign: "center", fontSize: "56px", fontWeight: "bold", color: "#000", fontFamily: "'Times New Roman', Times, serif", textTransform: "uppercase" }}>
-          {studentName}
+        <div style={{ 
+          position: "absolute", top: "580px", left: "50px", width: "calc(100% - 100px)", height: "100px", 
+          display: "flex", alignItems: "center", justifyContent: "center"
+        }}>
+          <div style={{ textAlign: "center", fontSize: getStudentNameFontSize(studentName), fontWeight: "bold", color: "#000", fontFamily: "'Times New Roman', Times, serif", textTransform: "uppercase", lineHeight: "1.2" }}>
+            {studentName}
+          </div>
         </div>
-        <div style={{ position: "absolute", top: "740px", left: "0", width: "100%", textAlign: "center", fontSize: "36px", fontWeight: "bold", color: "#000", fontFamily: "'Times New Roman', Times, serif", padding: "0 100px", boxSizing: "border-box", whiteSpace: "pre-wrap", lineHeight: "1.2" }}>
-          {programName}
+
+        <div style={{ 
+          position: "absolute", top: "680px", left: "100px", width: "calc(100% - 200px)", height: "140px", 
+          display: "flex", alignItems: "center", justifyContent: "center"
+        }}>
+          <div style={{ textAlign: "center", fontSize: getProgramNameFontSize(programName), fontWeight: "bold", color: "#000", fontFamily: "'Times New Roman', Times, serif", textTransform: "uppercase", whiteSpace: "pre-wrap", lineHeight: "1.2" }}>
+            {programName}
+          </div>
         </div>
         
-        <div style={{ position: "absolute", top: "972px", left: "610px", fontSize: "20px", color: "#000", fontFamily: "'Times New Roman', Times, serif", fontWeight: "bold" }}>
+        <div style={{ position: "absolute", top: "976px", left: "610px", fontSize: "20px", color: "#000", fontFamily: "'Times New Roman', Times, serif", fontWeight: "bold" }}>
           {providerName}
         </div>
-        <div style={{ position: "absolute", top: "1022px", left: "610px", fontSize: "20px", color: "#000", fontFamily: "'Times New Roman', Times, serif", fontWeight: "bold" }}>
+        <div style={{ position: "absolute", top: "1016px", left: "610px", fontSize: "20px", color: "#000", fontFamily: "'Times New Roman', Times, serif", fontWeight: "bold" }}>
           {certificateNumber}
         </div>
-        <div style={{ position: "absolute", top: "1072px", left: "610px", fontSize: "20px", color: "#000", fontFamily: "'Times New Roman', Times, serif", fontWeight: "bold" }}>
+        <div style={{ position: "absolute", top: "1061px", left: "610px", fontSize: "20px", color: "#000", fontFamily: "'Times New Roman', Times, serif", fontWeight: "bold" }}>
           {registrationNumber}
         </div>
         
-        <div style={{ position: "absolute", top: "1425px", left: "650px", fontSize: "20px", color: "#000", fontFamily: "'Times New Roman', Times, serif", fontWeight: "bold" }}>
+        <div style={{ position: "absolute", top: "1370px", left: "660px", fontSize: "20px", color: "#000", fontFamily: "'Times New Roman', Times, serif", fontWeight: "bold" }}>
           {dateIssuedText}
         </div>
       </div>
