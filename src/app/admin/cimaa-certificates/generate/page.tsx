@@ -202,7 +202,7 @@ export default function GenerateCimaaCertificatePage() {
       ]);
 
       const canvas = await html2canvas(el, {
-        scale: 3,
+        scale: 2, // Changed from 3 to 2 for compression
         useCORS: true,
         allowTaint: true,
         backgroundColor: "#ffffff",
@@ -212,13 +212,13 @@ export default function GenerateCimaaCertificatePage() {
         windowHeight: CANVAS_H,
       });
 
-      const img = canvas.toDataURL("image/png");
+      const img = canvas.toDataURL("image/jpeg", 0.8);
       const pdf = new jsPDF({
         orientation: "portrait",
         unit: "px",
         format: [CANVAS_W, CANVAS_H],
       });
-      pdf.addImage(img, "PNG", 0, 0, CANVAS_W, CANVAS_H);
+      pdf.addImage(img, "JPEG", 0, 0, CANVAS_W, CANVAS_H, undefined, "FAST");
 
       const safeCert = (values.certificateNumber || "certificate").replace(
         /[^a-zA-Z0-9/_-]+/g,
