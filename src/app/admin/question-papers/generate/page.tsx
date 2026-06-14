@@ -49,12 +49,19 @@ interface PaperData {
 export default function GenerateQuestionPaperPage() {
   const [form] = Form.useForm();
   const [paperData, setPaperData] = useState<PaperData>({
-    courseCode: "IDAIDM",
-    examinationTerm: "FINAL EXAMINATION 2026",
-    courseName: "International Diploma in AI Integrated Digital Marketing Management",
+    courseCode: "",
+    examinationTerm: "",
+    courseName: "",
     time: "2 Hrs",
     marks: "100",
-    modules: [{ title: "MARKETING BASICS", questions: [{ text: "", options: { a: "", b: "", c: "", d: "" } }] }]
+    modules: [
+      {
+        title: "",
+        questions: [
+          { text: "", options: { a: "", b: "", c: "", d: "" } }
+        ]
+      }
+    ]
   });
   const [loading, setLoading] = useState(false);
   const pageRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -96,17 +103,19 @@ export default function GenerateQuestionPaperPage() {
         const pageNode = pageRefs.current[i];
         if (pageNode) {
           const canvas = await html2canvas(pageNode, {
-            scale: 3,
+            scale: 2, // Scale 2 is plenty sharp and reduces size
             useCORS: true,
             logging: false,
           });
           
-          const imgData = canvas.toDataURL("image/png");
+          // Use JPEG with 0.8 compression to dramatically reduce the 100+ MB file size
+          const imgData = canvas.toDataURL("image/jpeg", 0.8);
           
           if (pagesAdded > 0) {
             pdf.addPage();
           }
-          pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+          // FAST compression for the PDF container
+          pdf.addImage(imgData, "JPEG", 0, 0, pdfWidth, pdfHeight, undefined, "FAST");
           pagesAdded++;
         }
       }
@@ -170,9 +179,9 @@ export default function GenerateQuestionPaperPage() {
     add({ text: "", options: { a: "", b: "", c: "", d: "" } });
   };
 
-  // Pagination Logic
-  const QUESTIONS_FIRST_PAGE = 20;
-  const QUESTIONS_NEXT_PAGES = 24;
+  // Pagination Logic based on estimated lines to prevent bottom overflow
+  const MAX_LINES_FIRST_PAGE = 74; // Adjusted to strictly prevent bottom padding overflow
+  const MAX_LINES_NEXT_PAGES = 88; // Adjusted to strictly prevent bottom padding overflow
 
   type RenderItem = 
     | { type: 'module', title: string, moduleIndex: number, roman: string }
@@ -188,32 +197,53 @@ export default function GenerateQuestionPaperPage() {
     });
   });
 
+  const estimateLines = (text: string, charsPerLine: number = 95) => {
+    if (!text) return 1;
+    // Count exact newlines if any
+    const newlines = (text.match(/\n/g) || []).length;
+    // Estimate wrapping lines
+    const wrapLines = Math.ceil(text.length / charsPerLine);
+    return Math.max(newlines + 1, wrapLines);
+  };
+
   const pages: RenderItem[][] = [];
   let currentPage: RenderItem[] = [];
-  let qCount = 0;
+  let currentLines = 0;
 
   for (let i = 0; i < allItems.length; i++) {
     const item = allItems[i];
-    const limit = pages.length === 0 ? QUESTIONS_FIRST_PAGE : QUESTIONS_NEXT_PAGES;
+    const limit = pages.length === 0 ? MAX_LINES_FIRST_PAGE : MAX_LINES_NEXT_PAGES;
+    let itemLines = 0;
 
     if (item.type === 'question') {
-      if (qCount >= limit) {
-        pages.push(currentPage);
-        currentPage = [];
-        qCount = 0;
-      }
-      currentPage.push(item);
-      qCount++;
+      const qTextLines = estimateLines(item.data.text, 95);
+      const optionsText = `${item.data.options?.a || ''} ${item.data.options?.b || ''} ${item.data.options?.c || ''} ${item.data.options?.d || ''}`;
+      const optLines = estimateLines(optionsText, 100);
+      itemLines = qTextLines + optLines + 1.5; // +1.5 for margins and spacing
     } else {
-      // If adding a module header when page is almost full, push to next page
-      if (qCount >= limit) {
-        pages.push(currentPage);
-        currentPage = [];
-        qCount = 0;
-      }
-      currentPage.push(item);
+      itemLines = 3.5; // Module headers have margins and bold text
     }
+
+    // Check if adding this item exceeds the limit
+    let willExceed = currentLines + itemLines > limit;
+
+    // Orphan prevention: if it's a module header, ensure there's room for at least 1 question (approx 6 lines) after it
+    if (!willExceed && item.type === 'module') {
+      if (currentLines + itemLines + 6 > limit) {
+        willExceed = true;
+      }
+    }
+
+    if (willExceed && currentPage.length > 0) {
+      pages.push(currentPage);
+      currentPage = [];
+      currentLines = 0;
+    }
+
+    currentPage.push(item);
+    currentLines += itemLines;
   }
+  
   if (currentPage.length > 0) {
     pages.push(currentPage);
   }
@@ -399,7 +429,7 @@ export default function GenerateQuestionPaperPage() {
                     height: "297mm",
                     boxSizing: "border-box",
                     backgroundColor: "white",
-                    padding: pageIndex === 0 ? "12.1mm 16.1mm 17.3mm 15.1mm" : "12.9mm 17.0mm 17.0mm 15.1mm",
+                    padding: pageIndex === 0 ? "12.1mm 16.1mm 14.1mm 15.1mm" : "12.1mm 16.1mm 14.1mm 15.1mm",
                     boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
                     fontFamily: 'Helvetica, Arial, sans-serif',
                     letterSpacing: "0.4px", // Fix font squishing
@@ -427,7 +457,7 @@ export default function GenerateQuestionPaperPage() {
                     <img src="/cbpd-logo-transparent.png" alt="watermark logo" style={{ width: "100%", height: "100%", objectFit: "contain", mixBlendMode: "multiply" }} />
                   </div>
 
-                <div style={{ position: "relative", zIndex: 1 }}>
+                <div style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", height: "100%" }}>
                   {pageIndex === 0 && (
                     <>
                       {/* Logo */}
@@ -471,7 +501,8 @@ export default function GenerateQuestionPaperPage() {
                   )}
 
                   {/* Modules & Questions for this Page */}
-                  {pageItems.map((item, idx) => {
+                  <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: pageIndex === pages.length - 1 ? "flex-start" : "space-between" }}>
+                    {pageItems.map((item, idx) => {
                     if (item.type === 'module') {
                       return (
                         <div key={`m-${item.moduleIndex}-${idx}`} style={{ 
@@ -492,7 +523,7 @@ export default function GenerateQuestionPaperPage() {
                         <div key={`q-${item.globalIndex}`} style={{ marginBottom: "4px", fontSize: "9.5pt", fontFamily: "Helvetica, Arial, sans-serif", color: "#000000" }}>
                           {/* Question Text */}
                           <div style={{ display: "flex", marginBottom: "1px", fontWeight: "bold" }}>
-                            <div style={{ width: "16px", flexShrink: 0 }}>{item.globalIndex}.</div>
+                            <div style={{ marginRight: "4px", flexShrink: 0 }}>{item.globalIndex}.</div>
                             <div style={{ flex: 1 }}>{item.data?.text || "Question Text"}</div>
                           </div>
                           
@@ -507,6 +538,7 @@ export default function GenerateQuestionPaperPage() {
                       );
                     }
                   })}
+                  </div>
                 </div>
               </div>
             </div>
