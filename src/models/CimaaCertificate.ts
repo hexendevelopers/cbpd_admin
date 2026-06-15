@@ -8,6 +8,7 @@ const cimaaCertificateSchema = new mongoose.Schema(
     certificateNo: { type: String, required: true, unique: true },
     registrationNo: { type: String, required: true },
     dateIssued: { type: Date, required: true },
+    level: { type: String },
     pdfUrl: { type: String },
   },
   { timestamps: true }

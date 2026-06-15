@@ -28,6 +28,7 @@ const CANVAS_H = 1738;
 type CimaaFormValues = {
   studentName: string;
   programName: string;
+  level: string;
   providerName: string;
   certificateNumber: string;
   registrationNumber: string;
@@ -37,6 +38,7 @@ type CimaaFormValues = {
 type CimaaCanvasProps = {
   studentName: string;
   programName: string;
+  level: string;
   providerName: string;
   certificateNumber: string;
   registrationNumber: string;
@@ -45,18 +47,14 @@ type CimaaCanvasProps = {
 
 const getStudentNameFontSize = (text: string) => {
   const len = text.length;
-  if (len > 50) return "32px";
-  if (len > 35) return "40px";
-  if (len > 25) return "48px";
-  return "56px";
+  if (len > 50) return "24px";
+  if (len > 35) return "32px";
+  if (len > 25) return "38px";
+  return "46px";
 };
 
 const getProgramNameFontSize = (text: string) => {
-  const len = text.length;
-  if (len > 120) return "20px";
-  if (len > 80) return "24px";
-  if (len > 50) return "28px";
-  return "36px";
+  return "24px";
 };
 
 const CimaaCanvas = forwardRef<HTMLDivElement, CimaaCanvasProps>(
@@ -64,6 +62,7 @@ const CimaaCanvas = forwardRef<HTMLDivElement, CimaaCanvasProps>(
     {
       studentName,
       programName,
+      level,
       providerName,
       certificateNumber,
       registrationNumber,
@@ -94,7 +93,7 @@ const CimaaCanvas = forwardRef<HTMLDivElement, CimaaCanvasProps>(
           crossOrigin="anonymous"
         />
         <div style={{ 
-          position: "absolute", top: "580px", left: "50px", width: "calc(100% - 100px)", height: "100px", 
+          position: "absolute", top: "560px", left: "50px", width: "calc(100% - 100px)", height: "100px", 
           display: "flex", alignItems: "center", justifyContent: "center"
         }}>
           <div style={{ textAlign: "center", fontSize: getStudentNameFontSize(studentName), fontWeight: "bold", color: "#000", fontFamily: "'Times New Roman', Times, serif", textTransform: "uppercase", lineHeight: "1.2" }}>
@@ -103,11 +102,20 @@ const CimaaCanvas = forwardRef<HTMLDivElement, CimaaCanvasProps>(
         </div>
 
         <div style={{ 
-          position: "absolute", top: "680px", left: "100px", width: "calc(100% - 200px)", height: "140px", 
+          position: "absolute", top: "740px", left: "100px", width: "calc(100% - 200px)", height: "30px", 
           display: "flex", alignItems: "center", justifyContent: "center"
         }}>
-          <div style={{ textAlign: "center", fontSize: getProgramNameFontSize(programName), fontWeight: "bold", color: "#000", fontFamily: "'Times New Roman', Times, serif", textTransform: "uppercase", whiteSpace: "pre-wrap", lineHeight: "1.2" }}>
+          <div style={{ textAlign: "center", fontSize: getProgramNameFontSize(programName), fontWeight: "bold", color: "#000", fontFamily: "'Times New Roman', Times, serif", whiteSpace: "pre-wrap", lineHeight: "1.2" }}>
             {programName}
+          </div>
+        </div>
+
+        <div style={{ 
+          position: "absolute", top: "780px", left: "100px", width: "calc(100% - 200px)", height: "30px", 
+          display: "flex", alignItems: "center", justifyContent: "center"
+        }}>
+          <div style={{ textAlign: "center", fontSize: "24px", fontWeight: "bold", color: "#000", fontFamily: "'Times New Roman', Times, serif", textTransform: "uppercase", lineHeight: "1.2" }}>
+            {level}
           </div>
         </div>
         
@@ -167,6 +175,7 @@ export default function GenerateCimaaCertificatePage() {
         body: JSON.stringify({
           studentName: values.studentName,
           programName: values.programName,
+          level: values.level,
           providerName: values.providerName,
           certificateNo: values.certificateNumber,
           registrationNo: values.registrationNumber,
@@ -249,6 +258,7 @@ export default function GenerateCimaaCertificatePage() {
 
   const studentName = (watched?.studentName ?? "Name").trim() || "Name";
   const programName = (watched?.programName ?? "Montessori Program").trim() || "Montessori Program";
+  const level = (watched?.level ?? "LEVEL 3").trim() || "LEVEL 3";
   const providerName = (watched?.providerName ?? "Provider Name").trim() || "Provider Name";
   const certificateNumber = (watched?.certificateNumber ?? "Cert No").trim() || "Cert No";
   const registrationNumber = (watched?.registrationNumber ?? "Reg No").trim() || "Reg No";
@@ -286,6 +296,13 @@ export default function GenerateCimaaCertificatePage() {
                   rules={[{ required: true, message: "Program name is required" }]}
                 >
                   <Input.TextArea rows={2} placeholder="e.g. International Diploma in Montessori Teachers Training" autoComplete="off" />
+                </Form.Item>
+                <Form.Item
+                  name="level"
+                  label="Level"
+                  rules={[{ required: false }]}
+                >
+                  <Input placeholder="e.g. LEVEL 3" autoComplete="off" />
                 </Form.Item>
                 <Form.Item
                   name="providerName"
@@ -353,6 +370,7 @@ export default function GenerateCimaaCertificatePage() {
                   ref={canvasRef}
                   studentName={studentName}
                   programName={programName}
+                  level={level}
                   providerName={providerName}
                   certificateNumber={certificateNumber}
                   registrationNumber={registrationNumber}
