@@ -54,7 +54,7 @@ const getStudentNameFontSize = (text: string) => {
 };
 
 const getProgramNameFontSize = (text: string) => {
-  return "24px";
+  return "30px";
 };
 
 const CimaaCanvas = forwardRef<HTMLDivElement, CimaaCanvasProps>(
@@ -141,6 +141,7 @@ export default function GenerateCimaaCertificatePage() {
   const [form] = Form.useForm<CimaaFormValues>();
   const canvasRef = useRef<HTMLDivElement>(null);
   const [pdfLoading, setPdfLoading] = useState(false);
+  const [cmykPdfLoading, setCmykPdfLoading] = useState(false);
 
   const scrollToPreview = () => {
     canvasRef.current?.scrollIntoView({
@@ -254,6 +255,108 @@ export default function GenerateCimaaCertificatePage() {
     }
   }, [form]);
 
+  const handleDownloadCmykPdf = useCallback(async () => {
+    let values: CimaaFormValues;
+    try {
+      values = await form.validateFields();
+    } catch {
+      notification.warning({
+        message: "Check the form",
+        description: "Please fill all required fields before downloading.",
+        placement: "topRight",
+      });
+      return;
+    }
+
+    setCmykPdfLoading(true);
+    try {
+      const { jsPDF } = await import("jspdf");
+
+      const pdf = new jsPDF({
+        orientation: "portrait",
+        unit: "px",
+        format: [CANVAS_W, CANVAS_H],
+      });
+
+      // Load background image
+      const img = new Image();
+      img.src = "/cimaa-template.png";
+      img.crossOrigin = "anonymous";
+      await new Promise((resolve, reject) => {
+        img.onload = resolve;
+        img.onerror = reject;
+      });
+
+      pdf.addImage(img, "PNG", 0, 0, CANVAS_W, CANVAS_H);
+
+      // Set CMYK color (100% K)
+      pdf.setTextColor(0, 0, 0, 100);
+      pdf.setFont("times", "bold");
+
+      const center_x = CANVAS_W / 2;
+      
+      const drawText = (text: string, x: number, y: number, fontSizePx: number, align: "left" | "center" | "right", baseline: "top" | "middle" | "bottom" = "top") => {
+        pdf.setFontSize(fontSizePx);
+        // Add a slight padding to top-aligned text to mimic CSS line-height padding
+        const yOffset = baseline === "top" ? fontSizePx * 0.25 : 0;
+        // User requested additional top padding for all CMYK text
+        const extraTopPadding = 15; 
+        pdf.text(text, x, y + yOffset + extraTopPadding, { align, baseline });
+      };
+
+      const sName = (values.studentName || "Name").trim().toUpperCase();
+      const pName = (values.programName || "Montessori Program").trim();
+      const lvl = (values.level || "LEVEL 3").trim().toUpperCase();
+      const provName = (values.providerName || "Provider Name").trim();
+      const certNo = (values.certificateNumber || "Cert No").trim();
+      const regNo = (values.registrationNumber || "Reg No").trim();
+      const dateText = values.dateIssued ? dayjs(values.dateIssued).format("D MMMM YYYY") : dayjs().format("D MMMM YYYY");
+
+      const sNameSize = Math.round(parseInt(getStudentNameFontSize(sName)) * 1.3);
+      
+      // Draw text at exact CSS coordinates matching the HTML preview
+      drawText(sName, center_x, 610, sNameSize, "center", "middle");
+      
+      const programLines = pName.split('\n');
+      let currentY = 755;
+      if (programLines.length > 1) {
+         currentY -= (programLines.length - 1) * 16; 
+      }
+      programLines.forEach(line => {
+        drawText(line, center_x, currentY, 38, "center", "middle");
+        currentY += 40;
+      });
+
+      drawText(lvl, center_x, 795, 30, "center", "middle");
+      
+      // Shifted right (630/680) to align right after the template labels
+      // Subtracted 8 from Y (was -12, adjusted +4 down for more top padding)
+      drawText(provName, 630, 976 - 8, 26, "left", "top");
+      drawText(certNo, 630, 1016 - 8, 26, "left", "top");
+      drawText(regNo, 630, 1061 - 8, 26, "left", "top");
+      drawText(dateText, 680, 1370 - 8, 26, "left", "top");
+
+      const safeCert = (values.certificateNumber || "certificate").replace(/[^a-zA-Z0-9/_-]+/g, "_");
+      pdf.save(`cimaa-cmyk-${safeCert}.pdf`);
+      
+      await saveToDatabase(values, safeCert);
+
+      notification.success({
+        message: "CMYK PDF downloaded",
+        placement: "topRight",
+      });
+    } catch (e) {
+      console.error(e);
+      notification.error({
+        message: "PDF export failed",
+        description: e instanceof Error ? e.message : "Unknown error",
+        placement: "topRight",
+      });
+    } finally {
+      setCmykPdfLoading(false);
+    }
+  }, [form]);
+
   const watched = Form.useWatch(undefined, form) as Partial<CimaaFormValues> | undefined;
 
   const studentName = (watched?.studentName ?? "Name").trim() || "Name";
@@ -348,6 +451,15 @@ export default function GenerateCimaaCertificatePage() {
                     loading={pdfLoading}
                   >
                     Download PDF
+                  </Button>
+                  <Button
+                    type="default"
+                    icon={<DownloadOutlined />}
+                    onClick={handleDownloadCmykPdf}
+                    loading={cmykPdfLoading}
+                    style={{ backgroundColor: "#000", color: "#fff", borderColor: "#000" }}
+                  >
+                    Download CMYK PDF
                   </Button>
                 </Space>
               </Form>

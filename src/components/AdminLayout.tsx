@@ -74,7 +74,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
     setLogoutModalVisible(true);
   };
 
-  const menuItems = [
+    const menuItems = [
     {
       key: "/admin",
       icon: (
@@ -107,6 +107,11 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
     },
     { type: "divider" as const },
     {
+      key: "academic-management",
+      icon: <BookOutlined style={{ fontSize: 18, color: "#ffffff" }} />,
+      label: "Academic Management",
+      children: [
+        {
       key: "courses",
       icon: (
         <svg
@@ -142,38 +147,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
         },
       ],
     },
-    {
-      key: "question-papers",
-      icon: <BookOutlined style={{ fontSize: 18, color: "#ffffff" }} />,
-      label: "Question Papers",
-      children: [
         {
-          key: "/admin/question-papers/generate",
-          label: "Generate Question Paper",
-        },
-        {
-          key: "/admin/question-papers/history",
-          label: "Question Paper History",
-        },
-      ],
-    },
-    {
-      key: "hall-tickets",
-      icon: <IdcardOutlined style={{ fontSize: 18, color: "#ffffff" }} />,
-      label: "Hall Tickets",
-      children: [
-        {
-          key: "/admin/hall-tickets/generate",
-          label: "Generate Hall Ticket",
-        },
-        {
-          key: "/admin/hall-tickets/history",
-          label: "Hall Ticket History",
-        },
-      ],
-    },
-    { type: "divider" as const },
-    {
       key: "/admin/students",
       icon: (
         <svg
@@ -203,6 +177,141 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       ),
       label: "Learners",
     },
+        {
+      key: "question-papers",
+      icon: <BookOutlined style={{ fontSize: 18, color: "#ffffff" }} />,
+      label: "Question Papers",
+      children: [
+        {
+          key: "/admin/question-papers/generate",
+          label: "Generate Question Paper",
+        },
+        {
+          key: "/admin/question-papers/history",
+          label: "Question Paper History",
+        },
+      ],
+    },
+        {
+      key: "hall-tickets",
+      icon: <IdcardOutlined style={{ fontSize: 18, color: "#ffffff" }} />,
+      label: "Hall Tickets",
+      children: [
+        {
+          key: "/admin/hall-tickets/generate",
+          label: "Generate Hall Ticket",
+        },
+        {
+          key: "/admin/hall-tickets/history",
+          label: "Hall Ticket History",
+        },
+      ],
+    }
+      ]
+    },
+    { type: "divider" as const },
+    {
+      key: "certification",
+      icon: <SafetyCertificateOutlined style={{ fontSize: 18, color: "#ffffff" }} />,
+      label: "Certification",
+      children: [
+        {
+      key: "student-certificates",
+      icon: <SafetyCertificateOutlined style={{ fontSize: 18, color: "#ffffff" }} />,
+      label: "Learner Certificates",
+      children: [
+        {
+          key: "/admin/student-certificates",
+          label: "Certificate List",
+        },
+        {
+          key: "/admin/student-certificates/add",
+          label: "Add Certificate",
+        },
+      ],
+    },
+        {
+      key: "certificates",
+      icon: <FileDoneOutlined style={{ fontSize: 18, color: "#ffffff" }} />,
+      label: "Certificates",
+      children: [
+        {
+          key: "/admin/certificates/generate",
+          label: "Generate Certificate",
+        },
+        {
+          key: "/admin/certificate-requests",
+          label: "Certificate Request",
+        },
+      ],
+    },
+        {
+      key: "cimaa-certificates",
+      icon: <FileDoneOutlined style={{ fontSize: 18, color: "#ffffff" }} />,
+      label: "CIMAA Certificate",
+      children: [
+        {
+          key: "/admin/cimaa-certificates/generate",
+          label: "Generate Certificate",
+        },
+        {
+          key: "/admin/cimaa-certificates/history",
+          label: "Certificate History",
+        },
+      ],
+    }
+      ]
+    },
+    { type: "divider" as const },
+    {
+      key: "institutions-centers",
+      icon: <BankOutlined style={{ fontSize: 18, color: "#ffffff" }} />,
+      label: "Institutions & Centers",
+      children: [
+        {
+      key: "/admin/institutions",
+      icon: (
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 25 25"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          transform="rotate(0 0 0)"
+        >
+          <path
+            d="M9.75 6C9.75 4.75736 10.7574 3.75 12 3.75H19C20.2426 3.75 21.25 4.75736 21.25 6V20.5C21.25 20.9142 20.9142 21.25 20.5 21.25H9.75V6ZM14 9.0835C13.5858 9.0835 13.25 9.41928 13.25 9.8335C13.25 10.2477 13.5858 10.5835 14 10.5835H17C17.4142 10.5835 17.75 10.2477 17.75 9.8335C17.75 9.41928 17.4142 9.0835 17 9.0835H14ZM14 14.4168C13.5858 14.4168 13.25 14.7526 13.25 15.1668C13.25 15.581 13.5858 15.9168 14 15.9168H17C17.4142 15.9168 17.75 15.581 17.75 15.1668C17.75 14.7526 17.4142 14.4168 17 14.4168H14Z"
+            fill="#ffffff"
+          />
+          <path
+            d="M8.75 8.25H6C4.75736 8.25 3.75 9.25736 3.75 10.5V20.5C3.75 20.9142 4.08579 21.25 4.5 21.25H8.75V17.5H7.50586C7.09165 17.5 6.75586 17.1642 6.75586 16.75C6.75586 16.3358 7.09165 16 7.50586 16H8.75V13.5H7.50586C7.09165 13.5 6.75586 13.1642 6.75586 12.75C6.75586 12.3358 7.09165 12 7.50586 12H8.75V8.25Z"
+            fill="#ffffff"
+          />
+        </svg>
+      ),
+      label: "Institutions",
+    },
+        {
+      key: "/admin/centers",
+      icon: (
+        <svg
+          width="20"
+          height="20"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          transform="rotate(0 0 0)"
+        >
+          <path
+            d="M5.03125 10.392C5.03125 6.26528 8.3766 2.91992 12.5033 2.91992C16.63 2.91992 19.9754 6.26528 19.9754 10.392C19.9754 13.194 18.9108 15.7454 17.6454 17.7938C16.3778 19.8458 14.8791 21.441 13.9389 22.3454C13.139 23.1148 11.9045 23.1163 11.1026 22.3493C10.1581 21.4458 8.65084 19.8507 7.37569 17.7982C6.1028 15.7493 5.03125 13.1963 5.03125 10.392ZM9.50391 10.3906C9.50391 12.0475 10.8471 13.3906 12.5039 13.3906C14.1608 13.3906 15.5039 12.0475 15.5039 10.3906C15.5039 8.73377 14.1608 7.39062 12.5039 7.39062C10.8471 7.39062 9.50391 8.73377 9.50391 10.3906Z"
+            fill="#ffffff"
+          />
+        </svg>
+      ),
+      label: "Centers",
+    }
+      ]
+    },
+    { type: "divider" as const },
     {
       key: "/admin/memberships",
       icon: (
@@ -233,118 +342,13 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       ),
       label: "Memberships",
     },
-    {
-      key: "/admin/institutions",
-      icon: (
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 25 25"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          transform="rotate(0 0 0)"
-        >
-          <path
-            d="M9.75 6C9.75 4.75736 10.7574 3.75 12 3.75H19C20.2426 3.75 21.25 4.75736 21.25 6V20.5C21.25 20.9142 20.9142 21.25 20.5 21.25H9.75V6ZM14 9.0835C13.5858 9.0835 13.25 9.41928 13.25 9.8335C13.25 10.2477 13.5858 10.5835 14 10.5835H17C17.4142 10.5835 17.75 10.2477 17.75 9.8335C17.75 9.41928 17.4142 9.0835 17 9.0835H14ZM14 14.4168C13.5858 14.4168 13.25 14.7526 13.25 15.1668C13.25 15.581 13.5858 15.9168 14 15.9168H17C17.4142 15.9168 17.75 15.581 17.75 15.1668C17.75 14.7526 17.4142 14.4168 17 14.4168H14Z"
-            fill="#ffffff"
-          />
-          <path
-            d="M8.75 8.25H6C4.75736 8.25 3.75 9.25736 3.75 10.5V20.5C3.75 20.9142 4.08579 21.25 4.5 21.25H8.75V17.5H7.50586C7.09165 17.5 6.75586 17.1642 6.75586 16.75C6.75586 16.3358 7.09165 16 7.50586 16H8.75V13.5H7.50586C7.09165 13.5 6.75586 13.1642 6.75586 12.75C6.75586 12.3358 7.09165 12 7.50586 12H8.75V8.25Z"
-            fill="#ffffff"
-          />
-        </svg>
-      ),
-      label: "Institutions",
-    },
-    {
-      key: "/admin/centers",
-      icon: (
-        <svg
-          width="20"
-          height="20"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          transform="rotate(0 0 0)"
-        >
-          <path
-            d="M5.03125 10.392C5.03125 6.26528 8.3766 2.91992 12.5033 2.91992C16.63 2.91992 19.9754 6.26528 19.9754 10.392C19.9754 13.194 18.9108 15.7454 17.6454 17.7938C16.3778 19.8458 14.8791 21.441 13.9389 22.3454C13.139 23.1148 11.9045 23.1163 11.1026 22.3493C10.1581 21.4458 8.65084 19.8507 7.37569 17.7982C6.1028 15.7493 5.03125 13.1963 5.03125 10.392ZM9.50391 10.3906C9.50391 12.0475 10.8471 13.3906 12.5039 13.3906C14.1608 13.3906 15.5039 12.0475 15.5039 10.3906C15.5039 8.73377 14.1608 7.39062 12.5039 7.39062C10.8471 7.39062 9.50391 8.73377 9.50391 10.3906Z"
-            fill="#ffffff"
-          />
-        </svg>
-      ),
-      label: "Centers",
-    },
-    {
-      key: "/admin/admins",
-      icon: (
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 24 25"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          transform="rotate(0 0 0)"
-        >
-          <path
-            d="M12 3.5C12.2326 3.5 12.452 3.60791 12.594 3.79212L16.7497 9.18332L20.7777 5.91743C21.0147 5.72527 21.3445 5.69584 21.6118 5.843C21.879 5.99017 22.0305 6.2846 21.9949 6.58763L21.0346 14.75H2.96544L2.00516 6.58763C1.96951 6.2846 2.12099 5.99017 2.38828 5.843C2.65556 5.69584 2.98537 5.72527 3.22237 5.91743L7.2503 9.18332L11.406 3.79212C11.548 3.60791 11.7674 3.5 12 3.5Z"
-            fill="#ffffff"
-          />
-          <path
-            d="M3.14191 16.25L3.34931 18.0129C3.48261 19.146 4.44295 20 5.58389 20H18.4161C19.5571 20 20.5174 19.146 20.6507 18.0129L20.8581 16.25H3.14191Z"
-            fill="#ffffff"
-          />
-        </svg>
-      ),
-      label: "Administrators",
-    },
     { type: "divider" as const },
     {
-      key: "student-certificates",
-      icon: <SafetyCertificateOutlined style={{ fontSize: 18, color: "#ffffff" }} />,
-      label: "Learner Certificates",
-      children: [
-        {
-          key: "/admin/student-certificates",
-          label: "Certificate List",
-        },
-        {
-          key: "/admin/student-certificates/add",
-          label: "Add Certificate",
-        },
-      ],
-    },
-    {
-      key: "certificates",
+      key: "finance",
       icon: <FileDoneOutlined style={{ fontSize: 18, color: "#ffffff" }} />,
-      label: "Certificates",
+      label: "Finance",
       children: [
         {
-          key: "/admin/certificates/generate",
-          label: "Generate Certificate",
-        },
-        {
-          key: "/admin/certificate-requests",
-          label: "Certificate Request",
-        },
-      ],
-    },
-    {
-      key: "cimaa-certificates",
-      icon: <FileDoneOutlined style={{ fontSize: 18, color: "#ffffff" }} />,
-      label: "CIMAA Certificate",
-      children: [
-        {
-          key: "/admin/cimaa-certificates/generate",
-          label: "Generate Certificate",
-        },
-        {
-          key: "/admin/cimaa-certificates/history",
-          label: "Certificate History",
-        },
-      ],
-    },
-    { type: "divider" as const },
-    {
       key: "invoices",
       icon: (
         <svg
@@ -380,7 +384,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
         },
       ],
     },
-    {
+        {
       key: "receipts",
       icon: <FileDoneOutlined style={{ fontSize: 18, color: "#ffffff" }} />,
       label: "Receipts",
@@ -394,7 +398,34 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
           label: "Receipt History",
         },
       ],
+    }
+      ]
     },
+    { type: "divider" as const },
+    {
+      key: "/admin/admins",
+      icon: (
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 25"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          transform="rotate(0 0 0)"
+        >
+          <path
+            d="M12 3.5C12.2326 3.5 12.452 3.60791 12.594 3.79212L16.7497 9.18332L20.7777 5.91743C21.0147 5.72527 21.3445 5.69584 21.6118 5.843C21.879 5.99017 22.0305 6.2846 21.9949 6.58763L21.0346 14.75H2.96544L2.00516 6.58763C1.96951 6.2846 2.12099 5.99017 2.38828 5.843C2.65556 5.69584 2.98537 5.72527 3.22237 5.91743L7.2503 9.18332L11.406 3.79212C11.548 3.60791 11.7674 3.5 12 3.5Z"
+            fill="#ffffff"
+          />
+          <path
+            d="M3.14191 16.25L3.34931 18.0129C3.48261 19.146 4.44295 20 5.58389 20H18.4161C19.5571 20 20.5174 19.146 20.6507 18.0129L20.8581 16.25H3.14191Z"
+            fill="#ffffff"
+          />
+        </svg>
+      ),
+      label: "Administrators",
+    },
+    { type: "divider" as const },
     {
       key: "enquiries",
       icon: <AppstoreOutlined style={{ fontSize: 18, color: "#ffffff" }} />,
@@ -409,7 +440,8 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
           label: "Partnership Forms",
         },
       ],
-    }  ];
+    }
+  ];
 
   const getBreadcrumbItems = () => {
     const pathSegments = pathname.split("/").filter(Boolean);
