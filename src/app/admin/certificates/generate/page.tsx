@@ -323,7 +323,6 @@ const MembershipCanvas = forwardRef<HTMLDivElement, MembershipCanvasProps>(
     );
   },
 );
-
 const buildDefaultUnits = () =>
   Array.from({ length: UNIT_ROWS }, () => ({
     unitCode: "",
