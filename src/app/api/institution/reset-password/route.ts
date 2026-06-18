@@ -122,7 +122,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     const institution = await Organization.findOne({
       resetPasswordToken: token,
       resetPasswordExpires: { $gt: new Date() }, // Token not expired
-    }).select("orgName firstName lastName");
+    }).select("orgName firstName lastName isApproved isTerminated");
 
     if (!institution) {
       const errorResponse: ApiResponse<never> = {
