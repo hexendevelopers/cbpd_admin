@@ -129,7 +129,7 @@ const CimaaCanvas = forwardRef<HTMLDivElement, CimaaCanvasProps>(
           {registrationNumber}
         </div>
         
-        <div style={{ position: "absolute", top: "1370px", left: "660px", fontSize: "20px", color: "#000", fontFamily: "'Times New Roman', Times, serif", fontWeight: "bold" }}>
+        <div style={{ position: "absolute", top: "1370px", left: "610px", fontSize: "20px", color: "#000", fontFamily: "'Times New Roman', Times, serif", fontWeight: "bold" }}>
           {dateIssuedText}
         </div>
       </div>
@@ -334,7 +334,7 @@ export default function GenerateCimaaCertificatePage() {
       drawText(provName, 630, 976 - 8, 26, "left", "top");
       drawText(certNo, 630, 1016 - 8, 26, "left", "top");
       drawText(regNo, 630, 1061 - 8, 26, "left", "top");
-      drawText(dateText, 680, 1370 - 8, 26, "left", "top");
+      drawText(dateText, 630, 1370 - 8, 26, "left", "top");
 
       const safeCert = (values.certificateNumber || "certificate").replace(/[^a-zA-Z0-9/_-]+/g, "_");
       pdf.save(`cimaa-cmyk-${safeCert}.pdf`);
