@@ -119,17 +119,17 @@ const CimaaCanvas = forwardRef<HTMLDivElement, CimaaCanvasProps>(
           </div>
         </div>
         
-        <div style={{ position: "absolute", top: "976px", left: "610px", fontSize: "20px", color: "#000", fontFamily: "'Times New Roman', Times, serif", fontWeight: "bold" }}>
+        <div style={{ position: "absolute", top: "976px", left: "630px", fontSize: "20px", color: "#000", fontFamily: "'Times New Roman', Times, serif", fontWeight: "bold" }}>
           {providerName}
         </div>
-        <div style={{ position: "absolute", top: "1016px", left: "610px", fontSize: "20px", color: "#000", fontFamily: "'Times New Roman', Times, serif", fontWeight: "bold" }}>
+        <div style={{ position: "absolute", top: "1016px", left: "630px", fontSize: "20px", color: "#000", fontFamily: "'Times New Roman', Times, serif", fontWeight: "bold" }}>
           {certificateNumber}
         </div>
-        <div style={{ position: "absolute", top: "1061px", left: "610px", fontSize: "20px", color: "#000", fontFamily: "'Times New Roman', Times, serif", fontWeight: "bold" }}>
+        <div style={{ position: "absolute", top: "1061px", left: "630px", fontSize: "20px", color: "#000", fontFamily: "'Times New Roman', Times, serif", fontWeight: "bold" }}>
           {registrationNumber}
         </div>
         
-        <div style={{ position: "absolute", top: "1370px", left: "610px", fontSize: "20px", color: "#000", fontFamily: "'Times New Roman', Times, serif", fontWeight: "bold" }}>
+        <div style={{ position: "absolute", top: "1370px", left: "630px", fontSize: "20px", color: "#000", fontFamily: "'Times New Roman', Times, serif", fontWeight: "bold" }}>
           {dateIssuedText}
         </div>
       </div>
@@ -331,10 +331,10 @@ export default function GenerateCimaaCertificatePage() {
       
       // Shifted right (630/680) to align right after the template labels
       // Subtracted 8 from Y (was -12, adjusted +4 down for more top padding)
-      drawText(provName, 630, 976 - 8, 26, "left", "top");
-      drawText(certNo, 630, 1016 - 8, 26, "left", "top");
-      drawText(regNo, 630, 1061 - 8, 26, "left", "top");
-      drawText(dateText, 630, 1370 - 8, 26, "left", "top");
+      drawText(provName, 630, 976, 26, "left", "top");
+      drawText(certNo, 630, 1016, 26, "left", "top");
+      drawText(regNo, 630, 1061, 26, "left", "top");
+      drawText(dateText, 630, 1370, 26, "left", "top");
 
       const safeCert = (values.certificateNumber || "certificate").replace(/[^a-zA-Z0-9/_-]+/g, "_");
       pdf.save(`cimaa-cmyk-${safeCert}.pdf`);
