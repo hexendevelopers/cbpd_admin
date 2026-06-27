@@ -334,7 +334,7 @@ export default function GenerateCimaaCertificatePage() {
       drawText(provName, 630, 976, 26, "left", "top");
       drawText(certNo, 630, 1016, 26, "left", "top");
       drawText(regNo, 630, 1061, 26, "left", "top");
-      drawText(dateText, 630, 1370, 26, "left", "top");
+      drawText(dateText, 630, 1360, 26, "left", "top");
 
       const safeCert = (values.certificateNumber || "certificate").replace(/[^a-zA-Z0-9/_-]+/g, "_");
       pdf.save(`cimaa-cmyk-${safeCert}.pdf`);
