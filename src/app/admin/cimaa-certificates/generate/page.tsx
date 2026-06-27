@@ -331,9 +331,9 @@ export default function GenerateCimaaCertificatePage() {
       
       // Shifted right (630/680) to align right after the template labels
       // Subtracted 8 from Y (was -12, adjusted +4 down for more top padding)
-      drawText(provName, 630, 972, 26, "left", "top");
-      drawText(certNo, 630, 1012, 26, "left", "top");
-      drawText(regNo, 630, 1057, 26, "left", "top");
+      drawText(provName, 630, 968, 26, "left", "top");
+      drawText(certNo, 630, 1008, 26, "left", "top");
+      drawText(regNo, 630, 1053, 26, "left", "top");
       drawText(dateText, 630, 1360, 26, "left", "top");
 
       const safeCert = (values.certificateNumber || "certificate").replace(/[^a-zA-Z0-9/_-]+/g, "_");
