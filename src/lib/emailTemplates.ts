@@ -387,14 +387,14 @@ export const emailTemplates = {
             
             <div style="text-align: center;">
               <a href="${
-                process.env.NEXT_PUBLIC_APP_URL || "https://cbpd-admin.com"
+                process.env.NEXT_PUBLIC_FRONTEND_URL || process.env.NEXT_PUBLIC_APP_URL || "https://cbpd.co.uk"
               }/reset-password?token=${resetToken}" class="cta-button">Reset Password</a>
             </div>
             
             <p>If the button doesn't work, you can copy and paste this link into your browser:</p>
             <p style="word-break: break-all; background-color: #f8f9fa; padding: 10px; border-radius: 4px; font-family: monospace;">
               ${
-                process.env.NEXT_PUBLIC_APP_URL || "https://cbpd-admin.com"
+                process.env.NEXT_PUBLIC_FRONTEND_URL || process.env.NEXT_PUBLIC_APP_URL || "https://cbpd.co.uk"
               }/reset-password?token=${resetToken}
             </p>
             
@@ -426,7 +426,7 @@ export const emailTemplates = {
       
       Reset your password by clicking this link:
       ${
-        process.env.NEXT_PUBLIC_APP_URL || "https://cbpd-admin.com"
+        process.env.NEXT_PUBLIC_FRONTEND_URL || process.env.NEXT_PUBLIC_APP_URL || "https://cbpd.co.uk"
       }/reset-password?token=${resetToken}
       
       This link will expire in 1 hour for security reasons.
