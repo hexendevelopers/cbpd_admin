@@ -338,8 +338,8 @@
   left: 50%;
   transform: translateX(-50%);
   width: 650px;
-  font-size: 20px;
-  font-weight: 700;
+  font-size: 24px;
+  font-weight: 900;
   font-family: "Times New Roman", Times, "Liberation Serif", Georgia, serif !important;
   text-transform: uppercase;
 }
