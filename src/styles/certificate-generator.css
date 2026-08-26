@@ -260,7 +260,7 @@
 }
 
 .accreditation-canvas .institution-name {
-  top: 282px;
+  top: 274px;
   left: 50%;
   transform: translateX(-50%);
   width: 480px;
@@ -272,7 +272,7 @@
 }
 
 .accreditation-canvas .location {
-  top: 320px;
+  top: 328px;
   left: 50%;
   transform: translateX(-50%);
   width: 300px;
