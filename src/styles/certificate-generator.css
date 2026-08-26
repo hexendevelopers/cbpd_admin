@@ -287,16 +287,17 @@
 .accreditation-canvas .valid-until,
 .accreditation-canvas .accreditation-level {
   transform: none;
-  width: 245px;
+  width: 250px;
   font-size: 12px;
   font-weight: 600;
+  text-align: right;
 }
 
-.accreditation-canvas .accreditation-no { top: 484px; left: 315px; }
-.accreditation-canvas .accreditation-status { top: 499px; left: 315px; }
-.accreditation-canvas .effective-date { top: 516px; left: 315px; }
-.accreditation-canvas .valid-until { top: 531px; left: 315px; }
-.accreditation-canvas .accreditation-level { top: 547px; left: 315px; width: 200px; }
+.accreditation-canvas .accreditation-no { top: 484px; right: 60px; }
+.accreditation-canvas .accreditation-status { top: 499px; right: 60px; }
+.accreditation-canvas .effective-date { top: 516px; right: 60px; }
+.accreditation-canvas .valid-until { top: 531px; right: 60px; }
+.accreditation-canvas .accreditation-level { top: 547px; right: 60px; }
 
 /* Membership certificate canvas (matches membership-cert-reference proportion). */
 .membership-canvas {
