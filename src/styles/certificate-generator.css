@@ -334,7 +334,7 @@
 }
 
 .membership-canvas .institution-name {
-  top: 437px;
+  top: 430px;
   left: 50%;
   transform: translateX(-50%);
   width: 650px;
@@ -345,7 +345,7 @@
 }
 
 .membership-canvas .location {
-  top: 477px;
+  top: 500px;
   left: 50%;
   transform: translateX(-50%);
   width: 360px;
