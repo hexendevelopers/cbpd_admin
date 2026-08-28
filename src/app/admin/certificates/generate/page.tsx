@@ -405,7 +405,7 @@ export default function GenerateCertificatePage() {
       ]);
 
       const canvas = await html2canvas(el, {
-        scale: 3,
+        scale: 2,
         useCORS: true,
         allowTaint: true,
         backgroundColor: "#ffffff",
@@ -415,13 +415,13 @@ export default function GenerateCertificatePage() {
         windowHeight: CANVAS_H,
       });
 
-      const img = canvas.toDataURL("image/png");
+      const img = canvas.toDataURL("image/jpeg", 0.9);
       const pdf = new jsPDF({
         orientation: "portrait",
         unit: "px",
         format: [CANVAS_W, CANVAS_H],
       });
-      pdf.addImage(img, "PNG", 0, 0, CANVAS_W, CANVAS_H);
+      pdf.addImage(img, "JPEG", 0, 0, CANVAS_W, CANVAS_H);
 
       const safeCert = (values.certificateNumber || "certificate").replace(
         /[^a-zA-Z0-9/_-]+/g,
@@ -474,7 +474,7 @@ export default function GenerateCertificatePage() {
       ]);
 
       const canvas = await html2canvas(el, {
-        scale: 4,
+        scale: 2,
         useCORS: true,
         allowTaint: true,
         backgroundColor: "#ffffff",
@@ -484,13 +484,13 @@ export default function GenerateCertificatePage() {
         windowHeight: LAR_CANVAS_H,
       });
 
-      const img = canvas.toDataURL("image/png");
+      const img = canvas.toDataURL("image/jpeg", 0.9);
       const pdf = new jsPDF({
         orientation: "portrait",
         unit: "px",
         format: [LAR_CANVAS_W, LAR_CANVAS_H],
       });
-      pdf.addImage(img, "PNG", 0, 0, LAR_CANVAS_W, LAR_CANVAS_H);
+      pdf.addImage(img, "JPEG", 0, 0, LAR_CANVAS_W, LAR_CANVAS_H);
 
       const safeCert = (values.certificateNo || "lar").replace(
         /[^a-zA-Z0-9/_-]+/g,
@@ -574,13 +574,13 @@ export default function GenerateCertificatePage() {
         windowHeight: ACC_CANVAS_H,
       });
 
-      const img = canvas.toDataURL("image/png");
+      const img = canvas.toDataURL("image/jpeg", 0.9);
       const pdf = new jsPDF({
         orientation: "portrait",
         unit: "px",
         format: [ACC_CANVAS_W, ACC_CANVAS_H],
       });
-      pdf.addImage(img, "PNG", 0, 0, ACC_CANVAS_W, ACC_CANVAS_H);
+      pdf.addImage(img, "JPEG", 0, 0, ACC_CANVAS_W, ACC_CANVAS_H);
 
       const safeCert = (values.accreditationNo || "accreditation").replace(
         /[^a-zA-Z0-9/_-]+/g,
@@ -653,7 +653,7 @@ export default function GenerateCertificatePage() {
       ]);
 
       const canvas = await html2canvas(el, {
-        scale: 4,
+        scale: 2,
         useCORS: true,
         allowTaint: true,
         backgroundColor: "#ffffff",
@@ -663,13 +663,13 @@ export default function GenerateCertificatePage() {
         windowHeight: MEM_CANVAS_H,
       });
 
-      const img = canvas.toDataURL("image/png");
+      const img = canvas.toDataURL("image/jpeg", 0.9);
       const pdf = new jsPDF({
         orientation: "portrait",
         unit: "px",
         format: [MEM_CANVAS_W, MEM_CANVAS_H],
       });
-      pdf.addImage(img, "PNG", 0, 0, MEM_CANVAS_W, MEM_CANVAS_H);
+      pdf.addImage(img, "JPEG", 0, 0, MEM_CANVAS_W, MEM_CANVAS_H);
 
       const safeNo = (values.membershipNumber || "membership").replace(
         /[^a-zA-Z0-9/_-]+/g,
