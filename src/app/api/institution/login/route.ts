@@ -7,6 +7,10 @@ import { generateToken } from "@/lib/generateToken";
 
 export const POST = async (req: Request) => {
   try {
+    return NextResponse.json(
+      { status: "Failed", message: "Something went wrong. Check with technical team." },
+      { status: 403 }
+    );
     const { email, password } = await req.json();
 
     if (!email || !password) {

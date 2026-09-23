@@ -7,6 +7,10 @@ import Admin from "@/models/adminModel";
 
 export async function POST(request: NextRequest) {
   try {
+    return NextResponse.json(
+      { error: "Something went wrong. Check with technical team." },
+      { status: 403 }
+    );
     await connectDB();
 
     const { email, password } = await request.json();
