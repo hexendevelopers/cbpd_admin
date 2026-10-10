@@ -272,7 +272,7 @@ const AccreditationCanvas = forwardRef<HTMLDivElement, AccreditationCanvasProps>
     return (
       <div ref={ref} className="accreditation-canvas">
         <img
-          src="/accredation-cert-template.jpeg"
+          src="/accredation-cert-template.jpg"
           alt=""
           className="accreditation-bg"
           width={ACC_CANVAS_W}
