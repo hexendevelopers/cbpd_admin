@@ -28,8 +28,8 @@ const CANVAS_W = 1234;
 const CANVAS_H = 1738;
 const LAR_CANVAS_W = 737;
 const LAR_CANVAS_H = 1042;
-const ACC_CANVAS_W = 564;
-const ACC_CANVAS_H = 796;
+const ACC_CANVAS_W = 1672;
+const ACC_CANVAS_H = 941;
 const MEM_CANVAS_W = 735;
 const MEM_CANVAS_H = 1040;
 const UNIT_ROWS = 10;
@@ -272,7 +272,7 @@ const AccreditationCanvas = forwardRef<HTMLDivElement, AccreditationCanvasProps>
     return (
       <div ref={ref} className="accreditation-canvas">
         <img
-          src="/accredation-cert-template.jpg"
+          src="/landscape-accreditation-cert-template.webp"
           alt=""
           className="accreditation-bg"
           width={ACC_CANVAS_W}
@@ -576,7 +576,7 @@ export default function GenerateCertificatePage() {
 
       const img = canvas.toDataURL("image/jpeg", 0.9);
       const pdf = new jsPDF({
-        orientation: "portrait",
+        orientation: "landscape",
         unit: "px",
         format: [ACC_CANVAS_W, ACC_CANVAS_H],
       });
@@ -1299,7 +1299,7 @@ export default function GenerateCertificatePage() {
                   </Col>
                   <Col xs={24} lg={14}>
                     <Card
-                      title="Accreditation preview (564 × 796 px)"
+                      title="Accreditation preview (1672 × 941 px)"
                       bordered={false}
                     >
                       <Text
