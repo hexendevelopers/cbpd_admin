@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap");
+
 /* Fixed canvas — must match certificate-template.png pixel size (1234×1738). */
 
 .certificate-canvas {
@@ -287,19 +289,20 @@
 .accreditation-canvas .effective-date,
 .accreditation-canvas .valid-until,
 .accreditation-canvas .accreditation-level {
-  font-size: 19px;
-  font-weight: 700;
+  left: 805px;
+  font-size: 18px;
+  font-weight: 600;
   color: #111827;
   text-align: left;
   line-height: 1;
   white-space: nowrap;
 }
 
-.accreditation-canvas .accreditation-no { top: 593px; left: 765px; }
-.accreditation-canvas .accreditation-status { top: 618px; left: 798px; }
-.accreditation-canvas .effective-date { top: 641px; left: 735px; }
-.accreditation-canvas .valid-until { top: 665px; left: 697px; }
-.accreditation-canvas .accreditation-level { top: 689px; left: 787px; }
+.accreditation-canvas .accreditation-no { top: 588px; }
+.accreditation-canvas .accreditation-status { top: 613px; }
+.accreditation-canvas .effective-date { top: 636px; }
+.accreditation-canvas .valid-until { top: 660px; }
+.accreditation-canvas .accreditation-level { top: 684px; }
 
 /* Membership certificate canvas (matches membership-cert-reference proportion). */
 .membership-canvas {
