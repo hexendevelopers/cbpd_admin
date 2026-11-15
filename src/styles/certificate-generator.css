@@ -260,28 +260,61 @@
   line-height: 1.2;
 }
 
-.accreditation-canvas .institution-name {
-  top: 395px;
+.accreditation-canvas .institution-block {
+  position: absolute;
+  top: 436px;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
   width: 1100px;
-  font-size: 36px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  gap: 6px;
+}
+
+.accreditation-canvas .institution-name {
+  width: 100%;
+  max-width: 1100px;
   font-weight: 700;
   text-align: center;
   text-transform: uppercase;
   letter-spacing: 0.02em;
   color: #0f172a;
+  word-wrap: break-word;
+  white-space: pre-line;
+  line-height: 1.15;
+  margin: 0;
+  padding: 0;
 }
 
 .accreditation-canvas .location {
-  top: 442px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 700px;
+  width: 100%;
+  max-width: 700px;
   text-align: center;
   font-size: 18px;
   font-weight: 600;
   color: #1f2937;
+  margin: 0;
+  padding: 0;
+  line-height: 1.2;
+}
+
+.accreditation-canvas .accreditation-qr-code {
+  position: absolute;
+  left: 37px;
+  top: 1056px;
+  width: 84px;
+  height: 84px;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  border-radius: 2px;
 }
 
 .accreditation-canvas .accreditation-no,

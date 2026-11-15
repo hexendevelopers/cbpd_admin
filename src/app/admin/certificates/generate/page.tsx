@@ -14,6 +14,7 @@ import {
   Tabs,
   notification,
   Radio,
+  QRCode,
 } from "antd";
 import { EyeOutlined, DownloadOutlined } from "@ant-design/icons";
 import type { Dayjs } from "dayjs";
@@ -256,6 +257,13 @@ type AccreditationCanvasProps = {
   accreditationLevel: string;
 };
 
+const getInstitutionNameFontSize = (name: string) => {
+  const len = (name || "").trim().length;
+  if (len > 45) return "24px";
+  if (len > 28) return "28px";
+  return "34px";
+};
+
 const AccreditationCanvas = forwardRef<HTMLDivElement, AccreditationCanvasProps>(
   function AccreditationCanvas(
     {
@@ -269,6 +277,10 @@ const AccreditationCanvas = forwardRef<HTMLDivElement, AccreditationCanvasProps>
     },
     ref,
   ) {
+    const qrVerificationUrl = accreditationNo
+      ? `https://www.cbpd.co.uk/verifications?type=centre&centreCode=${encodeURIComponent(accreditationNo)}`
+      : "https://www.cbpd.co.uk/verifications";
+
     return (
       <div ref={ref} className="accreditation-canvas">
         <img
@@ -279,13 +291,28 @@ const AccreditationCanvas = forwardRef<HTMLDivElement, AccreditationCanvasProps>
           height={ACC_CANVAS_H}
           draggable={false}
         />
-        <div className="accreditation-field institution-name">{institutionName}</div>
-        <div className="accreditation-field location">{location}</div>
+        <div className="institution-block">
+          <div
+            className="institution-name"
+            style={{ fontSize: getInstitutionNameFontSize(institutionName) }}
+          >
+            {institutionName}
+          </div>
+          <div className="location">{location}</div>
+        </div>
         <div className="accreditation-field accreditation-no">{accreditationNo}</div>
         <div className="accreditation-field accreditation-level">{accreditationLevel}</div>
         <div className="accreditation-field accreditation-status">{accreditationStatus}</div>
         <div className="accreditation-field effective-date">{effectiveDateText}</div>
         <div className="accreditation-field valid-until">{validUntilText}</div>
+        <div className="accreditation-qr-code">
+          <QRCode
+            value={qrVerificationUrl}
+            size={80}
+            bordered={false}
+            type="canvas"
+          />
+        </div>
       </div>
     );
   },
