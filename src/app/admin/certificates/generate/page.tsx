@@ -29,7 +29,7 @@ const CANVAS_H = 1738;
 const LAR_CANVAS_W = 737;
 const LAR_CANVAS_H = 1042;
 const ACC_CANVAS_W = 1672;
-const ACC_CANVAS_H = 941;
+const ACC_CANVAS_H = 1171;
 const MEM_CANVAS_W = 735;
 const MEM_CANVAS_H = 1040;
 const UNIT_ROWS = 10;
@@ -282,10 +282,10 @@ const AccreditationCanvas = forwardRef<HTMLDivElement, AccreditationCanvasProps>
         <div className="accreditation-field institution-name">{institutionName}</div>
         <div className="accreditation-field location">{location}</div>
         <div className="accreditation-field accreditation-no">{accreditationNo}</div>
+        <div className="accreditation-field accreditation-level">{accreditationLevel}</div>
         <div className="accreditation-field accreditation-status">{accreditationStatus}</div>
         <div className="accreditation-field effective-date">{effectiveDateText}</div>
         <div className="accreditation-field valid-until">{validUntilText}</div>
-        <div className="accreditation-field accreditation-level">{accreditationLevel}</div>
       </div>
     );
   },
@@ -1216,6 +1216,21 @@ export default function GenerateCertificatePage() {
                           <Input autoComplete="off" />
                         </Form.Item>
                         <Form.Item
+                          name="accreditationLevel"
+                          label="Accreditation Type"
+                          rules={[
+                            {
+                              required: true,
+                              message: "Accreditation type is required",
+                            },
+                          ]}
+                        >
+                          <Input
+                            placeholder="e.g. Institutional / Programme / Partnership"
+                            autoComplete="off"
+                          />
+                        </Form.Item>
+                        <Form.Item
                           name="accreditationStatus"
                           label="Accreditation Status"
                           rules={[
@@ -1263,21 +1278,6 @@ export default function GenerateCertificatePage() {
                             </Form.Item>
                           </Col>
                         </Row>
-                        <Form.Item
-                          name="accreditationLevel"
-                          label="Accreditation Level"
-                          rules={[
-                            {
-                              required: true,
-                              message: "Accreditation level is required",
-                            },
-                          ]}
-                        >
-                          <Input
-                            placeholder="e.g. Institutional / Program / International Partner"
-                            autoComplete="off"
-                          />
-                        </Form.Item>
                         <Space wrap>
                           <Button
                             type="primary"
@@ -1299,7 +1299,7 @@ export default function GenerateCertificatePage() {
                   </Col>
                   <Col xs={24} lg={14}>
                     <Card
-                      title="Accreditation preview (1672 × 941 px)"
+                      title="Accreditation preview (1672 × 1171 px)"
                       bordered={false}
                     >
                       <Text
