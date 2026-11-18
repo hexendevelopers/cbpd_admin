@@ -14,7 +14,6 @@ import {
   Tabs,
   notification,
   Radio,
-  QRCode,
 } from "antd";
 import { EyeOutlined, DownloadOutlined } from "@ant-design/icons";
 import type { Dayjs } from "dayjs";
@@ -277,10 +276,6 @@ const AccreditationCanvas = forwardRef<HTMLDivElement, AccreditationCanvasProps>
     },
     ref,
   ) {
-    const qrVerificationUrl = accreditationNo
-      ? `https://www.cbpd.co.uk/verifications?type=centre&centreCode=${encodeURIComponent(accreditationNo)}`
-      : "https://www.cbpd.co.uk/verifications";
-
     return (
       <div ref={ref} className="accreditation-canvas">
         <img
@@ -305,14 +300,6 @@ const AccreditationCanvas = forwardRef<HTMLDivElement, AccreditationCanvasProps>
         <div className="accreditation-field accreditation-status">{accreditationStatus}</div>
         <div className="accreditation-field effective-date">{effectiveDateText}</div>
         <div className="accreditation-field valid-until">{validUntilText}</div>
-        <div className="accreditation-qr-code">
-          <QRCode
-            value={qrVerificationUrl}
-            size={80}
-            bordered={false}
-            type="canvas"
-          />
-        </div>
       </div>
     );
   },

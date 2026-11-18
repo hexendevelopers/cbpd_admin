@@ -304,20 +304,6 @@
   line-height: 1.2;
 }
 
-.accreditation-canvas .accreditation-qr-code {
-  position: absolute;
-  left: 37px;
-  top: 1056px;
-  width: 84px;
-  height: 84px;
-  background-color: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2px;
-  border-radius: 2px;
-}
-
 .accreditation-canvas .accreditation-no,
 .accreditation-canvas .accreditation-level,
 .accreditation-canvas .accreditation-status,
